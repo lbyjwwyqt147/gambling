@@ -7,7 +7,6 @@ var MemberList  = function () {
      */
     var initTableDatas = function () {
         $('#member-table-pagination').bootstrapTable('showLoading');
-
         $.ajax({
             url: basicUrl+ "/list",
             type:"GET",
@@ -36,11 +35,6 @@ var MemberList  = function () {
                     anim: 4 //动画类型
                 });
             }
-        });
-
-
-        $("#member-table-pagination tbody tr td").click(function() {
-            $(this).parent().toggleClass("clickTr");
         });
     }
 
@@ -198,11 +192,39 @@ var MemberList  = function () {
 
     }
 
+    /**
+     * 弹出form 表单页
+     */
+    function openFormPage(sign) {
+        var  title = "";
+        if(sign == 1){
+            title = "新增会员信息";
+        }else {
+            title = "修改会员信息";
+        }
+        var that = this;
+        //多窗口模式，层叠置顶
+        parent.layer.open({
+            type: 2 ,
+            title: title,
+            area: ['500px' , '500px'],
+            shade: 0,
+            shadeClose: false,
+            maxmin: false, //开启最大化最小化按钮
+            offset: '100px',  //间距上边100px
+            content: '../../resources/pages/member/member_form.html'
+        });
+        
+    }
+
+    
+
+    $('#addBtn').on('click', function(){
+        //selecteions();
+        openFormPage(1);
 
 
-    $('#openRoleForm').on('click', function(){
-        selecteions();
-        if(memberId != ''){
+       /* if(memberId != ''){
             layer.open({
                 type: 2,
                 title: '分配角色',
@@ -211,7 +233,7 @@ var MemberList  = function () {
                 area : ['80%' , '80%'],
                 content: '../../../pages/authority/role/member_role.html?memberId='+memberId
             });
-        }
+        }*/
 
     });
 
