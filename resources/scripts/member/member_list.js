@@ -1,18 +1,13 @@
 var MemberList  = function () {
     var basicUrl = commonUtil.httpUrl;
 
-    //设置页面高宽度
-    $(window.parent.document).find("#mainIframe").load(function () {
-        var main = $(window.parent.document).find("#mainIframe");
-        var thisheight = $(document).height();
-        main.height(thisheight);
-    });
-
 
     /**
      * 初始化会员表格数据
      */
     var initTableDatas = function () {
+        $('#member-table-pagination').bootstrapTable('showLoading');
+
         $.ajax({
             url: basicUrl+ "/list",
             type:"GET",
@@ -25,6 +20,7 @@ var MemberList  = function () {
                 console.log(data);
                 if(data.status == 0){
                     initMemberTable(data.data);
+                    $('#member-table-pagination').bootstrapTable('hideLoading');
                 }else{
                     layer.alert(data.msg, {
                         skin: 'layui-layer-lan',
@@ -41,7 +37,15 @@ var MemberList  = function () {
                 });
             }
         });
+
+
+        $("#member-table-pagination tbody tr td").click(function() {
+            $(this).parent().toggleClass("clickTr");
+        });
     }
+
+
+
 
     /**
      * 初始化Table
@@ -61,7 +65,7 @@ var MemberList  = function () {
             clickToSelect:true,                         //是否启动点击选中行
             striped: true,                              //是否显示行间隔色
             sidePagination: "client",                  //分页方式：client客户端分页，server服务端分页（*）
-            height: $(window).height() - 110,
+            height: $(window).height() - 120,
             width: $(window).width(),
             showColumns: false,                        //是否显示列
             pagination: true,
