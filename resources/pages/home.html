@@ -88,22 +88,22 @@
                         </div>
                     </li>
                     <li class="nav-item  active ">
-                        <a href="javascript:;" class="nav-link nav-toggle">
+                        <a href="javascript:;" sign="1"  class="nav-link nav-toggle">
                             <i class="icon-home"></i>
-                            <span class="title">Dashboard</span>
+                            <span class="title">Home</span>
                             <span class="selected"></span>
                             <span class="arrow open"></span>
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="javascript:;" class="nav-link nav-toggle">
-                            <i class="icon-diamond"></i>
-                            <span class="title">UI Features</span>
+                        <a href="javascript:;" sign="2" class="nav-link nav-toggle">
+                            <i class="icon-users"></i>
+                            <span class="title">会员管理</span>
                             <span class="arrow "></span>
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="javascript:;" class="nav-link nav-toggle">
+                        <a href="javascript:;" sign="3" class="nav-link nav-toggle">
                             <i class="icon-puzzle"></i>
                             <span class="title">Components</span>
                             <span class="arrow"></span>
@@ -126,26 +126,21 @@
         </div>
         <div class="page-content-wrapper">
             <div class="page-content">
-                <div class="page-bar">
+                <div class="page-bar" style="padding-left: 10px">
                     <ul class="page-breadcrumb">
+                        <i class="fa fa-home font-green-sharp" style="font-size: 15px;"></i>
                         <li>
                             <a href="javascript:;">Home</a>
-                            <i class="fa fa-circle"></i>
                         </li>
-                        <li>
-                            <span>Dashboard</span>
+                        <i class="fa fa-angle-double-right font-green-sharp homeTile" style="font-size: 15px;"></i>
+                        <li class="homeTile">
+                            <span id="homeModuleTile" ></span>
                         </li>
                     </ul>
                 </div>
-
-
-
-                <iframe name="mainIframe" id="mainIframe" frameborder="0" height="650px" width="100%" scrolling="auto" ></iframe>
-
-
-
-
-
+                <div style="margin-left: -10px;margin-right: -10px">
+                    <iframe name="mainIframe" id="mainIframe" width="100%"   scrolling="no"  frameborder="0" ></iframe>
+                </div>
             </div>
         </div>
     </div>

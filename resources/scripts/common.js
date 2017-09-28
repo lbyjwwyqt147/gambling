@@ -9,10 +9,7 @@ var commonUtil = {
     memberId : "",
     token:"",
     sessionId:"",
-    httpUrl:"http://10.1.121.89:80/security/api/v1",
-    //ihttpUrl:"http://127.0.0.1:18080/security/api/v1",
-    webUrl:"http://localhost:63342/",
-    //webUrl:"http://localhost:80/",
+    httpUrl:"http://localhost:8762/",
 
     setSeesionId : function (sessionId) {
         this.sessionId = sessionId;
@@ -35,34 +32,10 @@ var commonUtil = {
      * 当前用户信息
      *
      */
-    memberInfo : function(id){
-        var memberArray = "";
-        if(id != ""){
-            $.ajax({
-                url : '',
-                type : "post",
-                dataType : "json",
-                async : true,
-                success : function(data){
-                    memberArray = [data.id,data.userCode,data.userNickname,data.userPortrait];
-                    commonUtil.memberId = data.userCode;
-                    $("#user-headPhoto").attr("src",data.userPortrait);
-                    $("#userNikeName").text(data.userNickname);
-                }
-            });
-        }else{
-            memberArray = "";
-        }
-        return memberArray;
-    },
 
-    /**
-     * 推出系统
-     *
-     */
-    logiOut : function(memberId){
 
-    },
+
+
 
     getIp:function(){
         //获取主机域名：

@@ -1,71 +1,50 @@
 var Index = function () {
     var basicUrl = commonUtil.httpUrl;
-    var userId = "";
-    var token = $.cookie('token');
-    token = token != null ? token : "";
-    var sessionId = $.cookie('SESSION');
-    var roleId = 1;
-    /**
-     * 菜单数据源
-     */
-    var menusData = function() {
-        console.log("sessionId: " + sessionId);
-        console.log("token: " + token);
-
-        $.ajax( {
-            url: basicUrl+ "/resourceMenus/user/"+userId+"/token/"+token,
-
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            beforeSend: function(request) {
-                request.setRequestHeader("Authorization", token);
-            },
-            type:'GET',
-            dataType:'JSON',
-            success:function(data) {
-                console.log(data);
-                if(data.status == 0){
-                    initMenus(data.data);
-                }else{
-                    layer.alert(data.msg, {
-                        skin: 'layui-layer-lan',
-                        closeBtn: 1,
-                        anim: 4 //动画类型
-                    });
-                }
-
-
-            },
-            error : function() {
-               layer.open({
-                   title: '提示',
-                   content: '获取资源菜单树异常.'
-               });
-            }
-         });
-
-        //退出
-        jQuery('#logout-btn').click(function () {
-            logout();
-        });
-
-        //退出
-        jQuery('#logout1-btn').click(function () {
-            logout();
-        });
-
-    }
-
     /**
      * 初始化首页事件
      */
     var  initHome = function () {
-        //退出
+        $(".homeTile").hide();
+        // 菜单项点击事件
         $('.nav-link').click(function () {
             menuClickStyle(this);
+            //标记
+            var sign = $(this).attr("sign");
+            if(sign == "1"){
+                $(".homeTile").hide();
+            }else {
+                $(".homeTile").show();
+            }
+            console.log(sign);
+            var menuName = $(this).children(".title").html();
+            console.log(menuName);
+            switch(sign){
+                case "1":
+                    break;
+                case "2":
+                    $("#homeModuleTile").html(menuName);
+                    Index.openPageHtml("../pages/member/member_list.html");
+                    break;
+
+            }
         });
+
+        /**
+         * iframe 自适应高度
+         */
+        $("#mainIframe").load(function () {
+            changeFrameHeight();
+        });
+
+        /**
+         * 窗口变化事件
+         */
+        window.onresize=function(){
+            changeFrameHeight();
+        }
+
+
+
     }
 
 
@@ -85,64 +64,16 @@ var Index = function () {
     }
 
 
-
-
-
-
     /**
-     * 初始化菜单
-     * @param data
+     * iframe 高度
      */
-    function initMenus(data) {
-        var menusHtml = "";
-        $.each(data,function(i,v){
-            console.log(v);
-            if(i == 0){
-                menusHtml+='<li class="nav-item start active open">';
-            }else {
-                menusHtml+='<li class="nav-item ">';
-            }
-            menusHtml+='<a href="javascript:Index.openPageHtml(\''+v.a_attr.url+'\');" onclick="Index.openPageHtml(\''+v.a_attr.url+'\');" class="nav-link nav-toggle">';
-            menusHtml+='<i class="'+v.icon+'"></i>';
-            menusHtml+='<span class="title">'+v.text+'</span>';
-            if(i == 0){
-                menusHtml+='<span class="selected"></span>';
-            }else {
-
-            }
-            menusHtml+='<span class="arrow open"></span>';
-            menusHtml+='</a>';
-            menusHtml+=findChildren(v);
-        });
-
-       // console.log(menusHtml)
-       $("#page-sidebar-menu").html(menusHtml);
+    function changeFrameHeight(){
+        var homeTitleHeight = $(".page-bar").height();
+        var pageContentHeight = $(".page-content").height();
+        var iframeHeight = pageContentHeight-homeTitleHeight-10;
+        $("#mainIframe").attr("height", iframeHeight);
+        console.log("iframe高:" +$("#mainIframe").height());
     }
-
-    /**
-     * 叶子节点
-     * @param html
-     * @param arrays
-     */
-    function findChildren(v2) {
-        var html = '<ul class="sub-menu">';
-        var  children = v2.children;
-        console.log(children);
-        $.each(children,function (i,v) {
-                html+='<li class="nav-item ">';
-                html+='<a href="javascript:Index.openPageHtml(\''+v.a_attr.url+'\');" class="nav-link">';
-                html+='<i class="'+v.icon+'"></i>';
-                html+='<span class="title">'+v.text+'</span>';
-                html+='</a>';
-                html+='</li>';
-                findChildren(html,v);
-        })
-        html+='</ul>';
-        html+='</li>';
-       return html;
-    }
-
-
 
 
     /**
@@ -193,9 +124,6 @@ var Index = function () {
     return {
         //main function to initiate the module
         init: function () {
-
-          //  menusData();
-
             initHome();
 
         },
@@ -205,9 +133,10 @@ var Index = function () {
          */
         openPageHtml: function(url) {
             if(url != "" || url != null){
+                //计算window 高度
+                changeFrameHeight();
                 $("#mainIframe").attr("src",url);
             }
-
         }
     };
 
