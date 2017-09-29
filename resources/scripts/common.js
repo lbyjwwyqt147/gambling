@@ -63,6 +63,15 @@ var commonUtil = {
     },
 
     /**
+     * 关闭弹出窗口
+     */
+    closeForm: function () {
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        parent.layer.close(index);
+    },
+
+
+    /**
      * 日期时间处理工具
      */
     dateUtil : {

@@ -4,6 +4,7 @@ var Index = function () {
      * 初始化首页事件
      */
     var  initHome = function () {
+
         $(".homeTile").hide();
         // 菜单项点击事件
         $('.nav-link').click(function () {

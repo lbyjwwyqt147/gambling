@@ -1,65 +1,123 @@
 var MemberForm  = function () {
     var basicUrl = commonUtil.httpUrl;
+    var basicForm = $("#memberForm");
 
+    /**
+     * 关闭事件
+     */
     $('#close-button').on('click', function(){
-        closeForm();
+        commonUtil.closeForm();
     });
 
+    /**
+     * 保存数据
+     */
+    $('#save-button').on('click', function(){
+        submitForm();
+    });
 
-/*    function submitForm() {
+    /**
+     * 验证表单
+     */
+    var validateForm = function () {
+        basicForm.validate({
+            errorElement: 'span',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            rules: {
+                memberCode: {
+                    required: true
+                },
+                memberName: {
+                    required: true
+                },
+                memberBalance: {
+                    required: true
+                }
+            },
+
+            messages: {
+                memberCode: {
+                    required: "请填写会员编号."
+                },
+                memberName: {
+                    required: "请填写会员名称."
+                },
+                memberBalance: {
+                    required: "请填写会员余额."
+                }
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                //$('.alert-danger', $('.login-form')).show();
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label.closest('.form-group').removeClass('has-error');
+                label.remove();
+            },
+
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.closest('.input-icon'));
+            }
+
+
+        });
+    }
+
+    /**
+     * 保存数据
+     */
+    var submitForm = function(){
         commonUtil.inputTrim();
-        $.ajax({
-            url: basicUrl+ "/roles",
-            data:$("#addRoleForm").serialize(),
-            type:"POST",
-            dataType:"json",
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            beforeSend: function(request) {
-                request.setRequestHeader("Authorization", token);
-            },
-            success :function (data,textStatus) {
-                console.log(data);
-                if(data.status == 0){
+        console.log("sdd");
+        if (basicForm.validate().form()) {
 
-                }else{
-                    layer.alert(data.msg, {
+           /* $.ajax({
+                url: basicUrl+ "/roles",
+                data:$("#addRoleForm").serialize(),
+                type:"POST",
+                dataType:"json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                beforeSend: function(request) {
+                    request.setRequestHeader("Authorization", token);
+                },
+                success :function (data,textStatus) {
+                    console.log(data);
+                    if(data.status == 0){
+
+                    }else{
+                        layer.alert(data.msg, {
+                            skin: 'layui-layer-lan',
+                            closeBtn: 1,
+                            anim: 4 //动画类型
+                        });
+                    }
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.alert('网络出现错误!', {
                         skin: 'layui-layer-lan',
                         closeBtn: 1,
                         anim: 4 //动画类型
                     });
                 }
-            },
-            error:function (XMLHttpRequest, textStatus, errorThrown) {
-                layer.alert('网络出现错误!', {
-                    skin: 'layui-layer-lan',
-                    closeBtn: 1,
-                    anim: 4 //动画类型
-                });
-            }
-        });
-    }*/
+            });*/
 
-/*
-    $('#save-button').on('click', function(){
-        submitForm();
-    });*/
+        }
 
-    /**
-     * 关闭窗口
-     */
-    var closeForm = function () {
-        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-        parent.layer.close(index);
     }
 
     return {
         init: function () {
-
-
-
+            validateForm();
         }
     };
 }();

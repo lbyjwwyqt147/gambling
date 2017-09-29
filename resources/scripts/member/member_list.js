@@ -77,33 +77,35 @@ var MemberList  = function () {
                     field:'state',
                     checkbox:true
                 },
-                {
+             /*   {
                     field: '',
-                    title: 'Sort No.',
+                    title: '序号',
                     formatter: function (value, row, index) {
                         return index + 1;
-                    }
-                },
+                    },
+                    class:''
+                },*/
                 {
                     field: 'id',
-                    title: 'User ID',
+                    title: 'Member ID',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true
+                    sortable: false,
+                    visible:false
                 }, {
                     field: 'institutionCode',
-                    title: 'Institution Code',
+                    title: '编号',
                     align: 'center',
                     valign: 'middle',
                     sortable: true
                 }, {
                     field: 'institutionName',
-                    title: 'Institution Name',
+                    title: '姓名',
                     align: 'center',
                     valign: 'middle'
                 }, {
                     field: 'loginId',
-                    title: 'Login Name',
+                    title: '余分',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
@@ -117,12 +119,12 @@ var MemberList  = function () {
                     }
                 }, {
                     field: 'realName',
-                    title: 'Real Name',
+                    title: '抽成',
                     align: 'center',
                     valign: 'middle'
                 }, {
                     field: 'createTime',
-                    title: 'Create Time',
+                    title: '下注',
                     align: 'center',
                     valign: 'left'/*,
                     formatter: function (value, row, index) {
@@ -207,8 +209,8 @@ var MemberList  = function () {
         parent.layer.open({
             type: 2 ,
             title: title,
-            area: ['500px' , '500px'],
-            shade: 0,
+            area: ['325px' , '400px'],
+            shade: 0.01,
             shadeClose: false,
             maxmin: false, //开启最大化最小化按钮
             offset: '100px',  //间距上边100px
