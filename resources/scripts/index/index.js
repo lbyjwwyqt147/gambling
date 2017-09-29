@@ -26,7 +26,10 @@ var Index = function () {
                     $("#homeModuleTile").html(menuName);
                     Index.openPageHtml("../pages/member/member_list.html");
                     break;
-
+                case "3":
+                    $("#homeModuleTile").html(menuName);
+                    Index.openPageHtml("../pages/search/search.html");
+                    break;
             }
         });
 
