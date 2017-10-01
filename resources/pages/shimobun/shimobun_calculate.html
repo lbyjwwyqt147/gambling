@@ -26,6 +26,42 @@
     <link rel="shortcut icon" href="favicon.ico" />
     <style type="text/css">
 
+        #member-shimobun-calculate-table-pagination>thead:first-child>tr:first-child>th {
+            background-color: forestgreen;
+        }
+
+        #superm>thead:first-child>tr:first-child>th {
+            background-color:darkred;
+        }
+
+        #QiaoBuddha>thead:first-child>tr:first-child>th {
+            background-color:dodgerblue;
+        }
+
+        .fixed-table-container thead th .both {
+            background-image:none!important;
+        }
+
+
+
+        .fixed-table-container thead th .both {
+            background-image:none!important;
+        }
+
+        .mt-element-step .step-line .mt-step-col {
+            padding: 0px;
+        }
+        .portlet.light.portlet-fit>.portlet-body {
+            padding: 0px;
+        }
+
+        .portlet.light.portlet-fit>.portlet-title {
+            padding: 0px;
+        }
+
+        .portlet {
+            padding-bottom: 0px;
+        }
 
     </style>
 </head>
@@ -44,28 +80,71 @@
                     </div>
                 </div>
                 <div class="portlet-body" style="padding: 0px;">
-                    <div>
+                    <!--<div>
                         <img src="/gambling/assets/pages/img/20171001165659.png">
+
+                    </div>-->
+
+                    <div class="portlet-body">
+                        <div class="mt-element-step">
+                            <div class="row step-line">
+                                <div class="col-md-2 mt-step-col first done">
+                                    <div class="mt-step-number bg-white">
+                                        1
+                                    </div>
+
+                                </div>
+                                <div class="col-md-2 mt-step-col error">
+                                    <div class="mt-step-number bg-white">
+                                        2
+                                    </div>
+
+                                </div>
+                                <div class="col-md-2 mt-step-col done">
+                                    <div class="mt-step-number bg-white">
+                                        3
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mt-step-col active">
+                                    <div class="mt-step-number bg-white">
+                                        4
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mt-step-col done">
+                                    <div class="mt-step-number bg-white">
+                                        5
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mt-step-col last">
+                                    <div class="mt-step-number bg-white">
+                                        6
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
+                </div>
 
 
-                    <div class="bootstrap-table">
-                    <div class="fixed-table-container" style="height: 78px; padding-bottom: 40px;">
+
+                <!--<div class="bootstrap-table">
+                    <div class="fixed-table-container" style="height: 79px; padding-bottom: 40px;">
                         <div class="fixed-table-header" style="margin-right: 0px;">
-                            <table class="table-responsive table table-hover table-striped" data-sortable="false">
+                            <table class="table-responsive table table-hover table-striped" id="superm" data-sortable="false">
                                 <thead>
                                 <tr>
-                                    <th colspan="2"  style="text-align: center; vertical-align: middle; "  data-sortable="true" tabindex="0">
+                                    <th colspan="2"  style="text-align: center; vertical-align: middle; width: 25%"  data-sortable="true" tabindex="0">
                                         <div class="th-inner sortable both">首包时间</div>
                                     </th>
-                                    <th  colspan="2"  style="text-align: center; vertical-align: middle; "  tabindex="0">
-                                        <div class="th-inner sortable both">尾包时间</div>
+                                    <th  colspan="2"  style="text-align: center; vertical-align: middle;width: 25%"  tabindex="0">
+                                        <div class="">尾包时间</div>
                                     </th>
-                                    <th colspan="2" style="text-align: center; vertical-align: middle; " data-field="bottomPour" tabindex="0">
-                                        <div class="th-inner sortable both">下注人数</div>
+                                    <th colspan="2" style="text-align: center; vertical-align: middle; width: 25%" data-field="bottomPour" tabindex="0">
+                                        <div class="">下注人数</div>
                                     </th>
-                                    <th colspan="2" style="text-align: center; vertical-align: middle; " tabindex="0">
-                                        <div class="th-inner sortable both">最佳尾数</div>
+                                    <th colspan="2" style="text-align: center; vertical-align: middle; width: 25%" tabindex="0">
+                                        <div class="">最佳尾数</div>
                                     </th>
                                 </tr>
                                 </thead>
@@ -82,35 +161,35 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
 
                     <div class="bootstrap-table">
-                        <div class="fixed-table-container" style="height: 78px; padding-bottom: 40px;">
+                        <div class="fixed-table-container" style="height: 79px; padding-bottom: 40px;">
                             <div class="fixed-table-header" style="margin-right: 0px;">
-                                <table class="table-responsive table table-hover table-striped" >
+                                <table class="table-responsive table table-hover table-striped" id="QiaoBuddha">
                                     <thead>
                                     <tr>
-                                        <th colspan="2"  style="text-align: center; vertical-align: middle; " tabindex="0">
+                                        <th colspan="2"  style="text-align: center; vertical-align: middle;  " tabindex="0">
                                             <div class="th-inner sortable both">庄家昵称</div>
                                         </th>
-                                        <th   style="text-align: center; vertical-align: middle; "  tabindex="0">
-                                            <div class="th-inner sortable both">投注总数</div>
+                                        <th   style="text-align: center; vertical-align: middle;width: 14% "  tabindex="0">
+                                            <div class="">投注总数</div>
                                         </th>
-                                        <th  style="text-align: center; vertical-align: middle; " data-field="bottomPour" tabindex="0">
-                                            <div class="th-inner sortable both">尾数</div>
+                                        <th  style="text-align: center; vertical-align: middle; width:14% " data-field="bottomPour" tabindex="0">
+                                            <div class="">尾数</div>
                                         </th>
-                                        <th  style="text-align: center; vertical-align: middle; " tabindex="0">
-                                            <div class="th-inner sortable both">点数</div>
+                                        <th  style="text-align: center; vertical-align: middle;width: 14%  " tabindex="0">
+                                            <div class="">点数</div>
                                         </th>
-                                        <th  style="text-align: center; vertical-align: middle; " tabindex="0">
-                                            <div class="th-inner sortable both">庄家盈亏</div>
+                                        <th  style="text-align: center; vertical-align: middle; width: 14% " tabindex="0">
+                                            <div class="">庄家盈亏</div>
                                         </th>
-                                        <th  style="text-align: center; vertical-align: middle; " tabindex="0">
-                                            <div class="th-inner sortable both">上局积分</div>
+                                        <th  style="text-align: center; vertical-align: middle; width: 14% " tabindex="0">
+                                            <div class="">上局积分</div>
                                         </th>
-                                        <th  style="text-align: center; vertical-align: middle; " tabindex="0">
-                                            <div class="th-inner sortable both">剩余积分</div>
+                                        <th  style="text-align: center; vertical-align: middle; width:14% " tabindex="0">
+                                            <div class="">剩余积分</div>
                                         </th>
                                     </tr>
                                     </thead>

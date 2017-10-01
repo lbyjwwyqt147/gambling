@@ -171,6 +171,7 @@ var MemberShimobunCalculateList  = function () {
      * 生成图片
      */
     function generateImage() {
+        console.log("..开始执行生成图片.............");
         html2canvas(document.body).then(function(canvas) {
             $(".page-container").remove();
             document.body.appendChild(canvas);
