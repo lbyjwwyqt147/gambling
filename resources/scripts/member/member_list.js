@@ -1,14 +1,15 @@
 var MemberList  = function () {
     var basicUrl = commonUtil.httpUrl;
-
+    var  gridTable = $('#member-table-pagination');
 
     /**
      * 初始化会员表格数据
      */
     var initTableDatas = function () {
-        $('#member-table-pagination').bootstrapTable('showLoading');
+        gridTable.bootstrapTable('showLoading');
         $.ajax({
-            url: basicUrl+ "/list",
+            //url: basicUrl+ "/list",
+            url:commonUtil.gridJsonUrl,
             type:"GET",
             dataType:"json",
             xhrFields: {
@@ -18,12 +19,13 @@ var MemberList  = function () {
             success :function (data,textStatus) {
                 console.log(data);
                 if(data.status == 0){
-                    initMemberTable(data.data);
-                    $('#member-table-pagination').bootstrapTable('hideLoading');
+                    initMemberTable(data.datas.dataGrid);
+                    gridTable.bootstrapTable('hideLoading');
                 }else{
                     layer.alert(data.msg, {
                         skin: 'layui-layer-lan',
                         closeBtn: 1,
+                        shade: 0.01,
                         anim: 4 //动画类型
                     });
                 }
@@ -32,6 +34,7 @@ var MemberList  = function () {
                 layer.alert("网络错误!", {
                     skin: 'layui-layer-lan',
                     closeBtn: 1,
+                    shade: 0.01,
                     anim: 4 //动画类型
                 });
             }
@@ -47,9 +50,9 @@ var MemberList  = function () {
      */
     var initMemberTable = function(listData){
         //先销毁表格
-        $('#member-table-pagination').bootstrapTable('destroy');
+        gridTable.bootstrapTable('destroy');
         //初始化表格,动态从服务器加载数据
-        $("#member-table-pagination").bootstrapTable({
+        gridTable.bootstrapTable({
             method: 'GET',
             //toolbar: '#toolbar',                        //工具按钮用哪个容器
             dataType: 'json',
@@ -71,7 +74,10 @@ var MemberList  = function () {
             uniqueId: "id",                     //每一行的唯一标识，一般为主键列
             showExport: true,
             exportDataType: 'all',
-            responseHandler: responseHandler,
+            responseHandler:  function (res) {   //在ajax请求成功后，发放数据之前可以对返回的数据进行处理，返回什么部分的数据，比如我的就需要进行整改的！
+                console.log(res);
+                responseHandler(res);
+            },
             columns: [
                 {
                     field:'state',
@@ -93,48 +99,34 @@ var MemberList  = function () {
                     sortable: false,
                     visible:false
                 }, {
-                    field: 'institutionCode',
+                    field: 'memberCode',
                     title: '编号',
                     align: 'center',
                     valign: 'middle',
                     sortable: true
                 }, {
-                    field: 'institutionName',
+                    field: 'memberName',
                     title: '姓名',
                     align: 'center',
                     valign: 'middle'
                 }, {
-                    field: 'loginId',
-                    title: '余分',
+                    field: 'memberBalance',
+                    title: '积分余额',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true,
-                    editable: {
-                        type: 'text',
-                        validate: function (value) {
-                            if ($.trim(value) == '') {
-                                return '单元编号不能为空!';
-                            }
-                        }
-                    }
+                    sortable: true
                 }, {
-                    field: 'realName',
+                    field: 'rake',
                     title: '抽成',
                     align: 'center',
-                    valign: 'middle'
+                    valign: 'middle',
+                    sortable: true
                 }, {
-                    field: 'createTime',
+                    field: 'bottomPour',
                     title: '下注',
                     align: 'center',
-                    valign: 'left'/*,
-                    formatter: function (value, row, index) {
-                        return new Date(value).format('yyyy-MM-dd hh:mm:ss');
-                    }*/
-                }, {
-                    field: 'homeAddress',
-                    title: 'Address',
-                    align: 'center',
-                    valign: 'middle'
+                    valign: 'middle',
+                    sortable: true
                 }]
         });
     }
@@ -147,20 +139,18 @@ var MemberList  = function () {
      */
    var  queryParams = function (params) {
         var param = {
-            /*   orgCode : $("#orgCode").val(),
-               userName : $("#userName").val(),
-               startDate : $("#startDate").val(),
-               endDate : $("#endDate").val(),*/
-            limit : this.limit, // 页面大小
-            offset : this.offset, // 页码
-            pageindex : this.pageNumber,
-            pageSize : this.pageSize
+            memberName : $("#memberName").val(),// 参数
+            limit : this.limit, // 页面显示纪录条数
+            offset : this.offset, // 当前页码
+            pageNumber : this.pageNumber,  // 当前页码
+            pageSize : this.pageSize       // 页面显示纪录条数
         }
         return param;
     }
 
     // 用于server 分页，表格数据量太大的话 不想一次查询所有数据，可以使用server分页查询，数据量小的话可以直接把sidePagination: "server"  改为 sidePagination: "client" ，同时去掉responseHandler: responseHandler就可以了，
     function responseHandler(res) {
+       console.log(res);
         if (res) {
             return {
                 "rows": res.result,
@@ -174,22 +164,43 @@ var MemberList  = function () {
         }
     }
 
-
-
     /**
-     * 获取选中行数据
+     * 获取选中的行
      */
-    function selecteions(){
-        var row= $('#member-table-pagination').bootstrapTable('getSelections');
-        console.log(row);
+    function  getSelectRows() {
+        var row = gridTable.bootstrapTable('getSelections');
         if(row.length == 0){
             layer.alert('请选择会员', {
                 skin: 'layui-layer-lan',
                 closeBtn: 1,
+                shade: 0.01,
                 anim: 4 //动画类型
             });
-        }else{
-            memberId = row[0].memberId;
+        }else {
+            return row[0];
+        }
+    }
+
+    /**
+     * 获取选中行的主键ID
+     */
+    function getRowIds(sign) {
+        var ids = $.map(gridTable.bootstrapTable('getSelections'), function (row) {
+            return row.id;
+        });
+        if(ids.length == 0){
+            layer.alert('请选择会员', {
+                skin: 'layui-layer-lan',
+                closeBtn: 1,
+                shade: 0.01,
+                anim: 4 //动画类型
+            });
+        }else {
+            if (sign === 1){
+                return ids[0];
+            }else {
+                return ids;
+            }
         }
 
     }
@@ -197,7 +208,7 @@ var MemberList  = function () {
     /**
      * 弹出form 表单页
      */
-    function openFormPage(sign) {
+    function openFormPage(sign,params) {
         var  title = "";
         if(sign == 1){
             title = "新增会员信息";
@@ -214,29 +225,92 @@ var MemberList  = function () {
             shadeClose: false,
             maxmin: false, //开启最大化最小化按钮
             offset: '100px',  //间距上边100px
-            content: '../../resources/pages/member/member_form.html'
+            content: '../../resources/pages/member/member_form.html?params='+params
         });
         
     }
 
-    
 
+    /**
+     * 添加事件
+     */
     $('#addBtn').on('click', function(){
-        //selecteions();
-        openFormPage(1);
+        openFormPage(1,"");
+    });
 
+    /**
+     * 编辑事件
+     */
+    $('#pencilBtn').on('click', function(){
+        var row = getSelectRows();
+        if(row != null){
+            var params = JSON.stringify(row);
+            params = params.replace(/\"/g,"'");
+            console.log(params);
+            openFormPage(2,params);
+        }
+    });
 
-       /* if(memberId != ''){
-            layer.open({
-                type: 2,
-                title: '分配角色',
-                maxmin: true,
-                shadeClose: true, //点击遮罩关闭层
-                area : ['80%' , '80%'],
-                content: '../../../pages/authority/role/member_role.html?memberId='+memberId
+    /**
+     * 财务事件
+     */
+    $('#moneyBtn').on('click', function(){
+        var ids = getRowIds();
+        if(ids != null){
+            layer.prompt({title: '输入需要加减的数量，并确认', formType: 1}, function(pass, index){
+                layer.close(index);   //关闭事件
+                layer.close(index);                      //保存事件
             });
-        }*/
+        }
 
+    });
+
+    /**
+     * 删除事件
+     */
+    $('#trashBtn').on('click', function(){
+        var ids = getRowIds();
+        if(ids != null) {
+
+            /* $.ajax({
+                 url: basicUrl+ "/list",
+                 type:"DELETE",
+                 dataType:"json",
+                 xhrFields: {
+                     withCredentials: true
+                 },
+                 crossDomain: true,
+                 success :function (data,textStatus) {
+                     console.log(data);
+                     if(data.status == 0){
+
+                     }else{
+                         layer.alert(data.msg, {
+                             skin: 'layui-layer-lan',
+                             closeBtn: 1,
+                             shade: 0.01,
+                             anim: 4 //动画类型
+                         });
+                     }
+                 },
+                 error:function (XMLHttpRequest, textStatus, errorThrown) {
+                     layer.alert("网络错误!", {
+                         skin: 'layui-layer-lan',
+                         closeBtn: 1,
+                         shade: 0.01,
+                         anim: 4 //动画类型
+                     });
+                 }
+             });*/
+
+            //从表格中移除选中行
+            gridTable.bootstrapTable('remove', {
+                field: 'id',
+                values: ids
+            });
+
+            layer.msg('删除会员信息成功.', {icon: 1});
+        }
     });
 
 

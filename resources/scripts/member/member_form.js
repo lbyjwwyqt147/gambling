@@ -1,6 +1,7 @@
 var MemberForm  = function () {
     var basicUrl = commonUtil.httpUrl;
     var basicForm = $("#memberForm");
+    var  params = commonUtil.getUrlParams("params");
 
     /**
      * 关闭事件
@@ -111,13 +112,21 @@ var MemberForm  = function () {
                 }
             });*/
 
+
+            layer.msg('保存会员信息成功.', {icon: 1});
+
+            commonUtil.closeForm();
+
         }
 
     }
 
+
+
     return {
         init: function () {
             validateForm();
+            commonUtil.setFormValues(params,"",basicForm)
         }
     };
 }();

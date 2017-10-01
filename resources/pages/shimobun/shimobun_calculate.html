@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en" class="ie8 no-js">
+<html lang="en" class="ie9 no-js">
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>下注计算</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="Preview page of Metronic Admin Theme #1 for bootstrap inputs, input groups, custom checkboxes and radio controls and more" name="description" />
+    <meta content="" name="author" />
+    <link href="../../../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="../../../assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="../../../assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/pages/css/customers.css" rel="stylesheet" type="text/css" />
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <style type="text/css">
+
+
+    </style>
+</head>
+
+<body style="overflow-x:hidden;background-color: #fff">
+<div class="page-container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="portlet green-sharp box">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <!--<i class="fa fa-indent"></i>-->第<span id="inning">8</span>局
+                    </div>
+                    <div class="caption text-right" style="float: right">
+                        账单日期：<span id="billingDate">2017-10-01 15:55:56</span>
+                    </div>
+                </div>
+                <div class="portlet-body" style="padding: 0px;">
+                    <div>
+                        <img src="/gambling/assets/pages/img/20171001165659.png">
+                    </div>
+
+
+                    <div class="bootstrap-table">
+                    <div class="fixed-table-container" style="height: 78px; padding-bottom: 40px;">
+                        <div class="fixed-table-header" style="margin-right: 0px;">
+                            <table class="table-responsive table table-hover table-striped" data-sortable="false">
+                                <thead>
+                                <tr>
+                                    <th colspan="2"  style="text-align: center; vertical-align: middle; "  data-sortable="true" tabindex="0">
+                                        <div class="th-inner sortable both">首包时间</div>
+                                    </th>
+                                    <th  colspan="2"  style="text-align: center; vertical-align: middle; "  tabindex="0">
+                                        <div class="th-inner sortable both">尾包时间</div>
+                                    </th>
+                                    <th colspan="2" style="text-align: center; vertical-align: middle; " data-field="bottomPour" tabindex="0">
+                                        <div class="th-inner sortable both">下注人数</div>
+                                    </th>
+                                    <th colspan="2" style="text-align: center; vertical-align: middle; " tabindex="0">
+                                        <div class="th-inner sortable both">最佳尾数</div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-index="0" data-uniqueid="0" style="border-bottom-style: none">
+                                    <td colspan="2"  style="text-align: center; vertical-align: middle; border-bottom-style: hidden" >-29419</td>
+                                    <td colspan="2"  style="text-align: center; vertical-align: middle;  border-bottom-style: hidden">memberName0</td>
+
+                                    <td colspan="2"  style="text-align: center; vertical-align: middle;  border-bottom-style: hidden">-1699</td>
+                                    <td colspan="2"  style="text-align: center; vertical-align: middle;  border-bottom-style: hidden">-199</td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                    <div class="bootstrap-table">
+                        <div class="fixed-table-container" style="height: 78px; padding-bottom: 40px;">
+                            <div class="fixed-table-header" style="margin-right: 0px;">
+                                <table class="table-responsive table table-hover table-striped" >
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2"  style="text-align: center; vertical-align: middle; " tabindex="0">
+                                            <div class="th-inner sortable both">庄家昵称</div>
+                                        </th>
+                                        <th   style="text-align: center; vertical-align: middle; "  tabindex="0">
+                                            <div class="th-inner sortable both">投注总数</div>
+                                        </th>
+                                        <th  style="text-align: center; vertical-align: middle; " data-field="bottomPour" tabindex="0">
+                                            <div class="th-inner sortable both">尾数</div>
+                                        </th>
+                                        <th  style="text-align: center; vertical-align: middle; " tabindex="0">
+                                            <div class="th-inner sortable both">点数</div>
+                                        </th>
+                                        <th  style="text-align: center; vertical-align: middle; " tabindex="0">
+                                            <div class="th-inner sortable both">庄家盈亏</div>
+                                        </th>
+                                        <th  style="text-align: center; vertical-align: middle; " tabindex="0">
+                                            <div class="th-inner sortable both">上局积分</div>
+                                        </th>
+                                        <th  style="text-align: center; vertical-align: middle; " tabindex="0">
+                                            <div class="th-inner sortable both">剩余积分</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr data-index="0" data-uniqueid="0" style="border-bottom-style: none">
+                                        <td colspan="2"  style="text-align: center; vertical-align: middle; border-bottom-style: hidden">-219</td>
+                                        <td  style="text-align: center; vertical-align: middle; border-bottom-style: hidden">memberName0</td>
+                                        <td  style="text-align: center; vertical-align: middle; border-bottom-style: hidden">-199</td>
+                                        <td style="text-align: center; vertical-align: middle; border-bottom-style: hidden">-169</td>
+                                        <td style="text-align: center; vertical-align: middle;border-bottom-style: hidden ">-1409</td>
+                                        <td style="text-align: center; vertical-align: middle;border-bottom-style: hidden ">-109</td>
+                                        <td style="text-align: center; vertical-align: middle; border-bottom-style: hidden">-199</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="clearfix"></div>
+
+                    <table id="member-shimobun-calculate-table-pagination" class="table-responsive"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="../../../assets/global/plugins/respond.min.js"></script>
+<script src="../../../assets/global/plugins/excanvas.min.js"></script>
+<script src="../../../assets/global/plugins/ie8.fix.min.js"></script>
+
+<script src="../../../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/jquery.cookie.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/scripts/app.min.js" type="text/javascript"></script>
+
+<script src="../../../assets/global/plugins/bootstrap-table/bootstrap-table.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/bootstrap-table/extensions/editable/bootstrap-table-editable.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/html2canvas/html2canvas.js" type="text/javascript"></script>
+
+
+
+<script src="../../../assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+<script src="../../../assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+<script src="../../../assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+<script src="../../../assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/layer/layer.js" type="text/javascript"></script>
+<script src="../../../resources/scripts/common.js" type="text/javascript"></script>
+<script src="../../../resources/scripts/shimobun/shimobun_calculate.js" type="text/javascript"></script>
+
+<script >
+
+
+</script>
+
+</body>
+

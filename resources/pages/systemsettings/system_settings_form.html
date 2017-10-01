@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en" class="ie8 no-js">
+<html lang="en" class="ie9 no-js">
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>系统设置</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="Preview page of Metronic Admin Theme #1 for bootstrap inputs, input groups, custom checkboxes and radio controls and more" name="description" />
+    <meta content="" name="author" />
+    <link href="../../../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="../../../assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="../../../assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <style type="text/css">
+        .control-label{
+            margin-right: -10px;
+        }
+    </style>
+</head>
+
+<body style="overflow-x:hidden;background-color: #fff">
+<div class="page-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-gear"></i>系统设置
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <form class="form-horizontal" role="form" id="rakeForm">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label for="rakeRatio" class="col-md-5 control-label">抽成比例</label>
+                                <div class="col-md-3">
+                                    <div class="input-icon">
+                                        <i class="fa fa-sliders"></i>
+                                         <input type="number" class="form-control"  id="rakeRatio" name="rakeRatio" placeholder="抽成比例">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="directCommission" class="col-md-5 control-label">直接推荐提成</label>
+                                <div class="col-md-3">
+                                    <div class="input-icon">
+                                        <i class="fa fa-angle-double-up"></i>
+                                        <input type="number" class="form-control"  id="directCommission" name="directCommission" placeholder="直接推荐提成">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="indirectRecommendation" class="col-md-5 control-label">间接推荐提成</label>
+                                <div class="col-md-3">
+                                    <div class="input-icon">
+                                        <i class="fa fa-angle-double-up"></i>
+                                        <input type="number" class="form-control"  id="indirectRecommendation" name="indirectRecommendation" placeholder="间接推荐提成">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="commissionSeries" class="col-md-5 control-label">提成级数</label>
+                                <div class="col-md-3">
+                                    <div class="input-icon">
+                                        <i class="fa fa-angle-double-up"></i>
+                                        <input type="number" class="form-control"  id="commissionSeries" name="commissionSeries" placeholder="提成级数">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions right1 text-center">
+                            <button type="button" class="btn green" id="save-button">保存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="../../../assets/global/plugins/respond.min.js"></script>
+<script src="../../../assets/global/plugins/excanvas.min.js"></script>
+<script src="../../../assets/global/plugins/ie8.fix.min.js"></script>
+
+<script src="../../../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/jquery.cookie.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/scripts/app.min.js" type="text/javascript"></script>
+
+<script src="../../../assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+<script src="../../../assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+<script src="../../../assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+<script src="../../../assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/layer/layer.js" type="text/javascript"></script>
+<script src="../../../resources/scripts/common.js" type="text/javascript"></script>
+<script src="../../../resources/scripts/systemsettings/system_settings_form.js" type="text/javascript"></script>
+
+
+
+</body>
+

@@ -28,7 +28,15 @@ var Index = function () {
                     break;
                 case "3":
                     $("#homeModuleTile").html(menuName);
-                    Index.openPageHtml("../pages/search/search.html");
+                    Index.openPageHtml("../pages/shimobun/shimobun_list.html");
+                    break;
+                case "4":
+                    $("#homeModuleTile").html(menuName);
+                    Index.openPageHtml("../pages/logs/logs_list.html");
+                    break;
+                case "5":
+                    $("#homeModuleTile").html(menuName);
+                    Index.openPageHtml("../pages/systemsettings/system_settings_form.html");
                     break;
             }
         });

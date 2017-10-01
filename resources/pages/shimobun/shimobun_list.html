@@ -23,6 +23,8 @@
     <link href="../../../assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
     <link href="../../../assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
     <link href="../../../assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/pages/css/customers.css" rel="stylesheet" type="text/css" />
+
     <link rel="shortcut icon" href="favicon.ico" />
 
 </head>
@@ -31,44 +33,16 @@
 <body style="overflow-x:hidden;background-color: #fff">
 <div class="page-content">
     <div class="row">
-        <div class="col-md-12">
-            <div class="portlet box green">
+        <div class="col-md-6">
+            <div class="portlet green-sharp box">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-users"></i>会员下注
-                    </div>
+                        <i class="fa fa-bitcoin"></i>下注</div>
                 </div>
                 <div class="portlet-body">
-                    <div id="toolbar" class="col-md-9" style="padding-left: 0px;">
-                        <b>第20170930期:</b>
-                        <input type="number" class="form-control" placeholder="尾数" style="width: 70px;display: inline-block" >
-                        <!-- <div class="mt-element-step">
-                             <div class="step-no-background-thin">
-                                 <div class="col-md-4 mt-step-col done">
-                                     <div class="mt-step-number font-grey" style="">3</div>
-                                 </div>
-                             </div>
-                         </div>-->
-                        <a href="javascript:;" class="btn btn-sm blue" id="addBtn">
-                            <i class="fa fa-calculator"></i> 计算
-                        </a>
-                        <!--   <a href="javascript:;" class="btn btn-sm green">
-                              <i class="fa fa-pencil"></i> 编辑
-                          </a>-->
-                        <!--  <a href="javascript:;" class="btn btn-sm yellow">
-                              <i class="fa fa-star-half-o"></i> 分成
-                          </a>
-                          <a href="javascript:;" class="btn btn-sm purple">
-                              <i class="fa fa-star"></i> 必分成
-                          </a>
-                          <a href="javascript:;" class="btn btn-sm grey-cascade">
-                              <i class="fa fa-star-o"></i> 不分成
-                          </a>-->
-                        <!--<a href="javascript:;" class="btn btn-sm red">
-                            <i class="fa fa-trash-o"></i> 删除
-                        </a>-->
+                    <div id="toolbar" class="col-md-8" style="padding-left: 0px;">
                     </div>
-                    <div class="col-md-3 text-right" style="padding-right: 0px;">
+                    <div class="col-md-4 text-right" style="padding-right: 0px;">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="请输入：编号\姓名\拼音 搜索">
                             <span class="input-group-btn">
@@ -84,14 +58,38 @@
 
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-7">
-                            <table id="member-shimobun-table1-pagination" class="table-responsive"></table>
-                        </div>
-                        <div class="col-md-5">
-                            <table id="member-shimobun-table2-pagination" class="table-responsive"></table>
+                    <table id="member-shimobun-table1-pagination" class="table-responsive"></table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="portlet red-mint box">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-empire"></i>尾数
+                    </div>
+                </div>
+                <div class="portlet-body" id="blockui_sample_4_portlet_body">
+                    <div  class="col-md-10 text-right" style="padding-left: 0px;">
+                        <label class="col-md-12 control-label" style="    padding-right: 0px;padding-top: 6px;font: caption;font-weight: bold;">第<span id="periods">20171001</span>期 最佳:</label>
+                    </div>
+
+                    <div  class="col-md-2" style="padding-left: 0px;padding-right: 0px">
+                        <div class="input-group">
+                            <input type="number" id="bestMantissa" class="form-control" placeholder="尾数">
+                            <span class="input-group-btn" id="calculatorbtn">
+                                     <button class="btn green" type="button">
+                                         <i class="fa fa-calculator" /></i> 计算
+                                     </button>
+                                 </span>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
+
+                    <div style="margin-bottom: 10px;">
+
+                    </div>
+                    <table id="member-shimobun-table2-pagination" class="table-responsive"></table>
                 </div>
             </div>
         </div>

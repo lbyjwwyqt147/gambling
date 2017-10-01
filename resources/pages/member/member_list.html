@@ -22,6 +22,8 @@
     <link href="../../../assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
     <link href="../../../assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
     <link href="../../../assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/pages/css/customers.css" rel="stylesheet" type="text/css" />
+
     <link rel="shortcut icon" href="favicon.ico" />
 
 </head>
@@ -42,8 +44,11 @@
                              <a href="javascript:;" class="btn btn-sm blue" id="addBtn">
                                  <i class="fa fa-plus"></i> 添加
                              </a>
-                             <a href="javascript:;" class="btn btn-sm green">
+                             <a href="javascript:;" class="btn btn-sm green" id="pencilBtn">
                                  <i class="fa fa-pencil"></i> 编辑
+                             </a>
+                             <a href="javascript:;" class="btn btn-sm purple" id="moneyBtn">
+                                 <i class="fa fa-money"></i> 财务
                              </a>
                            <!--  <a href="javascript:;" class="btn btn-sm yellow">
                                  <i class="fa fa-star-half-o"></i> 分成
@@ -54,13 +59,13 @@
                              <a href="javascript:;" class="btn btn-sm grey-cascade">
                                  <i class="fa fa-star-o"></i> 不分成
                              </a>-->
-                             <a href="javascript:;" class="btn btn-sm red">
+                             <a href="javascript:;" class="btn btn-sm red" id="trashBtn">
                                  <i class="fa fa-trash-o"></i> 删除
                              </a>
                          </div>
                          <div class="col-md-3 text-right" style="padding-right: 0px;">
                              <div class="input-group">
-                                 <input type="text" class="form-control" placeholder="Search for...">
+                                 <input type="text"  id="memberName" class="form-control" placeholder="请输入：编号\姓名\拼音 搜索">
                                  <span class="input-group-btn">
                                      <button class="btn green" type="button">
                                          <i class="fa fa-search" /></i> Go!

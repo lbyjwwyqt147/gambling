@@ -10,6 +10,7 @@ var commonUtil = {
     token:"",
     sessionId:"",
     httpUrl:"http://localhost:8762/",
+    gridJsonUrl:"../../../resources/scripts/data/grid_data.json",
 
     setSeesionId : function (sessionId) {
         this.sessionId = sessionId;
@@ -70,6 +71,42 @@ var commonUtil = {
         parent.layer.close(index);
     },
 
+    /**
+     * 给form表单赋值
+     * @param params
+     */
+    setFormValues: function (params,json,form) {
+        var jsonValue = json;
+        if (params != null && params.trim() != ""){
+            params = params.replace(/'/g, '"');
+            var jsonValue = JSON.parse(params);
+        }
+        var obj=form;
+        $.each(jsonValue, function (name, ival) {
+            console.log(name);
+            console.log(ival);
+            console.log(obj);
+            var $oinput = obj.find("input:[name=" + name + "]");
+            if ($oinput.attr("type")== "radio" || $oinput.attr("type")== "checkbox"){
+                $oinput.each(function(){
+                    if(Object.prototype.toString.apply(ival) == '[object Array]'){//是复选框，并且是数组
+                        for(var i=0;i<ival.length;i++){
+                            if($(this).val()==ival[i])
+                                $(this).attr("checked", "checked");
+                        }
+                    }else{
+                        if($(this).val()==ival)
+                            $(this).attr("checked", "checked");
+                    }
+                });
+            }else if($oinput.attr("type")== "textarea"){//多行文本框
+                obj.find("[name="+name+"]").html(ival);
+            }else{
+                obj.find("[name="+name+"]").val(ival);
+            }
+        });
+
+    },
 
     /**
      * 日期时间处理工具
