@@ -42,15 +42,26 @@
                     <form class="form-horizontal" role="form" id="rakeForm">
                         <div class="form-body">
                             <div class="form-group">
-                                <label for="rakeRatio" class="col-md-5 control-label">抽成比例</label>
+                                <label for="password" class="col-md-5 control-label">系统密码</label>
                                 <div class="col-md-3">
                                     <div class="input-icon">
                                         <i class="fa fa-sliders"></i>
-                                         <input type="number" class="form-control"  id="rakeRatio" name="rakeRatio" placeholder="抽成比例">
+                                        <input type="number" class="form-control"  id="password" name="password" placeholder="系统密码">
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
+                                <label for="cut" class="col-md-5 control-label">抽成比例</label>
+                                <div class="col-md-3">
+                                    <div class="input-icon">
+                                        <i class="fa fa-sliders"></i>
+                                         <input type="number" class="form-control"  id="cut" name="cut" placeholder="抽成比例">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--<div class="form-group">
                                 <label for="directCommission" class="col-md-5 control-label">直接推荐提成</label>
                                 <div class="col-md-3">
                                     <div class="input-icon">
@@ -67,13 +78,15 @@
                                         <input type="number" class="form-control"  id="indirectRecommendation" name="indirectRecommendation" placeholder="间接推荐提成">
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label for="commissionSeries" class="col-md-5 control-label">提成级数</label>
                                 <div class="col-md-3">
                                     <div class="input-icon">
                                         <i class="fa fa-angle-double-up"></i>
                                         <input type="number" class="form-control"  id="commissionSeries" name="commissionSeries" placeholder="提成级数">
+                                        <input type="hidden" id="id" name="id">
+                                        <input type="hidden" id="type" name="type" value="1">
                                     </div>
                                 </div>
                             </div>

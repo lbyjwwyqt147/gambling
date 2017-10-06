@@ -72,6 +72,24 @@ var commonUtil = {
     },
 
     /**
+     * 获取弹出框索引
+     */
+    layerIframeIndex:function(){
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        return index;
+    },
+
+    /**
+     * 设置form页面高度
+     */
+    setIframeHeight:function(index,height){
+
+       $("#layui-layer-iframe"+index).css("height",height);
+    },
+
+
+
+/**
      * 给form表单赋值
      * @param params
      */

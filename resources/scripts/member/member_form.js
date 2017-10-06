@@ -26,21 +26,17 @@ var MemberForm  = function () {
             errorClass: 'help-block',
             focusInvalid: false,
             rules: {
-                memberCode: {
-                    required: true
-                },
+
                 memberName: {
                     required: true
                 },
-                memberBalance: {
+                source: {
                     required: true
                 }
             },
 
             messages: {
-                memberCode: {
-                    required: "请填写会员编号."
-                },
+
                 memberName: {
                     required: "请填写会员名称."
                 },
@@ -54,6 +50,7 @@ var MemberForm  = function () {
             },
 
             highlight: function (element) { // hightlight error inputs
+
                 $(element)
                     .closest('.form-group').addClass('has-error'); // set error class to the control group
             },
@@ -76,13 +73,22 @@ var MemberForm  = function () {
      */
     var submitForm = function(){
         commonUtil.inputTrim();
-        console.log("sdd");
-        if (basicForm.validate().form()) {
+        var  layerIframeIndex = commonUtil.layerIframeIndex();
 
-           /* $.ajax({
-                url: basicUrl+ "/roles",
+        commonUtil.setIframeHeight(layerIframeIndex,"350px");
+
+
+        parent.layer.iframeAuto(layerIframeIndex);
+        if (basicForm.validate().form()) {
+            var typeMOde = "POST";
+            var id = $("#id").val();
+            if(id != null && id != ""){
+                typeMOde = "PUT";
+            }
+           $.ajax({
+                url: basicUrl+ "/userController/addOrUpUser",
                 data:$("#addRoleForm").serialize(),
-                type:"POST",
+                type:typeMOde,
                 dataType:"json",
                 xhrFields: {
                     withCredentials: true
@@ -95,10 +101,16 @@ var MemberForm  = function () {
                     console.log(data);
                     if(data.status == 0){
 
+
+                        layer.msg('保存会员信息成功.', {icon: 1});
+
+                        commonUtil.closeForm();
+
                     }else{
-                        layer.alert(data.msg, {
+                        layer.alert(data.message, {
                             skin: 'layui-layer-lan',
                             closeBtn: 1,
+                            shade: 0.01,
                             anim: 4 //动画类型
                         });
                     }
@@ -107,15 +119,12 @@ var MemberForm  = function () {
                     layer.alert('网络出现错误!', {
                         skin: 'layui-layer-lan',
                         closeBtn: 1,
+                        shade: 0.01,
                         anim: 4 //动画类型
                     });
                 }
-            });*/
+            });
 
-
-            layer.msg('保存会员信息成功.', {icon: 1});
-
-            commonUtil.closeForm();
 
         }
 

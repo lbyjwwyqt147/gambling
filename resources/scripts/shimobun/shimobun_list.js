@@ -152,6 +152,7 @@ var MemberShimobunList  = function () {
                     }
                 }],
             onEditableSave: function (field, row, oldValue, $el) {
+                row.mantissa=1;
                 //将下注后的用户移植到右边表格中显示
                 table2.bootstrapTable('insertRow', {
                     index: 1,
@@ -253,7 +254,7 @@ var MemberShimobunList  = function () {
                     valign: 'middle',
                     sortable: true,
                 }, {
-                    field: 'mantissa',
+                    field: '  ',
                     title: '尾数',
                     align: 'center',
                     valign: 'middle',
@@ -261,12 +262,24 @@ var MemberShimobunList  = function () {
                     editable: {
                         type: 'number',
                         //mode: "inline",
-
+                        emptytext: "hhh  ",
                         validate: function (value) {
                             if ($.trim(value) == '') {
                                 return '请输入尾数值!';
                             }
+                        },
+                        noeditFormatter:function(value,row,index){
+                            console.log(value);
+                            // var rowId = row.id;
+                            // var d = '<a href="javascript:;" onclick="MemberShimobunList.removeTable2Row('+rowId+')" class="btn btn-circle btn-sm red delete"><i class="fa fa-trash-o"></i> 删除 </a> ';
+                            // return d;
                         }
+                    },
+                    formatter:function(value,row,index){
+                        console.log(value);
+                        // var rowId = row.id;
+                        // var d = '<a href="javascript:;" onclick="MemberShimobunList.removeTable2Row('+rowId+')" class="btn btn-circle btn-sm red delete"><i class="fa fa-trash-o"></i> 删除 </a> ';
+                        // return d;
                     }
                 }, {
                     field: 'bottomPour',

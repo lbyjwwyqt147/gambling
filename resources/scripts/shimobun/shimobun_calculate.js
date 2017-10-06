@@ -3,13 +3,50 @@ var MemberShimobunCalculateList  = function () {
     var gridTable = $('#member-shimobun-calculate-table-pagination');
 
     /**
+     * 获取幸运数字
+     */
+    var getLuckyData = function () {
+        $.ajax({
+            url: basicUrl+ "/collectPointController/lastSomeNumber",
+            //url: commonUtil.gridJsonUrl,
+            type:"GET",
+            dataType:"json",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success :function (data,textStatus) {
+                console.log(data);
+                if(data.status == 0){
+
+                }else{
+                    layer.alert(data.msg, {
+                        skin: 'layui-layer-lan',
+                        closeBtn: 1,
+                        shade: 0.01,
+                        anim: 4 //动画类型
+                    });
+                }
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.alert("网络错误!", {
+                    skin: 'layui-layer-lan',
+                    closeBtn: 1,
+                    shade: 0.01,
+                    anim: 4 //动画类型
+                });
+            }
+        });
+    }
+
+    /**
      * 初始化表格数据
      */
     var initTableDatas = function () {
         gridTable.bootstrapTable('showLoading');
         $.ajax({
-            // url: basicUrl+ "/list",
-            url: commonUtil.gridJsonUrl,
+            url: basicUrl+ "/collectPointController/openResult",
+            //url: commonUtil.gridJsonUrl,
             type:"GET",
             dataType:"json",
             xhrFields: {
@@ -86,14 +123,7 @@ var MemberShimobunCalculateList  = function () {
                        class:''
                    },*/
                 {
-                    field: 'id',
-                    title: 'Member ID',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: false,
-                    visible:false
-                }, {
-                    field: 'memberCode',
+                    field: 'userId',
                     title: '编号',
                     align: 'center',
                     valign: 'middle',
@@ -134,14 +164,14 @@ var MemberShimobunCalculateList  = function () {
                     sortable: true
                 },
                 {
-                    field: 'lastIntegral',
+                    field: 'lastSource',
                     title: '上局积分',
                     align: 'center',
                     valign: 'middle',
                     sortable: true
                 },
                 {
-                    field: 'memberBalance',
+                    field: 'source',
                     title: '剩余积分',
                     align: 'center',
                     valign: 'middle',

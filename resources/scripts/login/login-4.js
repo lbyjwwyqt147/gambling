@@ -53,8 +53,8 @@ var Login = function () {
 		    //开始登录
 		    function startLogin() {
 				commonUtil.inputTrim();
-                /*if ($('.login-form').validate().form()) {
-                    $.ajax({
+                if ($('.login-form').validate().form()) {
+                    /*$.ajax({
                         url: commonUtil.httpUrl + "/users/logins",
                         data: $(".login-form").serialize(),
                         type: "POST",
@@ -92,11 +92,13 @@ var Login = function () {
                                 anim: 4 //动画类型
                             });
                         }
-                    });
-                }*/
+                    });*/
+
+                    window.location.href = "resources/pages/home.html";
+
+                }
 
 
-                window.location.href = "resources/pages/home.html";
             }
 
 	        $('.login-form input').keypress(function (e) {

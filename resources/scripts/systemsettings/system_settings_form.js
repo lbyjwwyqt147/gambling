@@ -25,10 +25,13 @@ var SystemSettingsForm  = function () {
             errorClass: 'help-block',
             focusInvalid: false,
             rules: {
-                rakeRatio: {
+                cut: {
                     required: true
                 },
-                directCommission: {
+                password:{
+                    required:true
+                }
+               /* directCommission: {
                     required: true
                 },
                 indirectRecommendation: {
@@ -36,14 +39,17 @@ var SystemSettingsForm  = function () {
                 },
                 commissionSeries: {
                     required: true
-                }
+                }*/
             },
 
             messages: {
-                rakeRatio: {
+                cut: {
                     required: "请填写抽成比例."
                 },
-                directCommission: {
+                password:{
+                    required:"请填写系统密码."
+                }
+                /*directCommission: {
                     required: "请填写直接推荐提成."
                 },
                 indirectRecommendation: {
@@ -51,7 +57,7 @@ var SystemSettingsForm  = function () {
                 },
                 commissionSeries:{
                     required: "请填写提成级数."
-                }
+                }*/
             },
 
             invalidHandler: function (event, validator) { //display error alert on form submit
@@ -83,24 +89,21 @@ var SystemSettingsForm  = function () {
         commonUtil.inputTrim();
         if (basicForm.validate().form()) {
 
-            /* $.ajax({
-                 url: basicUrl+ "/roles",
-                 data:$("#addRoleForm").serialize(),
+             $.ajax({
+                 url: basicUrl+ "/systemController/saveList",
+                 data:$("#rakeForm").serialize(),
                  type:"POST",
                  dataType:"json",
                  xhrFields: {
                      withCredentials: true
                  },
                  crossDomain: true,
-                 beforeSend: function(request) {
-                     request.setRequestHeader("Authorization", token);
-                 },
                  success :function (data,textStatus) {
                      console.log(data);
                      if(data.status == 0){
-
+                         layer.msg('保存系统设置信息成功.', {icon: 1});
                      }else{
-                         layer.alert(data.msg, {
+                         layer.alert(data.message, {
                              skin: 'layui-layer-lan',
                              closeBtn: 1,
                              shade: 0.01,
@@ -116,12 +119,50 @@ var SystemSettingsForm  = function () {
                          anim: 4 //动画类型
                      });
                  }
-             });*/
+             });
 
-            layer.msg('保存系统设置信息成功.', {icon: 1});
 
         }
 
+    }
+
+    /**
+     * 设置form数据
+     */
+    var setFormValue = function () {
+        $.ajax({
+            url: basicUrl+ "/systemController/getValue",
+            data:$("#rakeForm").serialize(),
+            type:"POST",
+            dataType:"json",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success :function (data,textStatus) {
+                console.log(data);
+                commonUtil.setFormValues("",data.datas,"#rakeForm")
+
+                if(data.status == 0){
+
+                }else{
+                    layer.alert(data.message, {
+                        skin: 'layui-layer-lan',
+                        closeBtn: 1,
+                        shade: 0.01,
+                        anim: 4 //动画类型
+                    });
+                }
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.alert('网络出现错误!', {
+                    skin: 'layui-layer-lan',
+                    closeBtn: 1,
+                    shade: 0.01,
+                    anim: 4 //动画类型
+                });
+            }
+        });
     }
 
     return {

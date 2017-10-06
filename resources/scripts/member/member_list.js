@@ -8,7 +8,7 @@ var MemberList  = function () {
     var initTableDatas = function () {
         gridTable.bootstrapTable('showLoading');
         $.ajax({
-            //url: basicUrl+ "/list",
+            //url: basicUrl+ "/userController/userList",
             url:commonUtil.gridJsonUrl,
             type:"GET",
             dataType:"json",
@@ -22,7 +22,7 @@ var MemberList  = function () {
                     initMemberTable(data.datas.dataGrid);
                     gridTable.bootstrapTable('hideLoading');
                 }else{
-                    layer.alert(data.msg, {
+                    layer.alert(data.message, {
                         skin: 'layui-layer-lan',
                         closeBtn: 1,
                         shade: 0.01,
@@ -139,7 +139,7 @@ var MemberList  = function () {
      */
    var  queryParams = function (params) {
         var param = {
-            memberName : $("#memberName").val(),// 参数
+            searchCondition : $("#memberName").val(),// 参数
             limit : this.limit, // 页面显示纪录条数
             offset : this.offset, // 当前页码
             pageNumber : this.pageNumber,  // 当前页码
@@ -220,7 +220,7 @@ var MemberList  = function () {
         parent.layer.open({
             type: 2 ,
             title: title,
-            area: ['325px' , '392px'],
+            area: ['325px' , '305px'],
             shade: 0.01,
             shadeClose: false,
             maxmin: false, //开启最大化最小化按钮
@@ -229,6 +229,7 @@ var MemberList  = function () {
         });
         
     }
+
 
 
     /**
@@ -272,20 +273,28 @@ var MemberList  = function () {
         var ids = getRowIds();
         if(ids != null) {
 
-            /* $.ajax({
-                 url: basicUrl+ "/list",
+            $.ajax({
+                 url: basicUrl+ "/userController/deleteUserList",
                  type:"DELETE",
                  dataType:"json",
+                 data:{
+                     userIdString:ids.join()
+                 },
                  xhrFields: {
                      withCredentials: true
                  },
                  crossDomain: true,
                  success :function (data,textStatus) {
-                     console.log(data);
                      if(data.status == 0){
+                         //从表格中移除选中行
+                         gridTable.bootstrapTable('remove', {
+                             field: 'id',
+                             values: ids
+                         });
 
+                         layer.msg('删除会员信息成功.', {icon: 1});
                      }else{
-                         layer.alert(data.msg, {
+                         layer.alert(data.message, {
                              skin: 'layui-layer-lan',
                              closeBtn: 1,
                              shade: 0.01,
@@ -301,15 +310,9 @@ var MemberList  = function () {
                          anim: 4 //动画类型
                      });
                  }
-             });*/
+             });
 
-            //从表格中移除选中行
-            gridTable.bootstrapTable('remove', {
-                field: 'id',
-                values: ids
-            });
 
-            layer.msg('删除会员信息成功.', {icon: 1});
         }
     });
 
