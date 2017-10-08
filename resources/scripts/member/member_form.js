@@ -97,9 +97,11 @@ var MemberForm  = function () {
                                  }
                             });
                         //刷新父页面表格数据
-                        console.log(parent);
+                       // console.log($(parent.document.getElementById("mainIframe").contentWindow.document) )
+                       // console.log(parent.);
                         console.log(parent.parent);
-                        parent.queryData(2);
+                        ;
+                        //window.parent.queryData(2);
                     }else{
                         layer.msg(jsonObj.message, {icon: 5});
                        /* layer.alert(jsonObj.message, {
