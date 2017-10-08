@@ -40,7 +40,7 @@
                          </div>
                      </div>
                      <div class="portlet-body">
-                         <div id="toolbar" class="col-md-8" style="padding-left: 0px;">
+                         <div id="toolbar" class="col-md-9" style="padding-left: 0px;">
                              <a href="javascript:;" class="btn btn-sm blue" id="addBtn">
                                  <i class="fa fa-plus"></i> 添加
                              </a>
@@ -63,9 +63,9 @@
                                  <i class="fa fa-trash-o"></i> 删除
                              </a>
                          </div>
-                         <div class="col-md-4 text-right" style="padding-right: 0px;">
+                         <div class="col-md-3 text-right" style="padding-right: 0px;">
                              <div class="input-group">
-                                 <input type="text"  id="memberName" class="form-control" placeholder="请输入：编号\姓名\拼音 搜索">
+                                 <input type="text"  id="memberName" class="form-control" placeholder="请输入：编号\姓名 搜索">
                                  <span class="input-group-btn">
                                      <button class="btn green" type="button" id="query-btn">
                                          <i class="fa fa-search" /></i> Go!
@@ -127,13 +127,61 @@
 <script src="../../../resources/scripts/member/member_list.js" type="text/javascript"></script>
 
 <script>
+    var  userGridTable = $('#member-table-pagination');
+    var basicqueryUrl = commonUtil.httpUrl;
+    /**
+     * 查询事件
+     */
+    $("#query-btn").click(function(){
+        queryData(1);
+    });
 
     /**
-     * 设置form页面高度
+     * 查询数据
      */
-    function setIframeHeight(index){
-
-        $("#layui-layer-iframe"+index).src("height","350px");
+    function queryData(index){
+        var searchConditionValue = $("#memberName").val();
+        if(index == 2){
+            searchConditionValue = "";
+        }
+        userGridTable.bootstrapTable('showLoading');
+        $.ajax({
+            url: basicqueryUrl+ "/userController/userList",
+            data:{
+                searchCondition : searchConditionValue
+            },
+            type:"POST",
+            dataType:"json",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            success :function (data,textStatus) {
+                var jsonObj = commonUtil.stringToJson(data);
+                if(jsonObj.status == 0){
+                    userGridTable.bootstrapTable('load', jsonObj.datas.dataGrid);
+                    userGridTable.bootstrapTable('hideLoading');
+                }else{
+                    /* layer.alert(data.message, {
+                         skin: 'layui-layer-lan',
+                         closeBtn: 1,
+                         shade: 0.01,
+                         anim: 4 //动画类型
+                     });*/
+                    layer.msg(jsonObj.message, {icon: 5});
+                }
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                /* layer.alert("网络错误!", {
+                     skin: 'layui-layer-lan',
+                     closeBtn: 1,
+                     shade: 0.01,
+                     anim: 4 //动画类型
+                 });*/
+                layer.msg("网络错误!", {icon: 5});
+            }
+        });
     }
 </script>
 

@@ -3,7 +3,6 @@ var MemberShimobunCalculateList  = function () {
     var gridTable = $('#member-shimobun-calculate-table-pagination');
     var jsonParams = commonUtil.getUrlParams("params");
     var luckNumber = commonUtil.getUrlParams("luckNumber");
-    var finalNumber = 0;
 
     /**
      * 获取幸运数字
@@ -18,7 +17,6 @@ var MemberShimobunCalculateList  = function () {
             },
             crossDomain: true,
             success :function (data,textStatus) {
-                console.log(data);
                 var  jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
                     var goodFortuneHtml = $("#goodFortune");
@@ -82,26 +80,12 @@ var MemberShimobunCalculateList  = function () {
                 var  jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
                     var datas = jsonObj.datas;
-                    //庄家昵称
-                    $("#makersName").html(datas.banker.name);
                     //庄家输赢
-                    $("#bankerWin").html(datas.banker.bunko);
-                    //庄家下注分数
-                   // $("#makersInSource").html(datas.banker.inSource);
-                    //庄家下注尾数
-                    $("#makersInNumber").html(datas.banker.inNumber);
-                    //庄家上局积分
-                    $("#makersLastSource").html(datas.banker.lastSource);
-                    //庄家本局积分
-                    $("#makersSource").html(datas.banker.source);
+                    $("#bankerWin").html(datas.bankerBunko);
+                    //庄家提成额
 
 
-
-                   initMemberShimobunCalculateTable(datas.users);
-                   //parentIframeAuto();
-                   setTimeout(function () {
-                        generateImage();
-                    }, 10000);
+                  //  initMemberShimobunCalculateTable(jsonObj.datas.)
                 }else{
                     /* layer.alert(jsonObj.message, {
                          skin: 'layui-layer-lan',
@@ -176,37 +160,29 @@ var MemberShimobunCalculateList  = function () {
                     valign: 'middle',
                     sortable: true
                 }, {
-                    field: 'name',
-                    title: '闲家昵称',
+                    field: 'memberName',
+                    title: '玩家昵称',
                     align: 'center',
                     valign: 'middle',
                     sortable: true
                 },
                 {
-                    field: 'inSource',
-                    title: '下注分数',
+                    field: 'bottomPour',
+                    title: '下注',
                     align: 'center',
                     valign: 'middle',
                     sortable: true
                 },
                 {
-                    field: 'inNumber',
-                    title: '下注尾数',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true
-                },
-
-                {
-                    field: 'lastSource',
-                    title: '上局剩余积分',
+                    field: 'mantissa',
+                    title: '尾数',
                     align: 'center',
                     valign: 'middle',
                     sortable: true
                 },
                 {
-                    field: 'source',
-                    title: '本局剩余积分',
+                    field: 'dotPerInch',
+                    title: '点数',
                     align: 'center',
                     valign: 'middle',
                     sortable: true
@@ -216,16 +192,37 @@ var MemberShimobunCalculateList  = function () {
                     title: '本局输赢',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true,
-                    formatter: function (value, row, index) {
-                        var e = '<a href="javascript:;" class="btn btn-circle btn-sm default"> 输</a> ';
-                        if(value > finalNumber){
-                            e = '<a href="javascript:;" class="btn btn-circle btn-sm green"> 赢</a> ';
-                        }
-                        return e;
-                    }
+                    sortable: true
+                },
+                {
+                    field: 'lastSource',
+                    title: '上局积分',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                },
+                {
+                    field: 'source',
+                    title: '剩余积分',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
                 }]
         });
+
+        /**
+         * 数据加载完成
+         */
+        gridTable.on('load-success.bs.table',function(data){
+            console.log("load success");
+            generateImage();
+        });
+
+
+
+        setTimeout(function () {
+            generateImage();
+        }, 5000);
 
 
     }
@@ -239,19 +236,9 @@ var MemberShimobunCalculateList  = function () {
         html2canvas(document.body).then(function(canvas) {
             $(".page-container").remove();
             document.body.appendChild(canvas);
-           // parentIframeAuto();
             //document.body.innerHTML=canvas;
            // $(body).innerHTML(canvas);
         });
-    }
-
-
-    /**
-     * 窗口自适应
-     */
-    function parentIframeAuto() {
-        var  layerIframeIndex = commonUtil.layerIframeIndex();
-        parent.layer.iframeAuto(layerIframeIndex);
     }
 
     return {

@@ -6,20 +6,21 @@ var MemberList  = function () {
      * 初始化会员表格数据
      */
     var initTableDatas = function () {
+        var searchConditionValue = $("#memberName").val();
         gridTable.bootstrapTable('showLoading');
         $.ajax({
             url: basicUrl+ "/userController/userList",
             data:{
-                searchCondition : $("#memberName").val()
+                searchCondition : searchConditionValue
             },
-            type:"GET",
+            type:"POST",
             dataType:"json",
             xhrFields: {
                 withCredentials: true
             },
             crossDomain: true,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
             success :function (data,textStatus) {
-                console.log(data);
                 var jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
                     initMemberTable(jsonObj.datas.dataGrid);
@@ -171,13 +172,6 @@ var MemberList  = function () {
     }
 
     /**
-     * 查询事件
-     */
-    $("#query-btn").click(function(){
-         initTableDatas();
-    });
-
-    /**
      * 获取选中的行
      */
     function  getSelectRows() {
@@ -187,6 +181,7 @@ var MemberList  = function () {
                 skin: 'layui-layer-lan',
                 closeBtn: 1,
                 shade: 0.01,
+                icon: 7,
                 anim: 4 //动画类型
             });
         }else {
@@ -234,7 +229,7 @@ var MemberList  = function () {
         parent.layer.open({
             type: 2 ,
             title: title,
-            area: ['325px' , '305px'],
+            area: ['325px' , '255px'],
             shade: 0.01,
             shadeClose: false,
             maxmin: false, //开启最大化最小化按钮
@@ -261,7 +256,6 @@ var MemberList  = function () {
         if(row != null){
             var params = JSON.stringify(row);
             params = params.replace(/\"/g,"'");
-            console.log(params);
             openFormPage(2,params);
         }
     });
@@ -289,7 +283,7 @@ var MemberList  = function () {
 
             $.ajax({
                  url: basicUrl+ "/userController/deleteUserList",
-                 type:"DELETE",
+                 type:"POST",
                  dataType:"json",
                  data:{
                      userIdString:ids.join()
@@ -299,7 +293,8 @@ var MemberList  = function () {
                  },
                  crossDomain: true,
                  success :function (data,textStatus) {
-                     if(data.status == 0){
+                     var jsonObj = commonUtil.stringToJson(data);
+                     if(jsonObj.status == 0){
                          //从表格中移除选中行
                          gridTable.bootstrapTable('remove', {
                              field: 'id',
@@ -308,7 +303,7 @@ var MemberList  = function () {
 
                          layer.msg('删除会员信息成功.', {icon: 1});
                      }else{
-                         layer.msg(data.message, {icon: 5});
+                         layer.msg(jsonObj.message, {icon: 5});
                          /*layer.alert(data.message, {
                              skin: 'layui-layer-lan',
                              closeBtn: 1,

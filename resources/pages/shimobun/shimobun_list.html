@@ -37,16 +37,16 @@
             <div class="portlet green-sharp box">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-bitcoin"></i>下注</div>
+                        <i class="fa fa-bitcoin"></i>下注下分</div>
                 </div>
                 <div class="portlet-body">
                     <div id="toolbar" class="col-md-7" style="padding-left: 0px;">
                     </div>
                     <div class="col-md-5 text-right" style="padding-right: 0px;">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="请输入：编号\姓名\拼音 搜索">
+                            <input type="text" id="memberName" class="form-control" placeholder="请输入：编号\姓名 搜索">
                             <span class="input-group-btn">
-                                     <button class="btn green" type="button">
+                                     <button class="btn green" type="button" id="query-btn">
                                          <i class="fa fa-search" /></i> Go!
                                      </button>
                                  </span>
@@ -70,20 +70,23 @@
                     </div>
                 </div>
                 <div class="portlet-body" id="blockui_sample_4_portlet_body">
-                    <div  class="col-md-9 text-right" style="padding-left: 0px;">
-                        <label class="col-md-12 control-label" style="    padding-right: 0px;padding-top: 6px;font: caption;font-weight: bold;">第<span id="periods">20171001</span>期 最佳:</label>
-                    </div>
+                    <div id="calculator-div" >
+                        <div  class="col-md-9 text-right" style="padding-left: 0px;">
+                            <label class="col-md-12 control-label" style="    padding-right: 0px;padding-top: 6px;font: caption;font-weight: bold;">第<span id="periods">20171001</span>期 最佳:</label>
+                        </div>
 
-                    <div  class="col-md-3" style="padding-left: 0px;padding-right: 0px">
-                        <div class="input-group">
-                            <input type="number" id="bestMantissa" class="form-control" placeholder="尾数">
-                            <span class="input-group-btn" id="calculatorbtn">
+                        <div  class="col-md-3" style="padding-left: 0px;padding-right: 0px">
+                            <div class="input-group">
+                                <input type="number" id="bestMantissa" class="form-control" placeholder="尾数">
+                                <span class="input-group-btn" id="calculatorbtn">
                                      <button class="btn green" type="button">
                                          <i class="fa fa-calculator" /></i> 计算
                                      </button>
                                  </span>
+                            </div>
                         </div>
                     </div>
+
                     <div class="clearfix"></div>
 
                     <div style="margin-bottom: 10px;">

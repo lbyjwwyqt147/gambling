@@ -3,13 +3,6 @@ var SystemSettingsForm  = function () {
     var basicForm = $("#rakeForm");
 
     /**
-     * 关闭事件
-     */
-    $('#close-button').on('click', function(){
-        commonUtil.closeForm();
-    });
-
-    /**
      * 保存数据
      */
     $('#save-button').on('click', function(){
@@ -88,10 +81,26 @@ var SystemSettingsForm  = function () {
     var submitForm = function(){
         commonUtil.inputTrim();
         if (basicForm.validate().form()) {
-
+            var params = new Array();
+            var cutObj = {
+                key:"cut",
+                value:$("#cut").val(),
+                type:"1",
+                id:$("cutid").val()
+            };
+            var pwdObj = {
+                key:"password",
+                value:$("#password").val(),
+                type:"1",
+                id:$("pwdid").val()
+            };
+            params.push(cutObj);
+            params.push(pwdObj);
              $.ajax({
                  url: basicUrl+ "/systemController/saveList",
-                 data:$("#rakeForm").serialize(),
+                 data:{
+                     params:JSON.stringify(params)
+                 },
                  type:"POST",
                  dataType:"json",
                  xhrFields: {
@@ -99,25 +108,29 @@ var SystemSettingsForm  = function () {
                  },
                  crossDomain: true,
                  success :function (data,textStatus) {
-                     console.log(data);
-                     if(data.status == 0){
+                     var jsonObj = commonUtil.stringToJson(data);
+                     if(jsonObj.status == 0){
                          layer.msg('保存系统设置信息成功.', {icon: 1});
                      }else{
-                         layer.alert(data.message, {
+                        /* layer.alert(data.message, {
                              skin: 'layui-layer-lan',
                              closeBtn: 1,
                              shade: 0.01,
                              anim: 4 //动画类型
-                         });
+                         });*/
+                         layer.msg(jsonObj.message, {icon: 5});
+
                      }
                  },
                  error:function (XMLHttpRequest, textStatus, errorThrown) {
-                     layer.alert('网络出现错误!', {
+                     /*layer.alert('网络出现错误!', {
                          skin: 'layui-layer-lan',
                          closeBtn: 1,
                          shade: 0.01,
                          anim: 4 //动画类型
-                     });
+                     });*/
+                     layer.msg('网络出现错误!', {icon: 5});
+
                  }
              });
 
@@ -131,8 +144,7 @@ var SystemSettingsForm  = function () {
      */
     var setFormValue = function () {
         $.ajax({
-            url: basicUrl+ "/systemController/getValue",
-            data:$("#rakeForm").serialize(),
+            url: basicUrl+ "/systemController/getAllValue",
             type:"POST",
             dataType:"json",
             xhrFields: {
@@ -141,26 +153,35 @@ var SystemSettingsForm  = function () {
             crossDomain: true,
             success :function (data,textStatus) {
                 console.log(data);
-                commonUtil.setFormValues("",data.datas,"#rakeForm")
-
-                if(data.status == 0){
-
+                var jsonObj = commonUtil.stringToJson(data);
+                if(jsonObj.status == 0){
+                    $.each(jsonObj.datas,function (i,v) {
+                        if(v.key == "cut"){
+                            $("input[name='cut']").val(v.value);
+                            $("input[name='cutid']").val(v.id);
+                        }else if (v.key == "password"){
+                            $("input[name='password']").val(v.value);
+                            $("input[name='pwdid']").val(v.value);
+                        }
+                    });
                 }else{
-                    layer.alert(data.message, {
+                  /*  layer.alert(jsonObj.message, {
                         skin: 'layui-layer-lan',
                         closeBtn: 1,
                         shade: 0.01,
                         anim: 4 //动画类型
-                    });
+                    });*/
+                    layer.msg(jsonObj.message, {icon: 5});
                 }
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) {
-                layer.alert('网络出现错误!', {
+                /*layer.alert('网络出现错误!', {
                     skin: 'layui-layer-lan',
                     closeBtn: 1,
                     shade: 0.01,
                     anim: 4 //动画类型
-                });
+                });*/
+                layer.msg("网络错误!", {icon: 5});
             }
         });
     }
@@ -168,6 +189,7 @@ var SystemSettingsForm  = function () {
     return {
         init: function () {
             validateForm();
+            setFormValue();
         }
     };
 }();

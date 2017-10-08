@@ -4,40 +4,52 @@ var MemberShimobunList  = function () {
     var table1 = $('#member-shimobun-table1-pagination');
     //右边表格
     var table2 = $('#member-shimobun-table2-pagination');
+    var luckyNumber = "";
+
     /**
      * 初始化左边表格数据
      */
-    var initTableDatas = function () {
+    var initTableDatas = function (sgin) {
+        var searchConditionValue = $("#memberName").val();
         table1.bootstrapTable('showLoading');
         $.ajax({
-           // url: basicUrl+ "/list",
-            url: commonUtil.gridJsonUrl,
-            type:"GET",
+            url: basicUrl+ "/userController/userList",
+            data:{
+                searchCondition : searchConditionValue
+            },
+            type:"POST",
             dataType:"json",
             xhrFields: {
                 withCredentials: true
             },
             crossDomain: true,
             success :function (data,textStatus) {
-                if(data.status == 0){
-                    initMemberShimobunTable1(data.datas.dataGrid);
+                var jsonObj = commonUtil.stringToJson(data);
+                if(jsonObj.status == 0){
+                    if(sgin == 2){
+                        table1.bootstrapTable('load', jsonObj.datas.dataGrid);
+                    }else {
+                        initMemberShimobunTable1(jsonObj.datas.dataGrid);
+                    }
                     table1.bootstrapTable('hideLoading');
                 }else{
-                    layer.alert(data.msg, {
+                   /* layer.alert(jsonObj.message, {
                         skin: 'layui-layer-lan',
                         closeBtn: 1,
                         shade: 0.01,
                         anim: 4 //动画类型
-                    });
+                    });*/
+                    layer.msg(jsonObj.message, {icon: 5});
                 }
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) {
-                layer.alert("网络错误!", {
+                /*layer.alert("网络错误!", {
                     skin: 'layui-layer-lan',
                     closeBtn: 1,
                     shade: 0.01,
                     anim: 4 //动画类型
-                });
+                });*/
+                layer.msg("网络错误!", {icon: 5});
             }
         });
     }
@@ -152,39 +164,17 @@ var MemberShimobunList  = function () {
                     }
                 }],
             onEditableSave: function (field, row, oldValue, $el) {
-                row.mantissa=1;
+                row.mantissa=99999999;
+                row.banker=2;
+                row.bankerTest=2;
                 //将下注后的用户移植到右边表格中显示
                 table2.bootstrapTable('insertRow', {
                     index: 1,
                     row:row
-                   /* row: {
-                         id: randomId,
-                        name: 'Item ' + randomId,
-                        price: '$' + randomId
-                    }*/
                 });
                 //移除当前行
                 removeTable1Row(row.id);
 
-
-              /*  $.ajax({
-                    type: "post",
-                    url: "",
-                    data: row,
-                    dataType: 'JSON',
-                    success: function (data, status) {
-                        if (status == "success") {
-                            alert('提交数据成功');
-                        }
-                    },
-                    error: function () {
-                        alert('编辑失败');
-                    },
-                    complete: function () {
-
-                    }
-
-                });*/
             }
         });
     }
@@ -222,7 +212,7 @@ var MemberShimobunList  = function () {
             exportDataType: 'all',
             responseHandler: responseHandler,
             columns: [
-                /*{
+             /*   {
                     field:'state',
                     checkbox:true
                 },*/
@@ -254,7 +244,7 @@ var MemberShimobunList  = function () {
                     valign: 'middle',
                     sortable: true,
                 }, {
-                    field: '  ',
+                    field: 'mantissa',
                     title: '尾数',
                     align: 'center',
                     valign: 'middle',
@@ -277,9 +267,11 @@ var MemberShimobunList  = function () {
                     },
                     formatter:function(value,row,index){
                         console.log(value);
-                        // var rowId = row.id;
-                        // var d = '<a href="javascript:;" onclick="MemberShimobunList.removeTable2Row('+rowId+')" class="btn btn-circle btn-sm red delete"><i class="fa fa-trash-o"></i> 删除 </a> ';
-                        // return d;
+                        if(value==99999999){
+                            return "点击填写尾数值";
+                        }else {
+                            return value;
+                        }
                     }
                 }, {
                     field: 'bottomPour',
@@ -288,7 +280,7 @@ var MemberShimobunList  = function () {
                     valign: 'middle',
                     sortable: true,
                 }, {
-                    field: 'banker',
+                    field: 'bankerText',
                     title: '庄家',
                     align: 'center',
                     valign: 'middle',
@@ -303,6 +295,14 @@ var MemberShimobunList  = function () {
                     }
                 },
                 {
+                    field: 'banker',
+                    title: '庄家',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: false,
+                    visible:false
+                },
+                {
                     title: '操作',
                     field: 'operate',
                     align: 'center',
@@ -315,28 +315,7 @@ var MemberShimobunList  = function () {
                     }
                 }],
             onEditableSave: function (field, row, oldValue, $el) {
-
-                console.log(row);
-
-
-                /*  $.ajax({
-                      type: "post",
-                      url: "",
-                      data: row,
-                      dataType: 'JSON',
-                      success: function (data, status) {
-                          if (status == "success") {
-                              alert('提交数据成功');
-                          }
-                      },
-                      error: function () {
-                          alert('编辑失败');
-                      },
-                      complete: function () {
-
-                      }
-
-                  });*/
+                // 单元格保存事件
             }
         });
     }
@@ -347,13 +326,20 @@ var MemberShimobunList  = function () {
      */
     function removeTable1Row(rowId) {
         var ids = new Array();
-        ids.push(rowId);
+        ids.push(rowId.toString());
         table1.bootstrapTable('remove', {
             field: 'id',
             values: ids
         });
     }
 
+
+    /**
+     * 查询事件
+     */
+    $("#query-btn").click(function(){
+        initTableDatas(2);
+    });
 
     /**
      * 查询参数
@@ -391,24 +377,68 @@ var MemberShimobunList  = function () {
      */
     $('#calculatorbtn').on('click', function(){
         var bestMantissa = $("#bestMantissa").val();
-        if (bestMantissa != ""){
-           openCalculatePage();
-        }else {
-            layer.alert("请输入最佳尾数.", {
+        var flag = true;
+        var types = new  Array();
+        var params = new Array();
+        //获取 右边grid中的全部数据
+        var table2Datas = table2.bootstrapTable('getData');
+        $.each(table2Datas,function(i,v){
+            if(v.mantissa == 99999999){
+                layer.alert(v.memberName+"的尾数值未填写.", {
+                    skin: 'layui-layer-lan',
+                    closeBtn: 1,
+                    icon: 7,
+                    offset:['10px' , '71%'],
+                    shade: 0.01,
+                    anim: 4 //动画类型
+                });
+                flag = false;
+                return false;
+            }
+            var obj = {
+                inNumber:v.mantissa,
+                inSource:v.bottomPour,
+                userId:v.id,
+                type:v.banker
+            }
+            types.push(v.banker);
+            params.push(obj);
+        });
+        if(flag && $.inArray(1, types) == -1){
+            layer.alert("请至少选择一位庄家.", {
                 skin: 'layui-layer-lan',
                 closeBtn: 1,
+                icon: 7,
                 offset:['10px' , '71%'],
                 shade: 0.01,
                 anim: 4 //动画类型
             });
+            flag = false;
         }
+        var lastParams = JSON.stringify(params).replace(/\"/g,"'");
+        if(flag){
+            if (bestMantissa != ""){
+                luckyNumber = bestMantissa;
+                openCalculatePage(lastParams);
+            }else {
+                layer.alert("请输入最佳尾数.", {
+                    skin: 'layui-layer-lan',
+                    closeBtn: 1,
+                    icon: 7,
+                    offset:['10px' , '71%'],
+                    shade: 0.01,
+                    anim: 4 //动画类型
+                });
+            }
+        }
+
 
 
     });
     /**
      * 弹出计算结果页
      */
-    function openCalculatePage() {
+    function openCalculatePage(params) {
         var that = this;
         //多窗口模式，层叠置顶
         parent.layer.open({
@@ -420,14 +450,14 @@ var MemberShimobunList  = function () {
             shadeClose: false,
             maxmin: false, //开启最大化最小化按钮
             offset: '20px',  //间距上边100px
-            content: '../../resources/pages/shimobun/shimobun_calculate.html',
-            btn: ['生成图片', '关闭'],
+            content: '../../resources/pages/shimobun/shimobun_calculate.html?params='+params+'&luckNumber='+luckyNumber,
+            btn: ['保存', '关闭'],
             yes: function(index,layero){
-                layer.getChildFrame('body', index);
+                //layer.getChildFrame('body', index);
                 // 调用子窗口中的方法
                // layero.find('iframe')[0].contentWindow.generateImage();
-                return flag;
 
+                saveCalculateResult();
             },
             btn2: function(index, layero){
                 layer.closeAll();
@@ -437,13 +467,39 @@ var MemberShimobunList  = function () {
 
     }
 
+    /**
+     * 保存计算结果
+     */
+    function saveCalculateResult() {
+        $.ajax({
+            url: basicUrl+ "/collectPointController/dealOrderData",
+            type:"POST",
+            dataType:"json",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success :function (data,textStatus) {
+                var jsonObj = commonUtil.stringToJson(data);
+                if(jsonObj.status == 0){
+                    parent.layer.msg("保存数据成功.", {icon: 1});
+                }else{
+                    parent.layer.msg(jsonObj.message, {icon: 5});
+                }
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                parent.layer.msg("网络错误!", {icon: 5});
+            }
+        });
+    }
+
 
     return {
         /**
          * 初始化
          */
         init: function () {
-            initTableDatas();
+            initTableDatas(1);
             initMemberShimobunTable2();
         },
         /**
@@ -451,7 +507,7 @@ var MemberShimobunList  = function () {
          */
         removeTable2Row :function(rowId){
             var ids = new Array();
-            ids.push(rowId);
+            ids.push(rowId.toString());
             console.log(ids);
             table2.bootstrapTable('remove', {
                 field: 'id',
@@ -464,7 +520,9 @@ var MemberShimobunList  = function () {
          */
         insertTable2Row :function(rowId,v){
             var row = table1.bootstrapTable('getRowByUniqueId', rowId);
+            row.mantissa=99999999;
             row.banker = v;
+            row.bankerText = v;
             table2.bootstrapTable('insertRow', {
                 index: 1,
                 row:row

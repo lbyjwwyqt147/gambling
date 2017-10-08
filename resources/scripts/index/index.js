@@ -27,6 +27,7 @@ var Index = function () {
             var menuName = $(this).children(".title").html();
             switch(sign){
                 case "1":
+                    Index.openPageHtml("../pages/shimobun/shimobun_list.html");
                     break;
                 case "2":
                     $("#homeModuleTile").html(menuName);
@@ -61,6 +62,9 @@ var Index = function () {
             changeFrameHeight();
         }
 
+        //默认第一个菜单点击
+        $('#defaultHome').trigger("click");
+
     }
 
 
@@ -88,7 +92,6 @@ var Index = function () {
         var pageContentHeight = $(".page-content").height();
         var iframeHeight = pageContentHeight-homeTitleHeight-10;
         $("#mainIframe").attr("height", iframeHeight);
-        console.log("iframe高:" +$("#mainIframe").height());
     }
 
 

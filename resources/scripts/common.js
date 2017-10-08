@@ -85,6 +85,7 @@ var commonUtil = {
     setIframeHeight:function(index,height){
 
        $("#layui-layer-iframe"+index).css("height",height);
+        $("#layui-layer-iframe"+index).attr("height",height);
     },
 
     /**
