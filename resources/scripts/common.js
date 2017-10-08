@@ -9,7 +9,7 @@ var commonUtil = {
     memberId : "",
     token:"",
     sessionId:"",
-    httpUrl:"http://localhost:8762/",
+    httpUrl:"http://116.62.185.182:8080/PlayGames",
     gridJsonUrl:"../../../resources/scripts/data/grid_data.json",
 
     setSeesionId : function (sessionId) {
@@ -85,6 +85,15 @@ var commonUtil = {
     setIframeHeight:function(index,height){
 
        $("#layui-layer-iframe"+index).css("height",height);
+    },
+
+    /**
+     * json 字符串转为json 对象
+     * @param data
+     * @returns {*}
+     */
+    stringToJson:function (data) {
+        return eval('(' + data + ')');
     },
 
 

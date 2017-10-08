@@ -1,5 +1,13 @@
 var Index = function () {
     var basicUrl = commonUtil.httpUrl;
+
+    /**
+     * 退出事件
+     */
+    $("#logout1-btn").click(function () {
+        logout();
+    });
+
     /**
      * 初始化首页事件
      */
@@ -16,9 +24,7 @@ var Index = function () {
             }else {
                 $(".homeTile").show();
             }
-            console.log(sign);
             var menuName = $(this).children(".title").html();
-            console.log(menuName);
             switch(sign){
                 case "1":
                     break;
@@ -55,8 +61,6 @@ var Index = function () {
             changeFrameHeight();
         }
 
-
-
     }
 
 
@@ -92,40 +96,40 @@ var Index = function () {
      * 退出系统
      */
     function logout() {
-        console.log("sessionId: " + sessionId);
-        console.log("token: " + token);
-        $.ajax( {
-            url: basicUrl+ "/logout",
-            data:{
+        window.location.href = "../../index.html";
 
-            },
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            type:'GET',
-            dataType:'JSON',
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            beforeSend: function(request) {
-                request.setRequestHeader("Authorization", token);
-            },
-            success:function(data) {
-                console.log(data);
-                console.log(commonUtil.getIp());
-                window.location.href = "http://"+commonUtil.getIp();
+        /* $.ajax( {
+             url: basicUrl+ "/logout",
+             data:{
+
+             },
+             xhrFields: {
+                 withCredentials: true
+             },
+             crossDomain: true,
+             type:'GET',
+             dataType:'JSON',
+             xhrFields: {
+                 withCredentials: true
+             },
+             crossDomain: true,
+             beforeSend: function(request) {
+                 request.setRequestHeader("Authorization", token);
+             },
+             success:function(data) {
+                 console.log(data);
+                 console.log(commonUtil.getIp());
+                 window.location.href = "http://"+commonUtil.getIp();
 
 
-            },
-            error : function() {
-                layer.open({
-                    title: '提示',
-                    content: '网络错误.'
-                });
-            }
-        });
+             },
+             error : function() {
+                 layer.open({
+                     title: '提示',
+                     content: '网络错误.'
+                 });
+             }
+         });*/
     }
 
 

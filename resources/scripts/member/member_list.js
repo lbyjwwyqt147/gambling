@@ -8,8 +8,10 @@ var MemberList  = function () {
     var initTableDatas = function () {
         gridTable.bootstrapTable('showLoading');
         $.ajax({
-            //url: basicUrl+ "/userController/userList",
-            url:commonUtil.gridJsonUrl,
+            url: basicUrl+ "/userController/userList",
+            data:{
+                searchCondition : $("#memberName").val()
+            },
             type:"GET",
             dataType:"json",
             xhrFields: {
@@ -18,25 +20,28 @@ var MemberList  = function () {
             crossDomain: true,
             success :function (data,textStatus) {
                 console.log(data);
-                if(data.status == 0){
-                    initMemberTable(data.datas.dataGrid);
+                var jsonObj = commonUtil.stringToJson(data);
+                if(jsonObj.status == 0){
+                    initMemberTable(jsonObj.datas.dataGrid);
                     gridTable.bootstrapTable('hideLoading');
                 }else{
-                    layer.alert(data.message, {
+                   /* layer.alert(data.message, {
                         skin: 'layui-layer-lan',
                         closeBtn: 1,
                         shade: 0.01,
                         anim: 4 //动画类型
-                    });
+                    });*/
+                    layer.msg(jsonObj.message, {icon: 5});
                 }
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) {
-                layer.alert("网络错误!", {
+               /* layer.alert("网络错误!", {
                     skin: 'layui-layer-lan',
                     closeBtn: 1,
                     shade: 0.01,
                     anim: 4 //动画类型
-                });
+                });*/
+                layer.msg("网络错误!", {icon: 5});
             }
         });
     }
@@ -132,6 +137,7 @@ var MemberList  = function () {
     }
 
 
+
     /**
      * 查询参数
      * @param params
@@ -165,6 +171,13 @@ var MemberList  = function () {
     }
 
     /**
+     * 查询事件
+     */
+    $("#query-btn").click(function(){
+         initTableDatas();
+    });
+
+    /**
      * 获取选中的行
      */
     function  getSelectRows() {
@@ -193,6 +206,7 @@ var MemberList  = function () {
                 skin: 'layui-layer-lan',
                 closeBtn: 1,
                 shade: 0.01,
+                icon: 7,
                 anim: 4 //动画类型
             });
         }else {
@@ -294,21 +308,23 @@ var MemberList  = function () {
 
                          layer.msg('删除会员信息成功.', {icon: 1});
                      }else{
-                         layer.alert(data.message, {
+                         layer.msg(data.message, {icon: 5});
+                         /*layer.alert(data.message, {
                              skin: 'layui-layer-lan',
                              closeBtn: 1,
                              shade: 0.01,
                              anim: 4 //动画类型
-                         });
+                         });*/
                      }
                  },
                  error:function (XMLHttpRequest, textStatus, errorThrown) {
-                     layer.alert("网络错误!", {
+                     /*layer.alert("网络错误!", {
                          skin: 'layui-layer-lan',
                          closeBtn: 1,
                          shade: 0.01,
                          anim: 4 //动画类型
-                     });
+                     });*/
+                     layer.msg("网络错误!", {icon: 5});
                  }
              });
 
