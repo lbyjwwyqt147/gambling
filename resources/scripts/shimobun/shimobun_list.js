@@ -128,13 +128,25 @@ var MemberShimobunList  = function () {
                     valign: 'middle',
                     sortable: true,
                     editable: {
-                        type: 'number',
+                        type: 'text',
                         //mode: "inline",
                         validate: function (value) {
                             if ($.trim(value) == '') {
                                 return '请填写下注值!';
+                            }else{
+                                var patrn = /^\d+(\.\d{1,2})?$/;
+                                var str = $.trim(value);
+                                if (!patrn.exec(str)){
+                                    return "下注值不能是负数.";
+                                }
                             }
+                        },
+                        noeditFormatter:function(value,row,index){
+                           console.log("table1 ----- noeditFormatter");
                         }
+                    },
+                    formatter:function(value,row,index){
+                        return 0;
                     }
                 }, {
                     field: 'memberBalance',
@@ -248,25 +260,28 @@ var MemberShimobunList  = function () {
                     title: '尾数',
                     align: 'center',
                     valign: 'middle',
+                    width:"150px",
                     sortable: true,
                     editable: {
-                        type: 'number',
+                        type: 'text',
                         //mode: "inline",
-                        emptytext: "hhh  ",
                         validate: function (value) {
                             if ($.trim(value) == '') {
-                                return '请输入尾数值!';
+                                return '请填写尾数值!';
+                            }else {
+                                var patrn = /^[0-9]$/;
+                                var str = $.trim(value);
+                                if (!patrn.exec(str)){
+                                    return "尾数值只能填写0~9之间的整数.";
+                                }
                             }
+
                         },
-                        noeditFormatter:function(value,row,index){
-                            console.log(value);
-                            // var rowId = row.id;
-                            // var d = '<a href="javascript:;" onclick="MemberShimobunList.removeTable2Row('+rowId+')" class="btn btn-circle btn-sm red delete"><i class="fa fa-trash-o"></i> 删除 </a> ';
-                            // return d;
+                        formatter:function(value,row,index){
+                            console.log("dsddddddddddddddddddddddddddd ............. ");
                         }
                     },
                     formatter:function(value,row,index){
-                        console.log(value);
                         if(value==99999999){
                             return "点击填写尾数值";
                         }else {
@@ -378,7 +393,7 @@ var MemberShimobunList  = function () {
     $('#calculatorbtn').on('click', function(){
         var bestMantissa = $("#bestMantissa").val();
         var flag = true;
-        var types = new  Array();
+        var makersTypes = new  Array();
         var params = new Array();
         //获取 右边grid中的全部数据
         var table2Datas = table2.bootstrapTable('getData');
@@ -396,16 +411,18 @@ var MemberShimobunList  = function () {
                 return false;
             }
             var obj = {
-                inNumber:v.mantissa,
-                inSource:v.bottomPour,
-                userId:v.id,
-                type:v.banker
+                inNumber:$.trim(v.mantissa),
+                inSource:$.trim(v.bottomPour),
+                userId:$.trim(v.id),
+                type:$.trim(v.banker)
             }
-            types.push(v.banker);
+            if($.trim(v.banker) == 1){
+                makersTypes.push($.trim(v.banker));
+            }
             params.push(obj);
         });
-        if(flag && $.inArray(1, types) == -1){
-            layer.alert("请至少选择一位庄家.", {
+        if(flag && makersTypes.length != 1){
+            layer.alert("请选择一位庄家.", {
                 skin: 'layui-layer-lan',
                 closeBtn: 1,
                 icon: 7,
@@ -417,11 +434,25 @@ var MemberShimobunList  = function () {
         }
         var lastParams = JSON.stringify(params).replace(/\"/g,"'");
         if(flag){
-            if (bestMantissa != ""){
-                luckyNumber = bestMantissa;
-                openCalculatePage(lastParams);
+            if ($.trim(bestMantissa) != ""){
+                var patrn = /^[0-9]$/;
+                var str = $.trim(bestMantissa);
+                if (!patrn.exec(str)){
+                    layer.alert("幸运数值只能填写0~9之间的整数.", {
+                        skin: 'layui-layer-lan',
+                        closeBtn: 1,
+                        icon: 7,
+                        offset:['10px' , '71%'],
+                        shade: 0.01,
+                        anim: 4 //动画类型
+                    });
+                }else {
+                    luckyNumber = $.trim(bestMantissa);
+                    openCalculatePage(lastParams);
+                }
+
             }else {
-                layer.alert("请输入最佳尾数.", {
+                layer.alert("请填写最佳幸运数值.", {
                     skin: 'layui-layer-lan',
                     closeBtn: 1,
                     icon: 7,
@@ -445,7 +476,7 @@ var MemberShimobunList  = function () {
             id: 'calculate-page',
             type: 2 ,
             title: "",
-            area: ['50%' , '90%'],
+            area: ['65%' , '90%'],
             shade: 0.01,
             shadeClose: false,
             maxmin: false, //开启最大化最小化按钮
@@ -493,6 +524,30 @@ var MemberShimobunList  = function () {
         });
     }
 
+    /**
+     * 检测是否已经存在庄家
+     */
+    function checkIsExistmakers() {
+        var flag = true;
+        //获取 右边grid中的全部数据
+        var table2Datas = table2.bootstrapTable('getData');
+        $.each(table2Datas,function(i,v){
+            if(v.banker == 1){
+                layer.alert("已经有庄家了,每局只能选择一位庄家.", {
+                    skin: 'layui-layer-lan',
+                    closeBtn: 1,
+                    icon: 7,
+                    offset:['10px' , '71%'],
+                    shade: 0.01,
+                    anim: 4 //动画类型
+                });
+                flag = false;
+                return false;
+            }
+        });
+        return flag;
+    }
+
 
     return {
         /**
@@ -506,12 +561,16 @@ var MemberShimobunList  = function () {
          * 右边表格删除事件
          */
         removeTable2Row :function(rowId){
+            var row = table2.bootstrapTable('getRowByUniqueId', rowId.toString());
             var ids = new Array();
             ids.push(rowId.toString());
-            console.log(ids);
             table2.bootstrapTable('remove', {
                 field: 'id',
                 values: ids
+            });
+            table1.bootstrapTable('insertRow', {
+                index: 1,
+                row:row
             });
         },
         /**
@@ -519,15 +578,19 @@ var MemberShimobunList  = function () {
          * @param rowId
          */
         insertTable2Row :function(rowId,v){
-            var row = table1.bootstrapTable('getRowByUniqueId', rowId);
-            row.mantissa=99999999;
-            row.banker = v;
-            row.bankerText = v;
-            table2.bootstrapTable('insertRow', {
-                index: 1,
-                row:row
-            });
-            removeTable1Row(rowId);
+            if(checkIsExistmakers()){
+                var row = table1.bootstrapTable('getRowByUniqueId', rowId);
+                row.mantissa=99999999;
+                row.banker = v;
+                row.bankerText = v;
+                row.bottomPour = 0;
+                table2.bootstrapTable('insertRow', {
+                    index: 1,
+                    row:row
+                });
+                removeTable1Row(rowId);
+            }
+
         }
     };
 }();

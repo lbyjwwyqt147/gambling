@@ -18,7 +18,6 @@ var MemberShimobunCalculateList  = function () {
             },
             crossDomain: true,
             success :function (data,textStatus) {
-                console.log(data);
                 var  jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
                     var goodFortuneHtml = $("#goodFortune");
@@ -213,13 +212,21 @@ var MemberShimobunCalculateList  = function () {
                 },
                 {
                     field: 'bunko',
+                    title: '本局盈亏',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                },
+                {
+                    field: 'bunko',
                     title: '本局输赢',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true,
+                    sortable: false,
                     formatter: function (value, row, index) {
+                        console.log(row.finalNumber);
                         var e = '<a href="javascript:;" class="btn btn-circle btn-sm default"> 输</a> ';
-                        if(value > finalNumber){
+                        if(row.finalNumber > finalNumber){
                             e = '<a href="javascript:;" class="btn btn-circle btn-sm green"> 赢</a> ';
                         }
                         return e;

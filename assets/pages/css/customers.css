@@ -3,4 +3,5 @@
 }
 table > tbody > tr{
     cursor:pointer;
+    background-color: azure;
 }
