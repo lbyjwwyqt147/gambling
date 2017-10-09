@@ -336,6 +336,16 @@ var MemberShimobunList  = function () {
     }
 
     /**
+     * 回车
+     */
+    $('#memberName').keypress(function (e) {
+        if (e.which == 13) {
+            initTableDatas(2);
+            return false;
+        }
+    });
+
+    /**
      * 移除左表行
      * @param rowId
      */
@@ -476,7 +486,7 @@ var MemberShimobunList  = function () {
             id: 'calculate-page',
             type: 2 ,
             title: "",
-            area: ['65%' , '90%'],
+            area: ['40%' , '90%'],
             shade: 0.01,
             shadeClose: false,
             maxmin: false, //开启最大化最小化按钮

@@ -26,7 +26,7 @@ var MemberShimobunCalculateList  = function () {
                     if(datas.length > 0){
                         var goodFortuneContent = "";
                        $.each(datas,function (i,v) {
-                           goodFortuneContent += '<div class=\"col-md-2 mt-step-col first done\">\n' +
+                           goodFortuneContent += '<div class=\"col-md-1 mt-step-col first done\">\n' +
                                                       '<div class=\"mt-step-number bg-white\">\n' +
                                                       datas[i] +
                                                       '</div>\n' +
@@ -78,7 +78,7 @@ var MemberShimobunCalculateList  = function () {
             },
             crossDomain: true,
             success :function (data,textStatus) {
-                //console.log(data);
+                console.log(data);
                 var  jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
                     var datas = jsonObj.datas;
@@ -95,13 +95,20 @@ var MemberShimobunCalculateList  = function () {
                     //庄家本局积分
                     $("#makersSource").html(datas.banker.source);
                     finalNumber = datas.banker.finalNumber;
-
+                    //庄家点数
+                    $("#makersFinalNumber").html(finalNumber);
+                    //庄家输多少家
+                    $("#makersLoseNumber").html(datas.banker.losePeoples);
+                    //庄家赢多少家
+                    $("#makersWinNumber").html(datas.banker.winPeoples);
+                    //庄家和多少家
+                    $("#makersHarmoniousNumber").html(datas.banker.drawPeoples);
 
                    initMemberShimobunCalculateTable(datas.users);
                    //parentIframeAuto();
                    setTimeout(function () {
                         generateImage();
-                    }, 6000);
+                    }, 1000);
                 }else{
                     /* layer.alert(jsonObj.message, {
                          skin: 'layui-layer-lan',
@@ -174,27 +181,39 @@ var MemberShimobunCalculateList  = function () {
                     title: '编号',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true
+                    sortable: true,
+                    width:'11%'
                 }, {
                     field: 'name',
                     title: '闲家昵称',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true
+                    sortable: true,
+                    width:'11%'
                 },
                 {
                     field: 'inSource',
                     title: '下注分数',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true
+                    sortable: true,
+                    width:'11%'
                 },
                 {
                     field: 'inNumber',
-                    title: '下注尾数',
+                    title: '尾数',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true
+                    sortable: true,
+                    width:'11%'
+                },
+                {
+                    field: 'finalNumber',
+                    title: '点数',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true,
+                    width:'11%'
                 },
 
                 {
@@ -202,21 +221,24 @@ var MemberShimobunCalculateList  = function () {
                     title: '上局剩余积分',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true
+                    sortable: true,
+                    width:'11%'
                 },
                 {
                     field: 'source',
                     title: '本局剩余积分',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true
+                    sortable: true,
+                    width:'11%'
                 },
                 {
                     field: 'bunko',
                     title: '本局盈亏',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true
+                    sortable: true,
+                    width:'11%'
                 },
                 {
                     field: 'bunko',
@@ -224,10 +246,14 @@ var MemberShimobunCalculateList  = function () {
                     align: 'center',
                     valign: 'middle',
                     sortable: false,
+                   // width:'11%',
                     formatter: function (value, row, index) {
-                        var e = '<a href="javascript:;" class="btn btn-circle btn-sm default"> 输</a> ';
-                        if(row.finalNumber > finalNumber){
-                            e = '<a href="javascript:;" class="btn btn-circle btn-sm green"> 赢</a> ';
+                        var e = '<a href="javascript:;" class="btn btn-circle btn-sm grey-cascade" style="font-size: 18px;"> 输</a> ';
+                        //if(row.finalNumber > finalNumber){
+                        if(value > 0){
+                            e = '<a href="javascript:;" class="btn btn-circle btn-sm green-meadow" style="font-size: 18px;"> 赢</a> ';
+                        }else if(value == 0) {
+                            e = '<a href="javascript:;" class="btn btn-circle btn-sm purple-plum" style="font-size: 18px;"> 和</a> ';
                         }
                         return e;
                     }

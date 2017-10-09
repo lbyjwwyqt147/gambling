@@ -103,8 +103,6 @@
 
 <script src="../../../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="../../../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="../../../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-<script src="../../../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="../../../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
 
 <script src="../../../assets/global/plugins/bootstrap-table/bootstrap-table.min.js" type="text/javascript"></script>
@@ -119,8 +117,6 @@
 
 <script src="../../../assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
 <script src="../../../assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
-<script src="../../../assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-<script src="../../../assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
 <script src="../../../assets/global/plugins/layer/layer.js" type="text/javascript"></script>
 <script src="../../../resources/scripts/common.js" type="text/javascript"></script>
 <script src="../../../resources/scripts/member/member_list.js" type="text/javascript"></script>
@@ -133,6 +129,16 @@
      */
     $("#query-btn").click(function(){
         queryData(1);
+    });
+
+    /**
+     * 回车
+     */
+    $('#memberName').keypress(function (e) {
+        if (e.which == 13) {
+            queryData(1);
+            return false;
+        }
     });
 
     /**

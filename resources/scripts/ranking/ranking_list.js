@@ -6,13 +6,10 @@ var MemberList  = function () {
      * 初始化会员表格数据
      */
     var initTableDatas = function (sign) {
-        var searchConditionValue = $("#memberName").val();
         gridTable.bootstrapTable('showLoading');
         $.ajax({
-            url: basicUrl+ "/userController/userList",
-            data:{
-                searchCondition : searchConditionValue
-            },
+            url: basicUrl+ "/userController/getUserByMoney",
+
             type:"POST",
             dataType:"json",
             xhrFields: {
@@ -30,22 +27,22 @@ var MemberList  = function () {
                     }
                     gridTable.bootstrapTable('hideLoading');
                 }else{
-                   /* layer.alert(data.message, {
-                        skin: 'layui-layer-lan',
-                        closeBtn: 1,
-                        shade: 0.01,
-                        anim: 4 //动画类型
-                    });*/
+                    /* layer.alert(data.message, {
+                         skin: 'layui-layer-lan',
+                         closeBtn: 1,
+                         shade: 0.01,
+                         anim: 4 //动画类型
+                     });*/
                     layer.msg(jsonObj.message, {icon: 5});
                 }
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) {
-               /* layer.alert("网络错误!", {
-                    skin: 'layui-layer-lan',
-                    closeBtn: 1,
-                    shade: 0.01,
-                    anim: 4 //动画类型
-                });*/
+                /* layer.alert("网络错误!", {
+                     skin: 'layui-layer-lan',
+                     closeBtn: 1,
+                     shade: 0.01,
+                     anim: 4 //动画类型
+                 });*/
                 layer.msg("网络错误!", {icon: 5});
             }
         });
@@ -97,18 +94,7 @@ var MemberList  = function () {
                 excelstyles: ['background-color', 'color', 'font-size', 'font-weight']
             },
             columns: [
-                {
-                    field:'state',
-                    checkbox:true
-                },
-             /*   {
-                    field: '',
-                    title: '序号',
-                    formatter: function (value, row, index) {
-                        return index + 1;
-                    },
-                    class:''
-                },*/
+
                 {
                     field: 'id',
                     title: 'Member ID',
@@ -117,49 +103,19 @@ var MemberList  = function () {
                     sortable: false,
                     visible:false
                 }, {
-                    field: 'memberCode',
+                    field: 'userId',
                     title: '编号',
                     align: 'center',
                     valign: 'middle',
                     sortable: true
                 }, {
-                    field: 'memberName',
+                    field: 'name',
                     title: '姓名',
                     align: 'center',
                     valign: 'middle'
                 }, {
-                    field: 'memberBalance',
-                    title: '积分余额',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true
-                }, {
-                    field: 'rake',
-                    title: '抽水',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true
-                }, {
-                    field: 'bottomPour',
-                    title: '下注',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true
-                }, {
-                    field: 'bankerRebate',
-                    title: '庄反水',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true
-                }, {
-                    field: 'playerRebate',
-                    title: '闲家反水',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true
-                }, {
-                    field: 'companyRebate',
-                    title: '公司反水',
+                    field: 'source',
+                    title: '剩余积分',
                     align: 'center',
                     valign: 'middle',
                     sortable: true
@@ -174,7 +130,7 @@ var MemberList  = function () {
      * @param params
      * @returns {{limit: *, offset: *, pageindex, pageSize: *}}
      */
-   var  queryParams = function (params) {
+    var  queryParams = function (params) {
         var param = {
             searchCondition : $("#memberName").val(),// 参数
             limit : this.limit, // 页面显示纪录条数
@@ -187,7 +143,7 @@ var MemberList  = function () {
 
     // 用于server 分页，表格数据量太大的话 不想一次查询所有数据，可以使用server分页查询，数据量小的话可以直接把sidePagination: "server"  改为 sidePagination: "client" ，同时去掉responseHandler: responseHandler就可以了，
     function responseHandler(res) {
-       console.log(res);
+        console.log(res);
         if (res) {
             return {
                 "rows": res.result,
@@ -276,7 +232,7 @@ var MemberList  = function () {
             offset: '30px',  //间距上边30px
             content: '../../../resources/pages/member/member_form.html?params='+params
         });
-        
+
     }
 
 
@@ -348,7 +304,7 @@ var MemberList  = function () {
     $('#paint-brush').on('click', function(){
         layer.confirm('确定要一件清除吗？', {
             title:"提示信息",
-           // skin: 'layui-layer-lan',
+            // skin: 'layui-layer-lan',
             shade: 0.01,
             icon: 3,
             anim: 4 ,
@@ -405,46 +361,46 @@ var MemberList  = function () {
         if(ids != null) {
 
             $.ajax({
-                 url: basicUrl+ "/userController/deleteUserList",
-                 type:"POST",
-                 dataType:"json",
-                 data:{
-                     userIdString:ids.join()
-                 },
-                 xhrFields: {
-                     withCredentials: true
-                 },
-                 crossDomain: true,
-                 success :function (data,textStatus) {
-                     var jsonObj = commonUtil.stringToJson(data);
-                     if(jsonObj.status == 0){
-                         //从表格中移除选中行
-                         gridTable.bootstrapTable('remove', {
-                             field: 'id',
-                             values: ids
-                         });
+                url: basicUrl+ "/userController/deleteUserList",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    userIdString:ids.join()
+                },
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success :function (data,textStatus) {
+                    var jsonObj = commonUtil.stringToJson(data);
+                    if(jsonObj.status == 0){
+                        //从表格中移除选中行
+                        gridTable.bootstrapTable('remove', {
+                            field: 'id',
+                            values: ids
+                        });
 
-                         layer.msg('删除会员信息成功.', {icon: 1});
-                     }else{
-                         layer.msg(jsonObj.message, {icon: 5});
-                         /*layer.alert(data.message, {
-                             skin: 'layui-layer-lan',
-                             closeBtn: 1,
-                             shade: 0.01,
-                             anim: 4 //动画类型
-                         });*/
-                     }
-                 },
-                 error:function (XMLHttpRequest, textStatus, errorThrown) {
-                     /*layer.alert("网络错误!", {
-                         skin: 'layui-layer-lan',
-                         closeBtn: 1,
-                         shade: 0.01,
-                         anim: 4 //动画类型
-                     });*/
-                     layer.msg("网络错误!", {icon: 5});
-                 }
-             });
+                        layer.msg('删除会员信息成功.', {icon: 1});
+                    }else{
+                        layer.msg(jsonObj.message, {icon: 5});
+                        /*layer.alert(data.message, {
+                            skin: 'layui-layer-lan',
+                            closeBtn: 1,
+                            shade: 0.01,
+                            anim: 4 //动画类型
+                        });*/
+                    }
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    /*layer.alert("网络错误!", {
+                        skin: 'layui-layer-lan',
+                        closeBtn: 1,
+                        shade: 0.01,
+                        anim: 4 //动画类型
+                    });*/
+                    layer.msg("网络错误!", {icon: 5});
+                }
+            });
 
 
         }

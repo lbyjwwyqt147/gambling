@@ -149,6 +149,9 @@ var MemberForm  = function () {
             $("input[name='name']").val(jsonValue.memberName);
             // 会员积分余额
             $("input[name='source']").val(jsonValue.memberBalance);
+            // 会员抽水
+            $("input[name='cutSourceSum']").val(jsonValue.rake);
+            $("#rake-input").show();
         }
     }
 

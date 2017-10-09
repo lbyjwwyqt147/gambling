@@ -26,10 +26,6 @@
             margin-right: -50px;
             margin-top: 7px;
         }
-       /* .col-md-3{
-            display: inline-block;
-        }*/
-
     </style>
 </head>
 
@@ -40,15 +36,7 @@
             <div class="portlet-body form">
                 <form class="form-horizontal" role="form" id="memberForm">
                     <div class="form-body">
-                      <!--  <div class="form-group">
-                            <label for="memberCode"  class="col-xs-3 control-label">会员编号</label>
-                            <div class="col-xs-6">
-                                <div class="input-icon">
-                                    <i class="fa fa-list-ol"></i>
-                                    <input name="id",id="id" type="hidden">
-                                    <input type="hidden" class="form-control" id="memberCode" name="memberCode" placeholder="会员编号"> </div>
-                            </div>
-                        </div>-->
+
                         <div class="form-group">
                             <label for="name" class="col-xs-3 control-label">会员名称</label>
                             <div class="col-xs-6">
@@ -66,6 +54,15 @@
                                 <div class="input-icon">
                                     <i class="fa fa-rmb"></i>
                                     <input type="number" class="form-control" id="source" name="source" placeholder="会员积分余额"> </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="rake-input" style="display: none">
+                            <label for="cutSourceSum"  class="col-xs-3 control-label">会员抽水</label>
+                            <div class="col-xs-6">
+                                <div class="input-icon">
+                                    <i class="fa fa-rmb"></i>
+                                    <input name="id",id="id" type="hidden">
+                                    <input type="number" class="form-control" id="cutSourceSum" name="cutSourceSum" placeholder="抽水"> </div>
                             </div>
                         </div>
 
@@ -88,8 +85,6 @@
 
 <script src="../../../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="../../../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="../../../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-<script src="../../../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="../../../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
 <script src="../../../assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
 <script src="../../../assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
@@ -97,8 +92,6 @@
 
 <script src="../../../assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
 <script src="../../../assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
-<script src="../../../assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-<script src="../../../assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
 <script src="../../../assets/global/plugins/layer/layer.js" type="text/javascript"></script>
 <script src="../../../resources/scripts/common.js" type="text/javascript"></script>
 <script src="../../../resources/scripts/member/member_form.js" type="text/javascript"></script>
