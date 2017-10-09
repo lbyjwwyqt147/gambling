@@ -18,6 +18,7 @@ var MemberShimobunCalculateList  = function () {
             },
             crossDomain: true,
             success :function (data,textStatus) {
+                console.log(data);
                 var  jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
                     var goodFortuneHtml = $("#goodFortune");
@@ -93,14 +94,14 @@ var MemberShimobunCalculateList  = function () {
                     $("#makersLastSource").html(datas.banker.lastSource);
                     //庄家本局积分
                     $("#makersSource").html(datas.banker.source);
-
+                    finalNumber = datas.banker.finalNumber;
 
 
                    initMemberShimobunCalculateTable(datas.users);
                    //parentIframeAuto();
                    setTimeout(function () {
                         generateImage();
-                    }, 10000);
+                    }, 6000);
                 }else{
                     /* layer.alert(jsonObj.message, {
                          skin: 'layui-layer-lan',
@@ -224,7 +225,6 @@ var MemberShimobunCalculateList  = function () {
                     valign: 'middle',
                     sortable: false,
                     formatter: function (value, row, index) {
-                        console.log(row.finalNumber);
                         var e = '<a href="javascript:;" class="btn btn-circle btn-sm default"> 输</a> ';
                         if(row.finalNumber > finalNumber){
                             e = '<a href="javascript:;" class="btn btn-circle btn-sm green"> 赢</a> ';
@@ -243,12 +243,23 @@ var MemberShimobunCalculateList  = function () {
      */
     function generateImage() {
         console.log("..开始执行生成图片.............");
-        html2canvas(document.body).then(function(canvas) {
+      /*  html2canvas(document.body).then(function(canvas) {
             $(".page-container").remove();
             document.body.appendChild(canvas);
            // parentIframeAuto();
             //document.body.innerHTML=canvas;
            // $(body).innerHTML(canvas);
+        });*/
+        html2canvas(document.getElementById("infoContent"),{
+            allowTaint: true,
+            taintTest: false,
+            onrendered: function(canvas){
+                $("#infoContent").children('.green-sharp').remove();
+
+                document.getElementById("infoContent").appendChild(canvas);
+            },
+            width: $("#infoContent").width()+14,
+            height: $("#infoContent").height()-22
         });
     }
 

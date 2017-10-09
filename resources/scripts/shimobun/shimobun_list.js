@@ -134,10 +134,10 @@ var MemberShimobunList  = function () {
                             if ($.trim(value) == '') {
                                 return '请填写下注值!';
                             }else{
-                                var patrn = /^\d+(\.\d{1,2})?$/;
+                                var patrn = /^\+?[1-9][0-9]*$/;
                                 var str = $.trim(value);
                                 if (!patrn.exec(str)){
-                                    return "下注值不能是负数.";
+                                    return "下注值必须大于0.";
                                 }
                             }
                         },
@@ -483,6 +483,7 @@ var MemberShimobunList  = function () {
             offset: '20px',  //间距上边100px
             content: '../../resources/pages/shimobun/shimobun_calculate.html?params='+params+'&luckNumber='+luckyNumber,
             btn: ['保存', '关闭'],
+            move: false,
             yes: function(index,layero){
                 //layer.getChildFrame('body', index);
                 // 调用子窗口中的方法

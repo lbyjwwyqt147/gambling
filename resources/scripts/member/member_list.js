@@ -5,7 +5,7 @@ var MemberList  = function () {
     /**
      * 初始化会员表格数据
      */
-    var initTableDatas = function () {
+    var initTableDatas = function (sign) {
         var searchConditionValue = $("#memberName").val();
         gridTable.bootstrapTable('showLoading');
         $.ajax({
@@ -23,7 +23,11 @@ var MemberList  = function () {
             success :function (data,textStatus) {
                 var jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
-                    initMemberTable(jsonObj.datas.dataGrid);
+                    if(sign == 1){
+                        gridTable.bootstrapTable('load', jsonObj.datas.dataGrid);
+                    }else{
+                        initMemberTable(jsonObj.datas.dataGrid);
+                    }
                     gridTable.bootstrapTable('hideLoading');
                 }else{
                    /* layer.alert(data.message, {
@@ -78,11 +82,19 @@ var MemberList  = function () {
             pageSize: 20,                       //每页的记录行数（*）
             pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
             uniqueId: "id",                     //每一行的唯一标识，一般为主键列
-            showExport: true,
-            exportDataType: 'all',
             responseHandler:  function (res) {   //在ajax请求成功后，发放数据之前可以对返回的数据进行处理，返回什么部分的数据，比如我的就需要进行整改的！
-                console.log(res);
                 responseHandler(res);
+            },
+            showExport: false,  //是否显示导出按钮
+            buttonsAlign:"right",  //按钮位置
+            exportTypes:['excel'],  //导出文件类型
+            Icons:'glyphicon-export',
+            exportOptions:{
+                ignoreColumn: [0,1],  //忽略某一列的索引
+                fileName: '会员信息',  //文件名称设置
+                worksheetName: 'sheet1',  //表格工作区名称
+                tableName: '会员信息',
+                excelstyles: ['background-color', 'color', 'font-size', 'font-weight']
             },
             columns: [
                 {
@@ -226,7 +238,7 @@ var MemberList  = function () {
         }
         var that = this;
         //多窗口模式，层叠置顶
-        parent.layer.open({
+        layer.open({
             type: 2 ,
             title: title,
             area: ['325px' , '255px'],
@@ -234,7 +246,7 @@ var MemberList  = function () {
             shadeClose: false,
             maxmin: false, //开启最大化最小化按钮
             offset: '100px',  //间距上边100px
-            content: '../../resources/pages/member/member_form.html?params='+params
+            content: '../../../resources/pages/member/member_form.html?params='+params
         });
         
     }
@@ -272,6 +284,89 @@ var MemberList  = function () {
             });
         }
 
+    });
+
+    /**
+     * 抽水统计事件
+     */
+    $('#bar-chart').on('click', function(){
+        $.ajax({
+            url: basicUrl+ "/userController/countCut",
+            type:"POST",
+            dataType:"json",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success :function (data,textStatus) {
+                var jsonObj = commonUtil.stringToJson(data);
+                if(jsonObj.status == 0){
+                    layer.alert('系统总抽水分数:'+jsonObj.datas, {icon: 6, shade: 0.01});
+                }else{
+                    layer.msg(jsonObj.message, {icon: 5});
+                }
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg("网络错误!", {icon: 5});
+            }
+        });
+
+    });
+
+
+    /**
+     * 一件清除事件
+     */
+    $('#paint-brush').on('click', function(){
+        layer.confirm('确定要一件清除吗？', {
+            title:"提示信息",
+            skin: 'layui-layer-lan',
+            shade: 0.01,
+            icon: 3,
+            anim: 4 ,
+            btn: ['确定', '取消'],
+            yes: function(index,layero){
+                $.ajax({
+                    url: basicUrl+ "/userController/clearAll",
+                    type:"POST",
+                    dataType:"json",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success :function (data,textStatus) {
+                        var jsonObj = commonUtil.stringToJson(data);
+                        if(jsonObj.status == 0){
+                            layer.msg('一件清除成功.', {icon: 1,
+                                end:function () {
+                                    layer.closeAll();
+                                }});
+                            initTableDatas(1);
+                        }else{
+                            layer.msg(jsonObj.message, {icon: 5});
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        layer.msg("网络错误!", {icon: 5});
+                    }
+                });
+            },
+            btn2: function(index, layero){
+                layer.closeAll();
+            }
+        });
+
+
+
+
+    });
+
+    /**
+     * 导出事件
+     */
+    $('#data-download').on('click', function(){
+        gridTable.tableExport({type: 'excel', escape: 'false',fileName:'会员信息',worksheetName:'会员信息'
+        });
     });
 
     /**
@@ -331,7 +426,7 @@ var MemberList  = function () {
 
     return {
         init: function () {
-            initTableDatas();
+            initTableDatas(0);
         }
     };
 }();
