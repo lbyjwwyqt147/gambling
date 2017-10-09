@@ -152,7 +152,6 @@ var SystemSettingsForm  = function () {
             },
             crossDomain: true,
             success :function (data,textStatus) {
-                console.log(data);
                 var jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
                     $.each(jsonObj.datas,function (i,v) {

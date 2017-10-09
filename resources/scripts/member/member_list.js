@@ -145,6 +145,24 @@ var MemberList  = function () {
                     align: 'center',
                     valign: 'middle',
                     sortable: true
+                }, {
+                    field: 'bankerRebate',
+                    title: '庄反水',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                }, {
+                    field: 'playerRebate',
+                    title: '闲家反水',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                }, {
+                    field: 'companyRebate',
+                    title: '公司反水',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
                 }]
         });
     }

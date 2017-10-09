@@ -9,8 +9,8 @@ var commonUtil = {
     memberId : "",
     token:"",
     sessionId:"",
-    //httpUrl:"http://116.62.185.182:8080/PlayGames",
-    httpUrl:"127.0.0.1:8080",
+    httpUrl:"http://116.62.185.182:8080/PlayGames",
+    //httpUrl:"127.0.0.1:8080",
     gridJsonUrl:"../../../resources/scripts/data/grid_data.json",
 
     setSeesionId : function (sessionId) {
