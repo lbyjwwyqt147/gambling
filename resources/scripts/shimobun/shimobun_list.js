@@ -347,6 +347,7 @@ var MemberShimobunList  = function () {
         var bestMantissa = $("#bestMantissa").val();
         var flag = true;
         var makersTypes = new  Array();
+        var xianTypes = new  Array();
         var params = new Array();
         //获取 右边grid中的全部数据
         var table2Datas = table2.bootstrapTable('getData');
@@ -363,19 +364,33 @@ var MemberShimobunList  = function () {
                 flag = false;
                 return false;
             }
+            var bankerType = $.trim(v.banker);
             var obj = {
                 inNumber:$.trim(v.mantissa),
                 inSource:$.trim(v.bottomPour),
                 userId:$.trim(v.id),
                 type:$.trim(v.banker)
             }
-            if($.trim(v.banker) == 1){
-                makersTypes.push($.trim(v.banker));
+            if(bankerType == 1){
+                makersTypes.push(bankerType);
+            }else{
+                xianTypes.push(bankerType)
             }
             params.push(obj);
         });
         if(flag && makersTypes.length != 1){
             layer.alert("请选择一位庄家.", {
+                skin: 'layui-layer-lan',
+                closeBtn: 1,
+                icon: 7,
+                offset:['10px' , '71%'],
+                shade: 0.01,
+                anim: 4 //动画类型
+            });
+            flag = false;
+        }
+        if(flag && xianTypes.length == 0){
+            layer.alert("请至少选择一位闲家.", {
                 skin: 'layui-layer-lan',
                 closeBtn: 1,
                 icon: 7,
@@ -472,7 +487,10 @@ var MemberShimobunList  = function () {
             success :function (data,textStatus) {
                 var jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
+                    $("#memberName").val("");
                     parent.layer.msg("保存数据成功.", {icon: 1});
+                    initTableDatas(2);
+                    initMemberShimobunTable2();
                 }else{
                     parent.layer.msg(jsonObj.message, {icon: 5});
                 }

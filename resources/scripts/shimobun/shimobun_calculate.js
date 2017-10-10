@@ -108,7 +108,7 @@ var MemberShimobunCalculateList  = function () {
                    //parentIframeAuto();
                    setTimeout(function () {
                         generateImage();
-                    }, 1000);
+                    }, 500);
                 }else{
                     /* layer.alert(jsonObj.message, {
                          skin: 'layui-layer-lan',
@@ -176,7 +176,7 @@ var MemberShimobunCalculateList  = function () {
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    width:'11%'
+                    //width:'11%'
                 },
                 {
                     field: 'inSource',
@@ -192,7 +192,7 @@ var MemberShimobunCalculateList  = function () {
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    width:'11%'
+                    width:'7%'
                 },
                 {
                     field: 'finalNumber',
@@ -233,7 +233,7 @@ var MemberShimobunCalculateList  = function () {
                     align: 'center',
                     valign: 'middle',
                     sortable: false,
-                    //width:'50px',
+                    width:'8%',
                     formatter: function (value, row, index) {
                         var e = '<a href="javascript:;" class="btn btn-circle btn-sm grey-cascade" style="font-size: 14px;"> 输</a> ';
                         //if(row.finalNumber > finalNumber){
@@ -276,7 +276,7 @@ var MemberShimobunCalculateList  = function () {
         //要将 canvas 的宽高设置成容器宽高的 2 倍
         var canvas = document.createElement("canvas");
         canvas.width = w * 2;
-        canvas.height = h * 2;
+        canvas.height = h * 2-49;
         canvas.style.width = w + "px";
         canvas.style.height = h + "px";
         var context = canvas.getContext("2d");
@@ -288,6 +288,7 @@ var MemberShimobunCalculateList  = function () {
             onrendered: function(canvas) {
                 $("#infoContent").children('.green-sharp').remove();
                 document.getElementById("infoContent").appendChild(canvas);
+                //parentIframeAuto();
             }
         });
     }

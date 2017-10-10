@@ -19,8 +19,12 @@ var RankingList  = function () {
             success :function (data,textStatus) {
                 var jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
-                    initRankingTable(jsonObj.datas.dataGrid);
+                    initRankingTable(jsonObj.datas);
                     gridTable.bootstrapTable('hideLoading');
+                    //parentIframeAuto();
+                    setTimeout(function () {
+                        generateImage();
+                    }, 500);
                 }else{
                     layer.msg(jsonObj.message, {icon: 5});
                 }
@@ -65,7 +69,7 @@ var RankingList  = function () {
                     title: '编号',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true
+                    sortable: false
                 }, {
                     field: 'name',
                     title: '姓名',
@@ -76,7 +80,8 @@ var RankingList  = function () {
                     title: '剩余积分',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true
+                    sortable: false
+
                 }]
         });
     }
@@ -86,17 +91,35 @@ var RankingList  = function () {
      */
     function generateImage() {
         console.log("..开始执行生成图片.............");
-        html2canvas(document.getElementById("infoContent"),{
-            allowTaint: true,
-            taintTest: false,
-            onrendered: function(canvas){
-                $("#infoContent").children('.green-sharp').remove();
+        var w = $("#infoContent").width();
+        var h = $("#infoContent").height();
 
+        //要将 canvas 的宽高设置成容器宽高的 2 倍
+        var canvas = document.createElement("canvas");
+        canvas.width = w * 2;
+        canvas.height = h * 2-49;
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+        var context = canvas.getContext("2d");
+        //然后将画布缩放，将图像放大两倍画到画布上
+        context.scale(2,2);
+
+        html2canvas(document.querySelector("#infoContent"), {
+            canvas: canvas,
+            onrendered: function(canvas) {
+                $("#infoContent").children('.green-sharp').remove();
                 document.getElementById("infoContent").appendChild(canvas);
-            },
-            width: $("#infoContent").width()+14,
-            height: $("#infoContent").height()-22
+               // parentIframeAuto();
+            }
         });
+    }
+
+    /**
+     * 窗口自适应
+     */
+    function parentIframeAuto() {
+        var  layerIframeIndex = commonUtil.layerIframeIndex();
+        parent.layer.iframeAuto(layerIframeIndex);
     }
 
     return {

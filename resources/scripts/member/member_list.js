@@ -117,19 +117,21 @@ var MemberList  = function () {
                     align: 'center',
                     valign: 'middle',
                     sortable: true
-                }, {
-                    field: 'rake',
-                    title: '抽水',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true
-                }, {
+                },
+                {
                     field: 'bottomPour',
                     title: '下注',
                     align: 'center',
                     valign: 'middle',
                     sortable: true
-                }, {
+                },
+                {
+                    field: 'rake',
+                    title: '抽水',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                },{
                     field: 'bankerRebate',
                     title: '庄反水',
                     align: 'center',
