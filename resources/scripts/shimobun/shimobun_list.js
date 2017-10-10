@@ -133,7 +133,7 @@ var MemberShimobunList  = function () {
                         }
                     },*/
                     formatter:function(value,row,index){
-                        return '<input class="form-control" type="number" autocomplete="off" min="0" placeholder="下注值" name="bottomPour" oninput="MemberShimobunList.insertTable2RowData('+row.id+',this)"/>'
+                        return '<input class="form-control" type="number" autocomplete="off" min="0" placeholder="下注值" name="bottomPour" onchange="MemberShimobunList.insertTable2RowData('+row.id+',this)"/>'
                     }
                 }, {
                     field: 'memberBalance',
@@ -255,9 +255,9 @@ var MemberShimobunList  = function () {
                     },*/
                     formatter:function(value,row,index){
                         if(value==99999999){
-                            return '<input class="form-control" type="number" autocomplete="off" placeholder="尾数值" min="0" max="9" name="mantissa" oninput="MemberShimobunList.validTable2Mantissa('+row.id+',this,'+index+')"/>'
+                            return '<input class="form-control" type="number" autocomplete="off" placeholder="尾数值" min="0" max="9" name="mantissa" onchange="MemberShimobunList.validTable2Mantissa('+row.id+',this,'+index+')"/>'
                         }else {
-                            return '<input class="form-control" type="number" autocomplete="off" placeholder="尾数值" min="0" value="'+value+'" max="9" name="mantissa" oninput="MemberShimobunList.validTable2Mantissa('+row.id+',this,'+index+')"/>';
+                            return '<input class="form-control" type="number" autocomplete="off" placeholder="尾数值" min="0" value="'+value+'" max="9" name="mantissa" onchange="MemberShimobunList.validTable2Mantissa('+row.id+',this,'+index+')"/>';
                         }
                     }
                 }, {
