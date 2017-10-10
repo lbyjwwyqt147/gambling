@@ -76,26 +76,11 @@ var MemberList  = function () {
             width: $(window).width(),
             showColumns: false,                        //是否显示列
             pagination: true,
-            queryParams: queryParams,
             minimumCountColumns: 2,
             pageNumber: 1,                       //初始化加载第一页，默认第一页
             pageSize: 20,                       //每页的记录行数（*）
             pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
             uniqueId: "id",                     //每一行的唯一标识，一般为主键列
-            responseHandler:  function (res) {   //在ajax请求成功后，发放数据之前可以对返回的数据进行处理，返回什么部分的数据，比如我的就需要进行整改的！
-                responseHandler(res);
-            },
-            showExport: false,  //是否显示导出按钮
-            buttonsAlign:"right",  //按钮位置
-            exportTypes:['excel'],  //导出文件类型
-            Icons:'glyphicon-export',
-            exportOptions:{
-                ignoreColumn: [0,1],  //忽略某一列的索引
-                fileName: '会员信息',  //文件名称设置
-                worksheetName: 'sheet1',  //表格工作区名称
-                tableName: '会员信息',
-                excelstyles: ['background-color', 'color', 'font-size', 'font-weight']
-            },
             columns: [
                 {
                     field:'state',
@@ -106,8 +91,7 @@ var MemberList  = function () {
                     title: '序号',
                     formatter: function (value, row, index) {
                         return index + 1;
-                    },
-                    class:''
+                    }
                 },*/
                 {
                     field: 'id',
@@ -165,40 +149,6 @@ var MemberList  = function () {
                     sortable: true
                 }]
         });
-    }
-
-
-
-    /**
-     * 查询参数
-     * @param params
-     * @returns {{limit: *, offset: *, pageindex, pageSize: *}}
-     */
-   var  queryParams = function (params) {
-        var param = {
-            searchCondition : $("#memberName").val(),// 参数
-            limit : this.limit, // 页面显示纪录条数
-            offset : this.offset, // 当前页码
-            pageNumber : this.pageNumber,  // 当前页码
-            pageSize : this.pageSize       // 页面显示纪录条数
-        }
-        return param;
-    }
-
-    // 用于server 分页，表格数据量太大的话 不想一次查询所有数据，可以使用server分页查询，数据量小的话可以直接把sidePagination: "server"  改为 sidePagination: "client" ，同时去掉responseHandler: responseHandler就可以了，
-    function responseHandler(res) {
-       console.log(res);
-        if (res) {
-            return {
-                "rows": res.result,
-                "total": res.totalCount
-            };
-        } else {
-            return {
-                "rows": [],
-                "total": 0
-            };
-        }
     }
 
     /**

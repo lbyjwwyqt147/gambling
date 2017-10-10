@@ -144,7 +144,6 @@ var MemberShimobunCalculateList  = function () {
         //初始化表格,动态从服务器加载数据
         gridTable.bootstrapTable({
             method: 'GET',
-            //toolbar: '#toolbar',                        //工具按钮用哪个容器
             dataType: 'json',
             contentType: "application/x-www-form-urlencoded",
             data:listData,
@@ -158,24 +157,12 @@ var MemberShimobunCalculateList  = function () {
             pagination: false,
             minimumCountColumns: 2,
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 20,                       //每页的记录行数（*）
+            pageSize: 100000,                       //每页的记录行数（*）
             pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
             uniqueId: "id",                     //每一行的唯一标识，一般为主键列
             showExport: true,
             exportDataType: 'all',
             columns: [
-                /*  {
-                      field:'state',
-                      checkbox:true
-                  },*/
-                /*   {
-                       field: '',
-                       title: '序号',
-                       formatter: function (value, row, index) {
-                           return index + 1;
-                       },
-                       class:''
-                   },*/
                 {
                     field: 'userId',
                     title: '编号',
@@ -246,14 +233,14 @@ var MemberShimobunCalculateList  = function () {
                     align: 'center',
                     valign: 'middle',
                     sortable: false,
-                   // width:'11%',
+                    //width:'50px',
                     formatter: function (value, row, index) {
-                        var e = '<a href="javascript:;" class="btn btn-circle btn-sm grey-cascade" style="font-size: 18px;"> 输</a> ';
+                        var e = '<a href="javascript:;" class="btn btn-circle btn-sm grey-cascade" style="font-size: 14px;"> 输</a> ';
                         //if(row.finalNumber > finalNumber){
                         if(value > 0){
-                            e = '<a href="javascript:;" class="btn btn-circle btn-sm green-meadow" style="font-size: 18px;"> 赢</a> ';
+                            e = '<a href="javascript:;" class="btn btn-circle btn-sm green-meadow" style="font-size: 14px;"> 赢</a> ';
                         }else if(value == 0) {
-                            e = '<a href="javascript:;" class="btn btn-circle btn-sm purple-plum" style="font-size: 18px;"> 和</a> ';
+                            e = '<a href="javascript:;" class="btn btn-circle btn-sm purple-plum" style="font-size: 14px;"> 合</a> ';
                         }
                         return e;
                     }
@@ -269,23 +256,39 @@ var MemberShimobunCalculateList  = function () {
      */
     function generateImage() {
         console.log("..开始执行生成图片.............");
-      /*  html2canvas(document.body).then(function(canvas) {
-            $(".page-container").remove();
-            document.body.appendChild(canvas);
-           // parentIframeAuto();
-            //document.body.innerHTML=canvas;
-           // $(body).innerHTML(canvas);
-        });*/
-        html2canvas(document.getElementById("infoContent"),{
+      /*  html2canvas(document.getElementById("infoContent"),{
             allowTaint: true,
             taintTest: false,
             onrendered: function(canvas){
+               // var imagedData = canvas.toDataURL("image/jpg");
                 $("#infoContent").children('.green-sharp').remove();
-
+               // var imageHtml = '<img src="'+imagedData+'">';
                 document.getElementById("infoContent").appendChild(canvas);
             },
             width: $("#infoContent").width()+14,
             height: $("#infoContent").height()-22
+        });*/
+
+
+        var w = $("#infoContent").width();
+        var h = $("#infoContent").height();
+
+        //要将 canvas 的宽高设置成容器宽高的 2 倍
+        var canvas = document.createElement("canvas");
+        canvas.width = w * 2;
+        canvas.height = h * 2;
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+        var context = canvas.getContext("2d");
+       //然后将画布缩放，将图像放大两倍画到画布上
+        context.scale(2,2);
+
+        html2canvas(document.querySelector("#infoContent"), {
+            canvas: canvas,
+            onrendered: function(canvas) {
+                $("#infoContent").children('.green-sharp').remove();
+                document.getElementById("infoContent").appendChild(canvas);
+            }
         });
     }
 

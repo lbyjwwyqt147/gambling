@@ -34,8 +34,9 @@ var Index = function () {
                     Index.openPageHtml("../pages/member/member_list.html");
                     break;
                 case "3":
-                    $("#homeModuleTile").html(menuName);
-                    Index.openPageHtml("../pages/shimobun/shimobun_list.html");
+                    openRanking();
+                    //$("#homeModuleTile").html(menuName);
+                   // Index.openPageHtml("../pages/ranking/ranking_list.html");
                     break;
                 case "4":
                     $("#homeModuleTile").html(menuName);
@@ -133,6 +134,24 @@ var Index = function () {
                  });
              }
          });*/
+    }
+
+    /**
+     * 排行榜
+     */
+    function openRanking() {
+        var that = this;
+        //多窗口模式，层叠置顶
+       parent.layer.open({
+            type: 2 ,
+            title: false,
+            area: ['300px' , '90%'],
+            shade: 0.01,
+            shadeClose: true,
+            maxmin: false, //开启最大化最小化按钮
+            offset: '30px',  //间距上边30px
+            content: '../pages/ranking/ranking_list.html'
+        });
     }
 
 

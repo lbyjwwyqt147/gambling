@@ -58,7 +58,7 @@ var MemberShimobunList  = function () {
 
 
     /**
-     * 初始化坐标表格
+     * 初始化左边表格
      * @param listData
      */
     var initMemberShimobunTable1 = function(listData){
@@ -67,7 +67,6 @@ var MemberShimobunList  = function () {
         //初始化表格,动态从服务器加载数据
         table1.bootstrapTable({
             method: 'GET',
-            //toolbar: '#toolbar',                        //工具按钮用哪个容器
             dataType: 'json',
             contentType: "application/x-www-form-urlencoded",
             data:listData,
@@ -79,7 +78,6 @@ var MemberShimobunList  = function () {
             width: $(window).width(),
             showColumns: false,                        //是否显示列
             pagination: true,
-            queryParams: queryParams,
             minimumCountColumns: 2,
             pageNumber: 1,                       //初始化加载第一页，默认第一页
             pageSize: 20,                       //每页的记录行数（*）
@@ -87,20 +85,11 @@ var MemberShimobunList  = function () {
             uniqueId: "id",                     //每一行的唯一标识，一般为主键列
             showExport: true,
             exportDataType: 'all',
-            responseHandler: responseHandler,
             columns: [
               /*  {
                     field:'state',
                     checkbox:true
                 },*/
-                /*   {
-                       field: '',
-                       title: '序号',
-                       formatter: function (value, row, index) {
-                           return index + 1;
-                       },
-                       class:''
-                   },*/
                 {
                     field: 'id',
                     title: 'Member ID',
@@ -126,8 +115,9 @@ var MemberShimobunList  = function () {
                     title: '下注',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true,
-                    editable: {
+                    width:"150px",
+                    sortable: false,
+                    /*editable: {
                         type: 'text',
                         //mode: "inline",
                         validate: function (value) {
@@ -140,13 +130,10 @@ var MemberShimobunList  = function () {
                                     return "下注值必须大于0.";
                                 }
                             }
-                        },
-                        noeditFormatter:function(value,row,index){
-                           console.log("table1 ----- noeditFormatter");
                         }
-                    },
+                    },*/
                     formatter:function(value,row,index){
-                        return 0;
+                        return '<input class="form-control" type="number" autocomplete="off" min="0" placeholder="下注值" name="bottomPour" oninput="MemberShimobunList.insertTable2RowData('+row.id+',this)"/>'
                     }
                 }, {
                     field: 'memberBalance',
@@ -176,7 +163,7 @@ var MemberShimobunList  = function () {
                     }
                 }],
             onEditableSave: function (field, row, oldValue, $el) {
-                row.mantissa=99999999;
+                /*row.mantissa=99999999;
                 row.banker=2;
                 row.bankerTest=2;
                 //将下注后的用户移植到右边表格中显示
@@ -185,7 +172,7 @@ var MemberShimobunList  = function () {
                     row:row
                 });
                 //移除当前行
-                removeTable1Row(row.id);
+                removeTable1Row(row.id);*/
 
             }
         });
@@ -202,7 +189,6 @@ var MemberShimobunList  = function () {
         //初始化表格,动态从服务器加载数据
         table2.bootstrapTable({
             method: 'GET',
-            //toolbar: '#toolbar',                        //工具按钮用哪个容器
             dataType: 'json',
             contentType: "application/x-www-form-urlencoded",
             data:listData,
@@ -214,7 +200,6 @@ var MemberShimobunList  = function () {
             width: $(window).width(),
             showColumns: false,                        //是否显示列
             pagination: true,
-            queryParams: queryParams,
             minimumCountColumns: 2,
             pageNumber: 1,                       //初始化加载第一页，默认第一页
             pageSize: 20,                       //每页的记录行数（*）
@@ -222,20 +207,11 @@ var MemberShimobunList  = function () {
             uniqueId: "id",                     //每一行的唯一标识，一般为主键列
             showExport: true,
             exportDataType: 'all',
-            responseHandler: responseHandler,
             columns: [
              /*   {
                     field:'state',
                     checkbox:true
                 },*/
-                /*   {
-                       field: '',
-                       title: '序号',
-                       formatter: function (value, row, index) {
-                           return index + 1;
-                       },
-                       class:''
-                   },*/
                 {
                     field: 'id',
                     title: 'Member ID',
@@ -261,10 +237,9 @@ var MemberShimobunList  = function () {
                     align: 'center',
                     valign: 'middle',
                     width:"150px",
-                    sortable: true,
-                    editable: {
+                    sortable: false,
+                  /*  editable: {
                         type: 'text',
-                        //mode: "inline",
                         validate: function (value) {
                             if ($.trim(value) == '') {
                                 return '请填写尾数值!';
@@ -276,16 +251,13 @@ var MemberShimobunList  = function () {
                                 }
                             }
 
-                        },
-                        formatter:function(value,row,index){
-                            console.log("dsddddddddddddddddddddddddddd ............. ");
                         }
-                    },
+                    },*/
                     formatter:function(value,row,index){
                         if(value==99999999){
-                            return "点击填写尾数值";
+                            return '<input class="form-control" type="number" autocomplete="off" placeholder="尾数值" min="0" max="9" name="mantissa" oninput="MemberShimobunList.validTable2Mantissa('+row.id+',this,'+index+')"/>'
                         }else {
-                            return value;
+                            return '<input class="form-control" type="number" autocomplete="off" placeholder="尾数值" min="0" value="'+value+'" max="9" name="mantissa" oninput="MemberShimobunList.validTable2Mantissa('+row.id+',this,'+index+')"/>';
                         }
                     }
                 }, {
@@ -345,6 +317,8 @@ var MemberShimobunList  = function () {
         }
     });
 
+
+
     /**
      * 移除左表行
      * @param rowId
@@ -365,37 +339,6 @@ var MemberShimobunList  = function () {
     $("#query-btn").click(function(){
         initTableDatas(2);
     });
-
-    /**
-     * 查询参数
-     * @param params
-     * @returns {{limit: *, offset: *, pageindex, pageSize: *}}
-     */
-    var  queryParams = function (params) {
-        var param = {
-            memberName : $("#memberName").val(),// 参数
-            limit : this.limit, // 页面显示纪录条数
-            offset : this.offset, // 当前页码
-            pageNumber : this.pageNumber,  // 当前页码
-            pageSize : this.pageSize       // 页面显示纪录条数
-        }
-        return param;
-    }
-
-    // 用于server 分页，表格数据量太大的话 不想一次查询所有数据，可以使用server分页查询，数据量小的话可以直接把sidePagination: "server"  改为 sidePagination: "client" ，同时去掉responseHandler: responseHandler就可以了，
-    function responseHandler(res) {
-        if (res) {
-            return {
-                "rows": res.result,
-                "total": res.totalCount
-            };
-        } else {
-            return {
-                "rows": [],
-                "total": 0
-            };
-        }
-    }
 
     /**
      * 计算事件
@@ -486,14 +429,19 @@ var MemberShimobunList  = function () {
             id: 'calculate-page',
             type: 2 ,
             title: "",
-            area: ['40%' , '90%'],
+            area: ['588px' , '90%'],
             shade: 0.01,
             shadeClose: false,
             maxmin: false, //开启最大化最小化按钮
             offset: '20px',  //间距上边100px
             content: '../../resources/pages/shimobun/shimobun_calculate.html?params='+params+'&luckNumber='+luckyNumber,
+            //btn: ['复制','保存', '关闭'],
             btn: ['保存', '关闭'],
             move: false,
+          /*  btn1: function(index,layero){
+                console.log(layero.find('iframe')[0]);
+                layero.find('iframe')[0].contentWindow.copyImage();
+            },*/
             yes: function(index,layero){
                 //layer.getChildFrame('body', index);
                 // 调用子窗口中的方法
@@ -548,7 +496,7 @@ var MemberShimobunList  = function () {
                     skin: 'layui-layer-lan',
                     closeBtn: 1,
                     icon: 7,
-                    offset:['10px' , '71%'],
+                    offset:['10px' , '45%'],
                     shade: 0.01,
                     anim: 4 //动画类型
                 });
@@ -602,6 +550,65 @@ var MemberShimobunList  = function () {
                 removeTable1Row(rowId);
             }
 
+        },
+        /**
+         * 向右边表格中插入行数据
+         * @param rowId
+         */
+        insertTable2RowData:function(rowId,obj) {
+            var flag = true;
+            var row = table1.bootstrapTable('getRowByUniqueId', rowId.toString());
+            var shimobun = $(obj).val();
+            var inputValue = $.trim(shimobun);
+            if (inputValue == '') {
+                flag = false;
+                //parent.layer.msg("请填写下注值!", {icon: 5,offset:['30%' , '30%']});
+            }else{
+                var patrn = /^\+?[1-9][0-9]*$/;
+                var str = $.trim(inputValue);
+                if (!patrn.exec(str)){
+                    flag = false;
+                    parent.layer.msg(row.memberName+"的下注值必须大于0.", {icon: 5,offset:['35%' , '39%']});
+                }
+            }
+            if(flag){
+                row.bottomPour = inputValue;
+                row.mantissa=99999999;
+                row.banker=2;
+                row.bankerTest=2;
+                //将下注后的用户移植到右边表格中显示
+                table2.bootstrapTable('insertRow', {
+                    index: 1,
+                    row:row
+                });
+                //移除当前行
+                removeTable1Row(row.id);
+            }
+        },
+        /**
+         * 验证右边表格的尾数值
+         * @param rowId
+         */
+        validTable2Mantissa:function(rowId,obj,index) {
+            var flag = true;
+            var row = table2.bootstrapTable('getRowByUniqueId', rowId.toString());
+            var mantissa = $(obj).val();
+            var inputValue = $.trim(mantissa);
+            if (inputValue == '') {
+                flag = false;
+            }else{
+                var patrn = /^[0-9]$/;
+                var str = $.trim(inputValue);
+                if (!patrn.exec(str)){
+                    flag = false;
+                    parent.layer.msg(row.memberName+"的尾数值只能填写0~9之间的整数..", {icon: 5,offset:['35%' , '75%']});
+                }
+            }
+            if(flag){
+                row.mantissa = inputValue;
+                //更新当前行数据
+                table2.bootstrapTable('updateRow', {index: index, row: row});
+            }
         }
     };
 }();
