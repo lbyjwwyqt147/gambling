@@ -86,16 +86,17 @@ var SystemSettingsForm  = function () {
                 key:"cut",
                 value:$("#cut").val(),
                 type:"1",
-                id:$("cutid").val()
+                id:$("#cutid").val()
             };
             var pwdObj = {
                 key:"password",
                 value:$("#password").val(),
                 type:"1",
-                id:$("pwdid").val()
+                id:$("#pwdid").val()
             };
             params.push(cutObj);
             params.push(pwdObj);
+           // console.log(JSON.stringify(params));
              $.ajax({
                  url: basicUrl+ "/systemController/saveList",
                  data:{
@@ -153,6 +154,7 @@ var SystemSettingsForm  = function () {
             crossDomain: true,
             success :function (data,textStatus) {
                 var jsonObj = commonUtil.stringToJson(data);
+                //console.log(jsonObj);
                 if(jsonObj.status == 0){
                     $.each(jsonObj.datas,function (i,v) {
                         if(v.key == "cut"){
@@ -160,7 +162,7 @@ var SystemSettingsForm  = function () {
                             $("input[name='cutid']").val(v.id);
                         }else if (v.key == "password"){
                             $("input[name='password']").val(v.value);
-                            $("input[name='pwdid']").val(v.value);
+                            $("input[name='pwdid']").val(v.id);
                         }
                     });
                 }else{
