@@ -78,7 +78,7 @@ var MemberShimobunCalculateList  = function () {
             },
             crossDomain: true,
             success :function (data,textStatus) {
-                console.log(data);
+               // console.log(data);
                 var  jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
                     var datas = jsonObj.datas;

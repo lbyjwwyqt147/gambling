@@ -5,6 +5,9 @@ var MemberShimobunList  = function () {
     //右边表格
     var table2 = $('#member-shimobun-table2-pagination');
     var luckyNumber = "";
+    //保存按钮点击次数
+    var tempSaveCount = 0;
+
 
     /**
      * 初始化左边表格数据
@@ -133,7 +136,12 @@ var MemberShimobunList  = function () {
                         }
                     },*/
                     formatter:function(value,row,index){
-                        return '<input class="form-control" type="number" autocomplete="off" min="0" placeholder="下注值" name="bottomPour" onchange="MemberShimobunList.insertTable2RowData('+row.id+',this)"/>'
+                        // onchange="MemberShimobunList.insertTable2RowData('+row.id+',this)"
+                        if(row.tmp){
+                            return '<input class="form-control bottomPour" type="number" value="'+value+'" autocomplete="off" min="0" placeholder="下注值" name="bottomPour" onmousedown="if(event.button == 2)MemberShimobunList.insertTable2RowData('+row.id+',this,'+index+');" onchange="MemberShimobunList.setTable1RowJson('+row.id+',this,'+index+')"/>'
+                        }else{
+                            return '<input class="form-control bottomPour" type="number"  autocomplete="off" min="0" placeholder="下注值" name="bottomPour" onmousedown="if(event.button == 2)MemberShimobunList.insertTable2RowData('+row.id+',this,'+index+');" onchange="MemberShimobunList.setTable1RowJson('+row.id+',this,'+index+')"/>'
+                        }
                     }
                 }, {
                     field: 'memberBalance',
@@ -176,6 +184,12 @@ var MemberShimobunList  = function () {
 
             }
         });
+
+        $('.bottomPour').bind("contextmenu",
+            function(){
+                return false;
+            }
+        );
     }
 
 
@@ -305,6 +319,7 @@ var MemberShimobunList  = function () {
                 // 单元格保存事件
             }
         });
+
     }
 
     /**
@@ -316,7 +331,6 @@ var MemberShimobunList  = function () {
             return false;
         }
     });
-
 
 
     /**
@@ -452,6 +466,7 @@ var MemberShimobunList  = function () {
             content: '../../resources/pages/shimobun/shimobun_calculate.html?params='+params+'&luckNumber='+luckyNumber,
             //btn: ['复制','保存', '关闭'],
             btn: ['保存', '关闭'],
+            resize:false,
             move: false,
           /*  btn1: function(index,layero){
                 console.log(layero.find('iframe')[0]);
@@ -461,8 +476,18 @@ var MemberShimobunList  = function () {
                 //layer.getChildFrame('body', index);
                 // 调用子窗口中的方法
                // layero.find('iframe')[0].contentWindow.generateImage();
+                parent.$(".layui-layer-btn0").css({
+                    "color":"gray",
+                    "background-color":"lightgray",
+                    "cursor":"no-drop"
+                });
+                if(tempSaveCount == 0){
+                    saveCalculateResult();
+                }
 
-                saveCalculateResult();
+                //parent.$(".layui-layer-btn0").addClass("layui-btn layui-btn-disabled");
+
+               // saveCalculateResult();
             },
             btn2: function(index, layero){
                 layer.closeAll();
@@ -487,15 +512,26 @@ var MemberShimobunList  = function () {
             success :function (data,textStatus) {
                 var jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
+                    tempSaveCount = 1;
                     $("#memberName").val("");
                     parent.layer.msg("保存数据成功.", {icon: 1});
                     initTableDatas(2);
                     initMemberShimobunTable2();
                 }else{
+                    parent.$(".layui-layer-btn0").css({
+                        "color":"",
+                        "background-color":"",
+                        "cursor":""
+                    });
                     parent.layer.msg(jsonObj.message, {icon: 5});
                 }
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) {
+                parent.$(".layui-layer-btn0").css({
+                    "color":"",
+                    "background-color":"",
+                    "cursor":""
+                });
                 parent.layer.msg("网络错误!", {icon: 5});
             }
         });
@@ -550,8 +586,26 @@ var MemberShimobunList  = function () {
                 row:row
             });
         },
+
         /**
-         * 向右边表格插入行
+         * 设置table1的下注值
+         * @param rowId
+         * @param v
+         * @param index
+         */
+        setTable1RowJson:function(rowId,v,index){
+            var row = table1.bootstrapTable('getRowByUniqueId', rowId);
+            if(row != null){
+                var inputValue = $.trim($(v).val());
+                row.bottomPour = inputValue;
+                row.tmp = 1;
+                //更新当前行数据
+                table1.bootstrapTable('updateRow', {index: index, row: row});
+            }
+        },
+
+        /**
+         * 点击“庄”向右边表格插入行
          * @param rowId
          */
         insertTable2Row :function(rowId,v){
@@ -570,7 +624,7 @@ var MemberShimobunList  = function () {
 
         },
         /**
-         * 向右边表格中插入行数据
+         * 输入“下注值”向右边表格中插入行数据
          * @param rowId
          */
         insertTable2RowData:function(rowId,obj) {
@@ -601,6 +655,12 @@ var MemberShimobunList  = function () {
                 });
                 //移除当前行
                 removeTable1Row(row.id);
+
+                $('.bottomPour').bind("contextmenu",
+                    function(){
+                        return false;
+                    }
+                );
             }
         },
         /**
