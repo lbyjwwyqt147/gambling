@@ -345,7 +345,12 @@ var MemberList  = function () {
      * 导出事件
      */
     $('#data-download').on('click', function(){
-        gridTable.tableExport({type: 'excel', escape: 'false',fileName:'会员信息',worksheetName:'会员信息'
+        gridTable.tableExport({
+            type: 'excel',
+            escape: 'false',
+            fileName:'会员信息',
+            worksheetName:'会员信息',
+            ignoreColumn: [0]
         });
     });
 
