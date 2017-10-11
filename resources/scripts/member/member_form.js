@@ -99,7 +99,10 @@ var MemberForm  = function () {
                         //刷新父页面表格数据
                         window.parent.queryData(2);
                     }else{
-                        layer.msg(jsonObj.message, {icon: 5});
+                        var msg = jsonObj.message;
+                        if(msg.indexOf("抽水") == -1){
+                            layer.msg(msg, {icon: 5});
+                        }
                        /* layer.alert(jsonObj.message, {
                             skin: 'layui-layer-lan',
                             closeBtn: 1,
