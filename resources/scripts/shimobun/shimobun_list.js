@@ -367,7 +367,7 @@ var MemberShimobunList  = function () {
         var table2Datas = table2.bootstrapTable('getData');
         $.each(table2Datas,function(i,v){
             if(v.mantissa == 99999999){
-                layer.alert(v.memberName+"的尾数值未填写.", {
+                layer.alert(v.memberName+"的尾数值未填写或者填写有错误.", {
                     skin: 'layui-layer-lan',
                     closeBtn: 1,
                     icon: 7,
@@ -484,13 +484,14 @@ var MemberShimobunList  = function () {
                 if(tempSaveCount == 0){
                     saveCalculateResult();
                 }
-
-                //parent.$(".layui-layer-btn0").addClass("layui-btn layui-btn-disabled");
-
                // saveCalculateResult();
             },
             btn2: function(index, layero){
+                tempSaveCount = 0;
                 layer.closeAll();
+            },
+            end:function () {
+                tempSaveCount = 0;
             }
 
         });
