@@ -1,6 +1,7 @@
 var MemberList  = function () {
     var basicUrl = commonUtil.httpUrl;
     var  gridTable = $('#member-table-pagination');
+    var memberId = commonUtil.getUrlParams("p");
 
     /**
      * 初始化会员表格数据
@@ -11,7 +12,8 @@ var MemberList  = function () {
         $.ajax({
             url: basicUrl+ "/userController/userList",
             data:{
-                searchCondition : searchConditionValue
+                searchCondition : searchConditionValue,
+                identity:memberId
             },
             type:"POST",
             dataType:"json",
@@ -29,6 +31,8 @@ var MemberList  = function () {
                         initMemberTable(jsonObj.datas.dataGrid);
                     }
                     gridTable.bootstrapTable('hideLoading');
+                }else if(jsonObj.status == -1){
+                    commonUtil.anewLoginLayer();
                 }else{
                    /* layer.alert(data.message, {
                         skin: 'layui-layer-lan',
@@ -214,7 +218,7 @@ var MemberList  = function () {
             title = "新增会员信息";
         }else {
             title = "修改会员信息";
-            formHeight = "305px";
+            formHeight = "355px";
         }
         var that = this;
         //多窗口模式，层叠置顶
@@ -226,7 +230,8 @@ var MemberList  = function () {
             shadeClose: false,
             maxmin: false, //开启最大化最小化按钮
             offset: '30px',  //间距上边30px
-            content: '../../../resources/pages/member/member_form.html?params='+params
+            resize:false,
+            content: '../../../resources/pages/member/member_form.html?params='+params+'&p='+memberId
         });
         
     }
@@ -273,6 +278,9 @@ var MemberList  = function () {
         $.ajax({
             url: basicUrl+ "/userController/countCut",
             type:"POST",
+            data:{
+                identity:memberId
+            },
             dataType:"json",
             xhrFields: {
                 withCredentials: true
@@ -282,6 +290,8 @@ var MemberList  = function () {
                 var jsonObj = commonUtil.stringToJson(data);
                 if(jsonObj.status == 0){
                     layer.alert('系统总抽水分数:'+jsonObj.datas, {icon: 6, shade: 0.01});
+                }else if(jsonObj.status == -1){
+                    commonUtil.anewLoginLayer();
                 }else{
                     layer.msg(jsonObj.message, {icon: 5});
                 }
@@ -308,6 +318,9 @@ var MemberList  = function () {
             yes: function(index,layero){
                 $.ajax({
                     url: basicUrl+ "/userController/clearAll",
+                    data:{
+                        identity:memberId
+                    },
                     type:"POST",
                     dataType:"json",
                     xhrFields: {
@@ -322,6 +335,8 @@ var MemberList  = function () {
                                     layer.closeAll();
                                 }});
                             initTableDatas(1);
+                        }else if(jsonObj.status == -1){
+                            commonUtil.anewLoginLayer();
                         }else{
                             layer.msg(jsonObj.message, {icon: 5});
                         }
@@ -366,7 +381,8 @@ var MemberList  = function () {
                  type:"POST",
                  dataType:"json",
                  data:{
-                     userIdString:ids.join()
+                     userIdString:ids.join(),
+                     identity:memberId
                  },
                  xhrFields: {
                      withCredentials: true
@@ -382,6 +398,8 @@ var MemberList  = function () {
                          });
 
                          layer.msg('删除会员信息成功.', {icon: 1});
+                     }else if(jsonObj.status == -1){
+                         commonUtil.anewLoginLayer();
                      }else{
                          layer.msg(jsonObj.message, {icon: 5});
                          /*layer.alert(data.message, {

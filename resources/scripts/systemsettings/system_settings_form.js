@@ -1,6 +1,7 @@
 var SystemSettingsForm  = function () {
     var basicUrl = commonUtil.httpUrl;
     var basicForm = $("#rakeForm");
+    var memberId = commonUtil.getUrlParams("p");
 
     /**
      * 保存数据
@@ -22,7 +23,7 @@ var SystemSettingsForm  = function () {
                     required: true
                 },
                 password:{
-                    required:true
+                    required:false
                 }
                /* directCommission: {
                     required: true
@@ -88,19 +89,24 @@ var SystemSettingsForm  = function () {
                 type:"1",
                 id:$("#cutid").val()
             };
-            var pwdObj = {
-                key:"password",
-                value:$("#password").val(),
-                type:"1",
-                id:$("#pwdid").val()
-            };
+            var pwd = $.trim($("#password").val());
+            if(pwd != ""){
+                var hash = md5(pwd);
+                var pwdObj = {
+                    key:"password",
+                    value:hash,
+                    type:"1",
+                    id:$("#pwdid").val()
+                };
+                params.push(pwdObj);
+            }
+
             params.push(cutObj);
-            params.push(pwdObj);
-           // console.log(JSON.stringify(params));
              $.ajax({
                  url: basicUrl+ "/systemController/saveList",
                  data:{
-                     params:JSON.stringify(params)
+                     params:JSON.stringify(params),
+                     identity:memberId
                  },
                  type:"POST",
                  dataType:"json",
@@ -112,6 +118,8 @@ var SystemSettingsForm  = function () {
                      var jsonObj = commonUtil.stringToJson(data);
                      if(jsonObj.status == 0){
                          layer.msg('保存系统设置信息成功.', {icon: 1});
+                     }else if(jsonObj.status == -1){
+                         commonUtil.anewLoginLayer();
                      }else{
                         /* layer.alert(data.message, {
                              skin: 'layui-layer-lan',
@@ -131,7 +139,6 @@ var SystemSettingsForm  = function () {
                          anim: 4 //动画类型
                      });*/
                      layer.msg('网络出现错误!', {icon: 5});
-
                  }
              });
 
@@ -146,6 +153,9 @@ var SystemSettingsForm  = function () {
     var setFormValue = function () {
         $.ajax({
             url: basicUrl+ "/systemController/getAllValue",
+            data:{
+                identity:memberId
+            },
             type:"POST",
             dataType:"json",
             xhrFields: {
@@ -161,10 +171,12 @@ var SystemSettingsForm  = function () {
                             $("input[name='cut']").val(v.value);
                             $("input[name='cutid']").val(v.id);
                         }else if (v.key == "password"){
-                            $("input[name='password']").val(v.value);
+                            //$("input[name='password']").val(v.value);
                             $("input[name='pwdid']").val(v.id);
                         }
                     });
+                }else if(jsonObj.status == -1){
+                    commonUtil.anewLoginLayer();
                 }else{
                   /*  layer.alert(jsonObj.message, {
                         skin: 'layui-layer-lan',

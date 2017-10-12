@@ -147,7 +147,8 @@
         $.ajax({
             url: basicqueryUrl+ "/userController/userList",
             data:{
-                searchCondition : searchConditionValue
+                searchCondition : searchConditionValue,
+                identity:commonUtil.getUrlParams("p")
             },
             type:"POST",
             dataType:"json",

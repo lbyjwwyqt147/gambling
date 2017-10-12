@@ -2,6 +2,7 @@ var MemberForm  = function () {
     var basicUrl = commonUtil.httpUrl;
     var basicForm = $("#memberForm");
     var  params = commonUtil.getUrlParams("params");
+    var memberId = commonUtil.getUrlParams("p");
 
     /**
      * 关闭事件
@@ -77,6 +78,7 @@ var MemberForm  = function () {
     var submitForm = function(){
         commonUtil.inputTrim();
         if (basicForm.validate().form()) {
+           $("#identity").val(memberId);
            $.ajax({
                 url: basicUrl+ "/userController/addOrUpUser",
                 data:$("#memberForm").serialize(),
@@ -98,6 +100,8 @@ var MemberForm  = function () {
                             });
                         //刷新父页面表格数据
                         window.parent.queryData(2);
+                    }else if(jsonObj.status == -1){
+                        commonUtil.anewLoginLayer();
                     }else{
                         var msg = jsonObj.message;
                         if(msg.indexOf("抽水") == -1){
@@ -154,7 +158,11 @@ var MemberForm  = function () {
             $("input[name='source']").val(jsonValue.memberBalance);
             // 会员抽水
             $("input[name='cutSourceSum']").val(jsonValue.rake);
+            $("input[name='bankerRebate']").val(jsonValue.bankerRebate);
+
             $("#rake-input").show();
+            $("#bankerRebate-input").show();
+
         }
     }
 

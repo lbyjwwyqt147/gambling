@@ -1,6 +1,7 @@
 var RankingList  = function () {
     var basicUrl = commonUtil.httpUrl;
     var  gridTable = $('#ranking-table');
+    var  memberId = commonUtil.getUrlParams("p");
 
     /**
      * 初始化排行榜表格数据
@@ -9,6 +10,9 @@ var RankingList  = function () {
         gridTable.bootstrapTable('showLoading');
         $.ajax({
             url: basicUrl+ "/userController/getUserByMoney",
+            data:{
+                identity:memberId
+            },
             type:"GET",
             dataType:"json",
             xhrFields: {
@@ -25,6 +29,8 @@ var RankingList  = function () {
                     setTimeout(function () {
                         generateImage();
                     }, 500);
+                }else if(jsonObj.status == -1){
+                    commonUtil.anewLoginLayer();
                 }else{
                     layer.msg(jsonObj.message, {icon: 5});
                 }

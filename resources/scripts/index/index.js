@@ -1,5 +1,6 @@
 var Index = function () {
     var basicUrl = commonUtil.httpUrl;
+    var memberId = commonUtil.getUrlParams("p");
 
     /**
      * 退出事件
@@ -12,7 +13,20 @@ var Index = function () {
      * 初始化首页事件
      */
     var  initHome = function () {
-
+         if(memberId == null){
+             layer.alert('你未登录,请登录系统.', {
+                 skin: 'layui-layer-lan',
+                 closeBtn: 1,
+                 shade: 0.01,
+                 icon: 7,
+                 anim: 4,
+                 time:5000,
+                 end:function(){
+                     window.location.href = "../../index.html";
+                 }
+             });
+             return ;
+         }
         $(".homeTile").hide();
         // 菜单项点击事件
         $('.nav-link').click(function () {
@@ -100,12 +114,10 @@ var Index = function () {
      * 退出系统
      */
     function logout() {
-        window.location.href = "../../index.html";
-
-        /* $.ajax( {
-             url: basicUrl+ "/logout",
+        $.ajax( {
+             url: basicUrl+ "/systemController/loginOut",
              data:{
-
+                 identity:memberId
              },
              xhrFields: {
                  withCredentials: true
@@ -117,23 +129,14 @@ var Index = function () {
                  withCredentials: true
              },
              crossDomain: true,
-             beforeSend: function(request) {
-                 request.setRequestHeader("Authorization", token);
-             },
              success:function(data) {
-                 console.log(data);
-                 console.log(commonUtil.getIp());
-                 window.location.href = "http://"+commonUtil.getIp();
-
-
+                 commonUtil.memberId = "";
+                 window.location.href = "../../index.html";
              },
              error : function() {
-                 layer.open({
-                     title: '提示',
-                     content: '网络错误.'
-                 });
+                 layer.msg("网络错误!", {icon: 5});
              }
-         });*/
+         });
     }
 
     /**
@@ -150,7 +153,7 @@ var Index = function () {
             shadeClose: true,
             maxmin: false, //开启最大化最小化按钮
             offset: '30px',  //间距上边30px
-            content: '../pages/ranking/ranking_list.html'
+            content: '../pages/ranking/ranking_list.html?p='+memberId
         });
     }
 
@@ -173,7 +176,7 @@ var Index = function () {
             if(url != "" || url != null){
                 //计算window 高度
                 changeFrameHeight();
-                $("#mainIframe").attr("src",url);
+                $("#mainIframe").attr("src",url+"?p="+memberId);
             }
         }
     };

@@ -54,9 +54,9 @@ var Login = function () {
 		    function startLogin() {
 				commonUtil.inputTrim();
                 if ($('.login-form').validate().form()) {
-                	/*var pwd = $("#password").val();
+                	var pwd = $("#password").val();
                     var hash = md5(pwd);
-                    $("#password").val(hash);*/
+                    $("#password").val(hash);
                     $.ajax({
                         url: commonUtil.httpUrl + "/systemController/login",
                         data: $(".login-form").serialize(),
@@ -66,7 +66,7 @@ var Login = function () {
                         	var jsonObj = commonUtil.stringToJson(data);
                             if(jsonObj.status == 0){
                             	console.log("登录成功..........");
-                               // window.location.href = "resources/pages/home.html";
+                                window.location.href = "resources/pages/home.html?p="+jsonObj.datas;
                             }else{
                               /*  layer.alert(jsonObj.message, {
                                     skin: 'layui-layer-lan',

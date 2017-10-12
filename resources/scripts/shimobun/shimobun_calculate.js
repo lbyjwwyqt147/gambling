@@ -4,6 +4,7 @@ var MemberShimobunCalculateList  = function () {
     var jsonParams = commonUtil.getUrlParams("params");
     var luckNumber = commonUtil.getUrlParams("luckNumber");
     var finalNumber = 0;
+    var memberId = commonUtil.getUrlParams("p");
 
     /**
      * 获取幸运数字
@@ -12,6 +13,9 @@ var MemberShimobunCalculateList  = function () {
         $.ajax({
             url: basicUrl+ "/collectPointController/lastSomeNumber",
             type:"GET",
+            data:{
+                identity:memberId
+            },
             dataType:"json",
             xhrFields: {
                 withCredentials: true
@@ -38,6 +42,8 @@ var MemberShimobunCalculateList  = function () {
 
 
 
+                }else if(jsonObj.status == -1){
+                    commonUtil.anewLoginLayer();
                 }else{
                    /* layer.alert(data.msg, {
                         skin: 'layui-layer-lan',
@@ -69,7 +75,8 @@ var MemberShimobunCalculateList  = function () {
             url: basicUrl+ "/collectPointController/openResult",
             data:{
                 params:jsonParams,
-                luckNumber:luckNumber
+                luckNumber:luckNumber,
+                identity:memberId
             },
             type:"GET",
             dataType:"json",
@@ -109,6 +116,8 @@ var MemberShimobunCalculateList  = function () {
                    setTimeout(function () {
                         generateImage();
                     }, 500);
+                }else if(jsonObj.status == -1){
+                    commonUtil.anewLoginLayer();
                 }else{
                     /* layer.alert(jsonObj.message, {
                          skin: 'layui-layer-lan',

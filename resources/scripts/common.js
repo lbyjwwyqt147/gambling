@@ -90,6 +90,23 @@ var commonUtil = {
     },
 
     /**
+     * 重新登录提示框
+     * @returns {string}
+     */
+    anewLoginLayer:function () {
+        parent.layer.alert('操作超时,请登录系统.', {
+            skin: 'layui-layer-lan',
+            closeBtn: 1,
+            shade: 0.01,
+            icon: 7,
+            anim: 4,
+            time:5000,
+            end:function(){
+                window.location.href = "../../index.html";
+            }
+        });
+    },
+    /**
      * json 字符串转为json 对象
      * @param data
      * @returns {*}

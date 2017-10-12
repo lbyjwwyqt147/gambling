@@ -7,6 +7,7 @@ var MemberShimobunList  = function () {
     var luckyNumber = "";
     //保存按钮点击次数
     var tempSaveCount = 0;
+    var memberId = commonUtil.getUrlParams("p");
 
 
     /**
@@ -18,7 +19,8 @@ var MemberShimobunList  = function () {
         $.ajax({
             url: basicUrl+ "/userController/userList",
             data:{
-                searchCondition : searchConditionValue
+                searchCondition : searchConditionValue,
+                identity:memberId
             },
             type:"POST",
             dataType:"json",
@@ -35,6 +37,8 @@ var MemberShimobunList  = function () {
                         initMemberShimobunTable1(jsonObj.datas.dataGrid);
                     }
                     table1.bootstrapTable('hideLoading');
+                }else if(jsonObj.status == -1){
+                    commonUtil.anewLoginLayer();
                 }else{
                    /* layer.alert(jsonObj.message, {
                         skin: 'layui-layer-lan',
@@ -463,7 +467,7 @@ var MemberShimobunList  = function () {
             shadeClose: false,
             maxmin: false, //开启最大化最小化按钮
             offset: '20px',  //间距上边100px
-            content: '../../resources/pages/shimobun/shimobun_calculate.html?params='+params+'&luckNumber='+luckyNumber,
+            content: '../../resources/pages/shimobun/shimobun_calculate.html?params='+params+'&luckNumber='+luckyNumber+'&p='+memberId,
             //btn: ['复制','保存', '关闭'],
             btn: ['保存', '关闭'],
             resize:false,
@@ -504,6 +508,9 @@ var MemberShimobunList  = function () {
     function saveCalculateResult() {
         $.ajax({
             url: basicUrl+ "/collectPointController/dealOrderData",
+            data:{
+                identity:memberId
+            },
             type:"POST",
             dataType:"json",
             xhrFields: {
@@ -518,6 +525,8 @@ var MemberShimobunList  = function () {
                     parent.layer.msg("保存数据成功.", {icon: 1});
                     initTableDatas(2);
                     initMemberShimobunTable2();
+                }else if(jsonObj.status == -1){
+                    commonUtil.anewLoginLayer();
                 }else{
                     parent.$(".layui-layer-btn0").css({
                         "color":"",
