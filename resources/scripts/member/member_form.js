@@ -83,7 +83,7 @@ var MemberForm  = function () {
                 url: basicUrl+ "/userController/addOrUpUser",
                 data:$("#memberForm").serialize(),
                 type:"POST",
-                dataType:"text",
+                dataType:"json",
                 xhrFields: {
                     withCredentials: true
                 },

@@ -16,7 +16,7 @@ var MemberList  = function () {
                 identity:memberId
             },
             type:"POST",
-            dataType:"text",
+            dataType:"json",
             xhrFields: {
                 withCredentials: true
             },
@@ -281,7 +281,7 @@ var MemberList  = function () {
             data:{
                 identity:memberId
             },
-            dataType:"text",
+            dataType:"json",
             xhrFields: {
                 withCredentials: true
             },
@@ -379,7 +379,7 @@ var MemberList  = function () {
             $.ajax({
                  url: basicUrl+ "/userController/deleteUserList",
                  type:"POST",
-                 dataType:"text",
+                 dataType:"json",
                  data:{
                      userIdString:ids.join(),
                      identity:memberId

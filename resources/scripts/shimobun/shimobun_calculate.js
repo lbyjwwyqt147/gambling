@@ -16,7 +16,7 @@ var MemberShimobunCalculateList  = function () {
             data:{
                 identity:memberId
             },
-            dataType:"text",
+            dataType:"json",
             xhrFields: {
                 withCredentials: true
             },
@@ -79,7 +79,7 @@ var MemberShimobunCalculateList  = function () {
                 identity:memberId
             },
             type:"GET",
-            dataType:"text",
+            dataType:"json",
             xhrFields: {
                 withCredentials: true
             },

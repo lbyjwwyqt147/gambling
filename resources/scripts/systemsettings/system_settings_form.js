@@ -109,7 +109,7 @@ var SystemSettingsForm  = function () {
                      identity:memberId
                  },
                  type:"POST",
-                 dataType:"text",
+                 dataType:"json",
                  xhrFields: {
                      withCredentials: true
                  },
@@ -157,7 +157,7 @@ var SystemSettingsForm  = function () {
                 identity:memberId
             },
             type:"POST",
-            dataType:"text",
+            dataType:"json",
             xhrFields: {
                 withCredentials: true
             },
