@@ -94,7 +94,7 @@ var commonUtil = {
      * @returns {string}
      */
     anewLoginLayer:function () {
-        parent.layer.alert('操作超时,请登录系统.', {
+        layer.alert('操作超时,请登录系统.', {
             skin: 'layui-layer-lan',
             closeBtn: 1,
             shade: 0.01,
@@ -102,7 +102,7 @@ var commonUtil = {
             anim: 4,
             time:5000,
             end:function(){
-                window.location.href = "../../index.html";
+                parent.location.href = "../../../index.html";
             }
         });
     },
