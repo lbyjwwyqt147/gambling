@@ -23,7 +23,7 @@ var MemberShimobunList  = function () {
                 identity:memberId
             },
             type:"POST",
-            dataType:"json",
+            dataType:"text",
             xhrFields: {
                 withCredentials: true
             },
@@ -512,7 +512,7 @@ var MemberShimobunList  = function () {
                 identity:memberId
             },
             type:"POST",
-            dataType:"json",
+            dataType:"text",
             xhrFields: {
                 withCredentials: true
             },

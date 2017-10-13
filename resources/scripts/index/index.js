@@ -124,7 +124,7 @@ var Index = function () {
              },
              crossDomain: true,
              type:'GET',
-             dataType:'JSON',
+             dataType:'text',
              xhrFields: {
                  withCredentials: true
              },

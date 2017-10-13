@@ -61,7 +61,7 @@ var Login = function () {
                         url: commonUtil.httpUrl + "/systemController/login",
                         data: $(".login-form").serialize(),
                         type: "POST",
-                        dataType: "json",
+                        dataType: "text",
                         success: function (data, textStatus) {
                         	var jsonObj = commonUtil.stringToJson(data);
                             if(jsonObj.status == 0){

@@ -14,7 +14,7 @@ var RankingList  = function () {
                 identity:memberId
             },
             type:"GET",
-            dataType:"json",
+            dataType:"text",
             xhrFields: {
                 withCredentials: true
             },

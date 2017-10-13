@@ -109,7 +109,7 @@ var SystemSettingsForm  = function () {
                      identity:memberId
                  },
                  type:"POST",
-                 dataType:"json",
+                 dataType:"text",
                  xhrFields: {
                      withCredentials: true
                  },
@@ -157,14 +157,16 @@ var SystemSettingsForm  = function () {
                 identity:memberId
             },
             type:"POST",
-            dataType:"json",
+            dataType:"text",
             xhrFields: {
                 withCredentials: true
             },
             crossDomain: true,
             success :function (data,textStatus) {
+                console.log(data);
+
                 var jsonObj = commonUtil.stringToJson(data);
-                //console.log(jsonObj);
+                console.log(jsonObj);
                 if(jsonObj.status == 0){
                     $.each(jsonObj.datas,function (i,v) {
                         if(v.key == "cut"){
@@ -178,22 +180,10 @@ var SystemSettingsForm  = function () {
                 }else if(jsonObj.status == -1){
                     commonUtil.anewLoginLayer();
                 }else{
-                  /*  layer.alert(jsonObj.message, {
-                        skin: 'layui-layer-lan',
-                        closeBtn: 1,
-                        shade: 0.01,
-                        anim: 4 //动画类型
-                    });*/
                     layer.msg(jsonObj.message, {icon: 5});
                 }
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) {
-                /*layer.alert('网络出现错误!', {
-                    skin: 'layui-layer-lan',
-                    closeBtn: 1,
-                    shade: 0.01,
-                    anim: 4 //动画类型
-                });*/
                 layer.msg("网络错误!", {icon: 5});
             }
         });
