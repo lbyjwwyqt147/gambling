@@ -29,7 +29,8 @@ var MemberForm  = function () {
             rules: {
 
                 name: {
-                    required: true
+                    required: true,
+                    maxlength:25
                 },
                 source: {
                     required: true

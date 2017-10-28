@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="en" class="ie8 no-js">
+<html lang="en" class="ie9 no-js">
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>下注图片页面</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="Preview page of Metronic Admin Theme #1 for bootstrap inputs, input groups, custom checkboxes and radio controls and more" name="description" />
+    <meta content="" name="author" />
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache"/>
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"/>
+    <META HTTP-EQUIV="expires" CONTENT="0"/>
+    <link href="../../../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="../../../assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="../../../assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/pages/css/customers.css" rel="stylesheet" type="text/css" />
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <style type="text/css">
+
+        .bootstrap-table .table:not(.table-condensed), .bootstrap-table .table:not(.table-condensed)>tbody>tr>td, .bootstrap-table .table:not(.table-condensed)>tbody>tr>th, .bootstrap-table .table:not(.table-condensed)>tfoot>tr>td, .bootstrap-table .table:not(.table-condensed)>tfoot>tr>th, .bootstrap-table .table:not(.table-condensed)>thead>tr>td {
+            font-size: 15px;
+        }
+
+        #member-shimobun-images-table>thead:first-child>tr:first-child>th {
+            background-color: forestgreen;
+            font-size: 15px;
+        }
+
+
+        #QiaoBuddha>thead:first-child>tr:first-child>th {
+            background-color:dodgerblue;
+            font-size: 15px;
+        }
+
+        .fixed-table-container thead th .both {
+            background-image:none!important;
+        }
+        .fixed-table-container {
+             border: 0px solid #E0E0E0;
+        }
+
+
+        .fixed-table-container thead th .both {
+            background-image:none!important;
+        }
+
+        .mt-element-step .step-line .mt-step-col {
+            padding: 0px;
+            padding-right: 5px;
+        }
+        .portlet.light.portlet-fit>.portlet-body {
+            padding: 0px;
+        }
+
+        .portlet.light.portlet-fit>.portlet-title {
+            padding: 0px;
+        }
+
+        .portlet {
+            padding-bottom: 0px;
+        }
+
+        .fixed-table-container thead th .sortable {
+            padding-right: 3px;
+            padding-left: 3px;
+
+        }
+
+
+        .mt-element-step .step-line .mt-step-number {
+            font-size: 26px;
+            border-radius: 50%!important;
+            display: inline-block;
+            margin: auto auto 5px;
+            padding: 5px;
+            border: 3px solid #e5e5e5;
+            position: relative;
+            z-index: 5;
+            height: 53px;
+            width: 53px;
+            text-align: center;
+        }
+
+        .bootstrap-table .table:not(.table-condensed), .bootstrap-table .table:not(.table-condensed)>tbody>tr>td, .bootstrap-table .table:not(.table-condensed)>tbody>tr>th, .bootstrap-table .table:not(.table-condensed)>tfoot>tr>td, .bootstrap-table .table:not(.table-condensed)>tfoot>tr>th, .bootstrap-table .table:not(.table-condensed)>thead>tr>td {
+            padding-top: 8px !important;
+            padding-bottom: 8px !important;
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+
+        /*   tr{
+               height: 120px;
+           }*/
+
+    </style>
+</head>
+
+<body style="overflow-x:hidden;background-color: #fff">
+<div class="page-container">
+    <div class="row">
+        <div class="col-xs-12" id="info-iamges-content">
+            <div class="portlet green-sharp box">
+
+                <div class="portlet-body" style="padding: 0px;">
+
+
+                    <div class="bootstrap-table" style="margin-top:0px;">
+                        <div class="fixed-table-container" style="">
+                            <div class="fixed-table-header" style="margin-right: 0px;">
+                                <table class="table-responsive table table-hover table-striped" id="QiaoBuddha">
+                                    <thead>
+                                    <tr>
+                                        <th  style="text-align: center; vertical-align: middle;  width:30% " tabindex="0">
+                                            <div class="th-inner sortable both">庄家昵称</div>
+                                        </th>
+                                        <th  style="text-align: center; vertical-align: middle;width:40%  "  tabindex="0">
+                                            <div class="">下注总人数</div>
+                                        </th>
+                                        <!--<th  style="text-align: center; vertical-align: middle;  width:20%  "  tabindex="0">
+                                            <div class="">庄家尾数</div>
+                                        </th>-->
+                                        <th  style="text-align: center; vertical-align: middle;  width:30%  "  tabindex="0">
+                                            <div class="">下注总分数</div>
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr data-index="0" data-uniqueid="0" style="border-bottom-style: none">
+                                        <td  style="text-align: center; vertical-align: middle; border-bottom-style: hidden" id="makersName"></td>
+                                        <td  style="text-align: center; vertical-align: middle; border-bottom-style: hidden" id="makersPersonNumber"></td>
+<!--
+                                        <td  style="text-align: center; vertical-align: middle; border-bottom-style: hidden" id="makersMantissa"></td>
+-->
+                                        <td  style="text-align: center; vertical-align: middle; border-bottom-style: hidden" id="makersScoreNumber"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                <div class="clearfix"></div>
+
+                <table id="member-shimobun-images-table" class="table-responsive"></table>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script src="../../../assets/global/plugins/respond.min.js"></script>
+<script src="../../../assets/global/plugins/excanvas.min.js"></script>
+<script src="../../../assets/global/plugins/ie8.fix.min.js"></script>
+
+<script src="../../../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/scripts/app.min.js" type="text/javascript"></script>
+
+<script src="../../../assets/global/plugins/bootstrap-table/bootstrap-table.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/html2canvas/html2canvas.js" type="text/javascript"></script>
+<!--<script src="https://cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js"></script>
+<script src="https://cdn.bootcss.com/zeroclipboard/2.3.0/ZeroClipboard.Core.min.js"></script>-->
+
+<script src="../../../assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+<script src="../../../assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+<script src="../../../assets/global/plugins/layer/layer.js" type="text/javascript"></script>
+<script src="../../../resources/scripts/common.js" type="text/javascript"></script>
+<script src="../../../resources/scripts/shimobun/shimobun_images.js" type="text/javascript"></script>
+
+<script >
+    /**
+     * 复制图片
+     */
+    function copyImage() {
+        console.log("开始复制图片.....");
+        /* var clip = new ZeroClipboard($('#infoContent'));
+         clip.on('ready', function(){
+             console.log('Flash 已经准备完成。');
+
+             this.on('aftercopy', function(event){
+                 console.log('已经复制剪贴板：');
+             });
+         });
+
+         clip.on('error', function(event){
+             console.log('异常：');
+             ZeroClipboard.destroy();
+         });
+
+
+
+     var clipboard = new Clipboard('#infoContent', {
+             // 通过target指定要复印的节点
+             target: function() {
+                 return document.querySelector('#infoContent');
+             }
+         });
+
+         clipboard.on('success', function(e) {
+             console.log('成功');
+         });
+
+         clipboard.on('error', function(e) {
+             console.log('失败');
+         });*/
+    }
+
+</script>
+
+</body>
+

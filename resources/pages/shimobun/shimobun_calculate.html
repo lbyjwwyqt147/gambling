@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>下注计算</title>
+    <title>下注计算结果页面</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Preview page of Metronic Admin Theme #1 for bootstrap inputs, input groups, custom checkboxes and radio controls and more" name="description" />
@@ -38,11 +38,6 @@
             font-size: 15px;
         }
 
-        #superm>thead:first-child>tr:first-child>th {
-            background-color:darkred;
-            font-size: 15px;
-        }
-
         #QiaoBuddha>thead:first-child>tr:first-child>th {
             background-color:dodgerblue;
             font-size: 15px;
@@ -51,7 +46,9 @@
         .fixed-table-container thead th .both {
             background-image:none!important;
         }
-
+        .fixed-table-container {
+            border: 0px solid #E0E0E0;
+        }
 
 
         .fixed-table-container thead th .both {
@@ -197,45 +194,8 @@
                 </div>
 
 
-
-                <!--<div class="bootstrap-table">
-                    <div class="fixed-table-container" style="height: 79px; padding-bottom: 40px;">
-                        <div class="fixed-table-header" style="margin-right: 0px;">
-                            <table class="table-responsive table table-hover table-striped" id="superm" data-sortable="false">
-                                <thead>
-                                <tr>
-                                    <th colspan="2"  style="text-align: center; vertical-align: middle; width: 25%"  data-sortable="true" tabindex="0">
-                                        <div class="th-inner sortable both">首包时间</div>
-                                    </th>
-                                    <th  colspan="2"  style="text-align: center; vertical-align: middle;width: 25%"  tabindex="0">
-                                        <div class="">尾包时间</div>
-                                    </th>
-                                    <th colspan="2" style="text-align: center; vertical-align: middle; width: 25%" data-field="bottomPour" tabindex="0">
-                                        <div class="">下注人数</div>
-                                    </th>
-                                    <th colspan="2" style="text-align: center; vertical-align: middle; width: 25%" tabindex="0">
-                                        <div class="">最佳尾数</div>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr data-index="0" data-uniqueid="0" style="border-bottom-style: none">
-                                    <td colspan="2"  style="text-align: center; vertical-align: middle; border-bottom-style: hidden" >-29419</td>
-                                    <td colspan="2"  style="text-align: center; vertical-align: middle;  border-bottom-style: hidden">memberName0</td>
-
-                                    <td colspan="2"  style="text-align: center; vertical-align: middle;  border-bottom-style: hidden">-1699</td>
-                                    <td colspan="2"  style="text-align: center; vertical-align: middle;  border-bottom-style: hidden">-199</td>
-
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>-->
-
-
                     <div class="bootstrap-table" style="margin-top:-5px;">
-                        <div class="fixed-table-container" style="height: 81px; padding-bottom: 40px;">
+                        <div class="fixed-table-container" style="">
                             <div class="fixed-table-header" style="margin-right: 0px;">
                                 <table class="table-responsive table table-hover table-striped" id="QiaoBuddha">
                                     <thead>

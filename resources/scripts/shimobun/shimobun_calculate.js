@@ -78,7 +78,7 @@ var MemberShimobunCalculateList  = function () {
                 luckNumber:luckNumber,
                 identity:memberId
             },
-            type:"GET",
+            type:"POST",
             dataType:"json",
             xhrFields: {
                 withCredentials: true
@@ -282,10 +282,22 @@ var MemberShimobunCalculateList  = function () {
         var w = $("#infoContent").width();
         var h = $("#infoContent").height();
 
+        var sw = 0;
+        var sh = 0;
+        //判断是否存在滚动条
+        $("body").scrollTop(10);//控制滚动条下移10px
+        if( $("body").scrollTop() > 0 ){
+            sw = 34;
+            sh = 30;
+        }else{
+
+        }
+        $("body").scrollTop(0);//滚动条返回顶部
+
         //要将 canvas 的宽高设置成容器宽高的 2 倍
         var canvas = document.createElement("canvas");
-        canvas.width = w * 2;
-        canvas.height = h * 2-49;
+        canvas.width = w * 2+sw;
+        canvas.height = h * 2-49-sh;
         canvas.style.width = w + "px";
         canvas.style.height = h + "px";
         var context = canvas.getContext("2d");

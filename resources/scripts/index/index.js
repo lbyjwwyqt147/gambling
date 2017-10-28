@@ -148,12 +148,24 @@ var Index = function () {
        parent.layer.open({
             type: 2 ,
             title: false,
-            area: ['300px' , '90%'],
+            area: ['400px' , '90%'],
             shade: 0.01,
             shadeClose: true,
             maxmin: false, //开启最大化最小化按钮
             offset: '30px',  //间距上边30px
-            content: '../pages/ranking/ranking_list.html?p='+memberId
+            content: '../pages/ranking/ranking_list.html?p='+memberId,
+            btn: ['关闭'],
+            resize:false,
+            move: false,
+            yes: function(index,layero){
+               //layer.getChildFrame('body', index);
+               // 调用子窗口中的方法
+               // layero.find('iframe')[0].contentWindow.generateImage();
+               parent.layer.closeAll();
+            },
+            btn2: function(index, layero){
+               parent.layer.closeAll();
+            }
         });
     }
 

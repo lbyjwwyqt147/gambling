@@ -221,8 +221,8 @@ var MemberShimobunList  = function () {
             pagination: true,
             minimumCountColumns: 2,
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 20,                       //每页的记录行数（*）
-            pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+            pageSize: 500,                       //每页的记录行数（*）
+            pageList: [500, 700, 1000, 10000],        //可供选择的每页的行数（*）
             uniqueId: "id",                     //每一行的唯一标识，一般为主键列
             showExport: true,
             exportDataType: 'all',
@@ -358,6 +358,26 @@ var MemberShimobunList  = function () {
     $("#query-btn").click(function(){
         initTableDatas(2);
     });
+
+    /**
+     * 点击生成图片事件
+     */
+    $("#createImagesbtn").click(function(){
+        var tableRightDatas = table2.bootstrapTable('getData');
+        if(tableRightDatas.length > 0){
+            openCreateImagesPage(tableRightDatas);
+        }else{
+            layer.alert("没有下分数据,请保持完整的下分数据.", {
+                skin: 'layui-layer-lan',
+                closeBtn: 1,
+                icon: 7,
+                offset:['10px' , '71%'],
+                shade: 0.01,
+                anim: 4 //动画类型
+            });
+        }
+    });
+
 
     /**
      * 计算事件
@@ -546,6 +566,90 @@ var MemberShimobunList  = function () {
                 parent.layer.msg("网络错误!", {icon: 5});
             }
         });
+    }
+
+
+
+
+    /**
+     * 生成图片页面
+     */
+    function openCreateImagesPage(params) {
+        var that = this;
+        var newParams = new Array();
+        var flag = true;
+        var makersTypes = new  Array();
+        var xianTypes = new  Array();
+        $.each(params,function(i,v){
+            var bankerType = $.trim(v.banker);
+            var obj = {
+                mantissa:$.trim(v.mantissa),
+                bottomPour:$.trim(v.bottomPour),
+                memberCode:$.trim(v.memberCode),
+                memberName:$.trim(v.memberName),
+                banker:bankerType
+            }
+            if(bankerType == 1){
+                makersTypes.push(bankerType);
+            }else{
+                xianTypes.push(bankerType)
+            }
+            newParams.push(obj);
+        });
+        if(flag && makersTypes.length != 1){
+            layer.alert("请选择一位庄家.", {
+                skin: 'layui-layer-lan',
+                closeBtn: 1,
+                icon: 7,
+                offset:['10px' , '71%'],
+                shade: 0.01,
+                anim: 4 //动画类型
+            });
+            flag = false;
+        }
+        if(flag && xianTypes.length == 0){
+            layer.alert("请至少选择一位闲家.", {
+                skin: 'layui-layer-lan',
+                closeBtn: 1,
+                icon: 7,
+                offset:['10px' , '71%'],
+                shade: 0.01,
+                anim: 4 //动画类型
+            });
+            flag = false;
+        }
+        if(flag){
+            var lastParams = JSON.stringify(newParams).replace(/\"/g,"'");
+            //多窗口模式，层叠置顶
+            parent.layer.open({
+                id: 'calculate-page',
+                type: 2 ,
+                title: "",
+                area: ['500px' , '90%'],
+                shade: 0.01,
+                shadeClose: false,
+                maxmin: false, //开启最大化最小化按钮
+                offset:['20px' , '32%'], //间距上边20px 左边30%
+                content: '../../resources/pages/shimobun/shimobun_images.html?params='+lastParams+'&p='+memberId,
+                btn: ['关闭'],
+                resize:false,
+                move: false,
+                yes: function(index,layero){
+                    //layer.getChildFrame('body', index);
+                    // 调用子窗口中的方法
+                    // layero.find('iframe')[0].contentWindow.generateImage();
+                    parent.layer.closeAll();
+                },
+                btn2: function(index, layero){
+                    parent.layer.closeAll();
+                },
+                end:function () {
+                    tempSaveCount = 0;
+                }
+            });
+        }
+
+
     }
 
     /**
